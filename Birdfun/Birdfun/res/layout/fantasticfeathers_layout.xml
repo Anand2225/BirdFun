@@ -22,7 +22,7 @@
         android:layout_weight="1"
 	    android:orientation="horizontal">
            	<!-- top left -->
-            <LinearLayout
+            <FrameLayout
             android:splitMotionEvents="false"
     		android:layout_width="fill_parent"
     		android:layout_height="fill_parent"
@@ -37,31 +37,58 @@
 			android:layout_width="fill_parent"
 			android:id="@+id/topleft"
 			android:scaleType="fitXY"
-			android:layout_height="fill_parent"
-			android:src="@drawable/fantasticfeathers_card7" >
+			android:layout_height="fill_parent">
 		    </ImageView>
-			</LinearLayout>
+
+			<ImageView
+			    android:id="@+id/tick11"
+			    android:layout_width="fill_parent"
+			    android:layout_height="fill_parent"
+			    android:scaleType="fitXY" />
+		    
+			<ImageView
+	        android:layout_centerHorizontal="true"
+			android:layout_centerVertical="true"
+			android:layout_width="fill_parent"
+			android:id="@+id/cross11"
+			android:scaleType="fitXY"
+			android:layout_height="fill_parent" >
+		    </ImageView>
+			</FrameLayout>
 			
 			<!-- top right -->
-            <LinearLayout
+            <FrameLayout
             android:splitMotionEvents="false"
     		android:layout_width="fill_parent"
     		android:layout_height="fill_parent"
     		android:layout_weight="1"
 			android:orientation="vertical"
 			android:background="#128">
-			
-			
+
+			<ImageView
+			    android:id="@+id/topright"
+			    android:layout_width="fill_parent"
+			    android:layout_height="fill_parent"
+			    android:scaleType="fitXY" />
+		    
 			<ImageView
 	        android:layout_centerHorizontal="true"
 			android:layout_centerVertical="true"
 			android:layout_width="fill_parent"
-			android:id="@+id/topright"
+			android:id="@+id/cross12"
 			android:scaleType="fitXY"
-			android:layout_height="fill_parent"
-			android:src="@drawable/fantasticfeathers_card8" >
+			android:layout_height="fill_parent" >
 		    </ImageView>
-			</LinearLayout>
+		    
+        <ImageView
+	        android:layout_centerHorizontal="true"
+			android:layout_centerVertical="true"
+			android:layout_width="fill_parent"
+			android:id="@+id/tick12"
+			android:scaleType="fitXY"
+			android:layout_height="fill_parent">
+		    </ImageView>
+			</FrameLayout>
             
         </LinearLayout>
         
@@ -73,7 +100,7 @@
         android:layout_weight="1"
 	    android:orientation="horizontal">
             <!-- low left -->
-            <LinearLayout
+            <FrameLayout
     		android:layout_width="fill_parent"
     		android:layout_height="fill_parent"
     		android:layout_weight="1"
@@ -86,21 +113,37 @@
 			android:layout_width="fill_parent"
 			android:id="@+id/lowleft"
 			android:scaleType="fitXY"
-			android:layout_height="fill_parent"
-			android:src="@drawable/fantasticfeathers_card9" >
+			android:layout_height="fill_parent">
 		    </ImageView>    
                 
+            <ImageView
+	        android:layout_centerHorizontal="true"
+			android:layout_centerVertical="true"
+			android:layout_width="fill_parent"
+			android:id="@+id/cross21"
+			android:scaleType="fitXY"
+			android:layout_height="fill_parent" >
+		    </ImageView>
+		    
+            <ImageView
+	        android:layout_centerHorizontal="true"
+			android:layout_centerVertical="true"
+			android:layout_width="fill_parent"
+			android:id="@+id/tick21"
+			android:scaleType="fitXY"
+			android:layout_height="fill_parent">
+		    </ImageView>
                 
-                
-			</LinearLayout>
+			</FrameLayout>
 			<!-- low right -->
-            <LinearLayout
-            android:splitMotionEvents="false"
-    		android:layout_width="fill_parent"
-    		android:layout_height="fill_parent"
-    		android:layout_weight="1"
-			android:orientation="vertical"
-			android:background="#256">
+
+            <FrameLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:background="#256"
+                android:orientation="horizontal"
+                android:splitMotionEvents="false" >
             
             <ImageView
 	        android:layout_centerHorizontal="true"
@@ -108,13 +151,30 @@
 			android:layout_width="fill_parent"
 			android:id="@+id/lowright"
 			android:scaleType="fitXY"
-			android:layout_height="fill_parent"
-			android:src="@drawable/fantasticfeathers_card10" >
+			android:layout_height="fill_parent">
+		    </ImageView>
+		    
+            <ImageView
+	        android:layout_centerHorizontal="true"
+			android:layout_centerVertical="true"
+			android:layout_width="fill_parent"
+			android:id="@+id/cross22"
+			android:scaleType="fitXY"
+			android:layout_height="fill_parent" >
+		    </ImageView>
+		    
+        <ImageView
+	        android:layout_centerHorizontal="true"
+			android:layout_centerVertical="true"
+			android:layout_width="fill_parent"
+			android:id="@+id/tick22"
+			android:scaleType="fitXY"
+			android:layout_height="fill_parent">
 		    </ImageView>
                 
                 
             
-			</LinearLayout>
+			</FrameLayout>
             
         </LinearLayout>
     </LinearLayout>
@@ -131,27 +191,10 @@
 			android:layout_width="fill_parent"
 			android:id="@+id/centre"
 			android:scaleType="fitXY"
-			android:layout_height="fill_parent"
-			android:src="@drawable/fantasticfeathers_round1" >
-		    </ImageView>
-		    
-        <ImageView
-	        android:layout_centerHorizontal="true"
-			android:layout_centerVertical="true"
-			android:layout_width="fill_parent"
-			android:id="@+id/cross"
-			android:scaleType="fitXY"
 			android:layout_height="fill_parent" >
 		    </ImageView>
 		    
-        <ImageView
-	        android:layout_centerHorizontal="true"
-			android:layout_centerVertical="true"
-			android:layout_width="fill_parent"
-			android:id="@+id/tick"
-			android:scaleType="fitXY"
-			android:layout_height="fill_parent">
-		    </ImageView>
+        
         
         
     </AbsoluteLayout>
@@ -168,7 +211,6 @@
         android:visibility="invisible"
         android:scaleType="fitXY"
         />
- 	    <include android:id="@+id/login_slider"
-             layout="@layout/sliding_bar"/>   
+    
 </FrameLayout>
 

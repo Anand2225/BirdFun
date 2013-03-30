@@ -1,0 +1,83 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.fyp.birdfun"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="14"
+        android:targetSdkVersion="17" />
+     	 <!-- Permissions  -->
+    <uses-permission android:name="android.permission.NFC" />
+	<uses-feature android:name="android.hardware.nfc" android:required="true" />
+	<uses-permission android:name="android.permission.INTERNET" />
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/BirdFunTheme"  
+        android:configChanges="orientation">
+         <!-- Main Screen Activity  -->
+        <activity
+            android:name=".PlayScreenActivity"
+            android:screenOrientation="landscape"
+            android:label="@string/app_name" >
+  
+           	
+        </activity>
+        
+           
+        <!-- Leader Board -->
+        <activity
+            android:name=".LeaderBoardActivity"
+            android:screenOrientation="landscape"
+            android:label="Leader board" >
+               
+        </activity>
+        
+             <!-- Find The Nest  -->
+        <activity
+            android:name=".FindTheNestActivity"
+            android:screenOrientation="landscape"
+            android:label="Find The Nest">
+        </activity>
+ 
+        <!-- Fantastic Feather -->
+        <activity
+            android:name=".FantasticFeathersActivity"
+            android:screenOrientation="landscape"
+            android:label="Fantastic Feathers" >
+        </activity>
+ 
+        <!-- The Weapon -->
+        <activity
+            android:name=".TheWeaponActivity"
+            android:screenOrientation="landscape" 
+            android:label="The Weapon" >
+        </activity>
+          <!-- Register -->
+        <activity
+            android:name=".RegisterActivity"
+            android:screenOrientation="landscape"
+            android:label="Regiter User" >
+                   
+        </activity>
+        <!-- Login -->
+        <activity
+            android:name=".LogInActivity"
+            android:screenOrientation="landscape"
+            android:label="Log in" >     
+             <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+ 				<category android:name="android.intent.category.LAUNCHER" />
+ 				</intent-filter>  
+            
+ 		</activity>
+ 		<activity
+            android:name=".FoodWebActivity"
+            android:screenOrientation="landscape"
+            android:label="food web" >      
+      
+ 		</activity>
+     
+    </application>  
+</manifest>

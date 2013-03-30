@@ -6,6 +6,8 @@ import java.util.Map;
 
 
 
+
+
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
@@ -43,7 +45,7 @@ public class FantasticFeathersActivity extends Activity implements CreateNdefMes
 
 		
 	String text;
-	ImageView topL, topR, lowL, lowR, centre, tick, cross;
+	ImageView topL, topR, lowL, lowR, centre, tick1, cross1, tick2, cross2, tick3, cross3, tick4, cross4;
 	//Cards are group by set of 4 with 1 centre picture.
 	public static Integer[] picOptions = {
 		   R.drawable.fantasticfeathers_card1,
@@ -147,15 +149,44 @@ public class FantasticFeathersActivity extends Activity implements CreateNdefMes
 		lowR = (ImageView) findViewById(R.id.lowright);
 		centre = (ImageView) findViewById(R.id.centre);
 		
+		
+		
+		tick1 = (ImageView) findViewById(R.id.tick11);
+		tick2 = (ImageView) findViewById(R.id.tick12);
+		tick3 = (ImageView) findViewById(R.id.tick21);
+		tick4 = (ImageView) findViewById(R.id.tick22);
+		
+		
+		
+		cross1 = (ImageView) findViewById(R.id.cross11);
+		cross2 = (ImageView) findViewById(R.id.cross12);
+		cross3 = (ImageView) findViewById(R.id.cross21);
+		cross4 = (ImageView) findViewById(R.id.cross22);
+		
+		
 		//Tick and Cross view
 		
-		tick = (ImageView) findViewById(R.id.tick);
-		cross = (ImageView) findViewById(R.id.cross);		
-		tick.setImageResource(R.drawable.fantasticfeathers_correct);
-		cross.setImageResource(R.drawable.fantasticfeathers_wrong);
+		tick1.setImageResource(R.drawable.fantasticfeathers_correct);
+		tick2.setImageResource(R.drawable.fantasticfeathers_correct);
+		tick3.setImageResource(R.drawable.fantasticfeathers_correct);
+		tick4.setImageResource(R.drawable.fantasticfeathers_correct);
 		
-		tick.setVisibility(View.INVISIBLE);
-		cross.setVisibility(View.INVISIBLE);
+		cross1.setImageResource(R.drawable.fantasticfeathers_wrong);
+		cross2.setImageResource(R.drawable.fantasticfeathers_wrong);
+		cross3.setImageResource(R.drawable.fantasticfeathers_wrong);
+		cross4.setImageResource(R.drawable.fantasticfeathers_wrong);
+		
+
+		
+		tick1.setVisibility(View.INVISIBLE);
+		tick2.setVisibility(View.INVISIBLE);
+		tick3.setVisibility(View.INVISIBLE);
+		tick4.setVisibility(View.INVISIBLE);
+		
+		cross1.setVisibility(View.INVISIBLE);
+		cross2.setVisibility(View.INVISIBLE);
+		cross3.setVisibility(View.INVISIBLE);
+		cross4.setVisibility(View.INVISIBLE);
 		
 		//Call set cards, eg: setCards(0) == set 1
 		setCards(setCounter);
@@ -307,24 +338,74 @@ public class FantasticFeathersActivity extends Activity implements CreateNdefMes
 			if (Check(topL,setCounter) == true)
 			{
 				//Correct Picture
-				correct();
+				new CountDownTimer(4000, 1000) {
+
+				     public void onTick(long millisUntilFinished) {
+				        //While counting
+				    	 tick1.setVisibility(View.VISIBLE);
+				     }
+
+				     public void onFinish() {
+				         //when finish
+				    	 tick1.setVisibility(View.INVISIBLE);
+				    	 setCounter++;
+				    	 score++;
+						 checkLevel(setCounter);
+				     }
+				  }.start();
 
 				
 			}else // Incorrect Picture
 				{
-				incorrect();
+				new CountDownTimer(2000, 1000) {
+
+				     public void onTick(long millisUntilFinished) {
+				        //While counting
+				    	 cross1.setVisibility(View.VISIBLE);
+				     }
+				     public void onFinish() {
+				         //when finish
+				    	 cross1.setVisibility(View.INVISIBLE);
+				    	 score--;
+				     }
+				  }.start();
 				}
 		}
 		if(checkCardContent(msgs[0])==12)
 		{
 			//select option B
 			if (Check(topR,setCounter) == true){
-				correct();
+				new CountDownTimer(4000, 1000) {
+
+				     public void onTick(long millisUntilFinished) {
+				        //While counting
+				    	 tick2.setVisibility(View.VISIBLE);
+				     }
+
+				     public void onFinish() {
+				         //when finish
+				    	 tick2.setVisibility(View.INVISIBLE);
+				    	 setCounter++;
+				    	 score++;
+						 checkLevel(setCounter);
+				     }
+				  }.start();
 
 				
 			}else // Incorrect Picture
 				{
-				incorrect();
+				new CountDownTimer(2000, 1000) {
+
+				     public void onTick(long millisUntilFinished) {
+				        //While counting
+				    	 cross2.setVisibility(View.VISIBLE);
+				     }
+				     public void onFinish() {
+				         //when finish
+				    	 cross2.setVisibility(View.INVISIBLE);
+				    	 score--;
+				     }
+				  }.start();
 				}
 			
 		}
@@ -333,12 +414,37 @@ public class FantasticFeathersActivity extends Activity implements CreateNdefMes
 			//select option C
 			if (Check(lowL,setCounter) == true){
 				//Correct Picture
-				correct();
+				new CountDownTimer(4000, 1000) {
+
+				     public void onTick(long millisUntilFinished) {
+				        //While counting
+				    	 tick3.setVisibility(View.VISIBLE);
+				     }
+
+				     public void onFinish() {
+				         //when finish
+				    	 tick3.setVisibility(View.INVISIBLE);
+				    	 setCounter++;
+				    	 score++;
+						 checkLevel(setCounter);
+				     }
+				  }.start();
 
 				
 			}else // Incorrect Picture
 				{
-				incorrect();
+				new CountDownTimer(2000, 1000) {
+
+				     public void onTick(long millisUntilFinished) {
+				        //While counting
+				    	 cross3.setVisibility(View.VISIBLE);
+				     }
+				     public void onFinish() {
+				         //when finish
+				    	 cross3.setVisibility(View.INVISIBLE);
+				    	 score--;
+				     }
+				  }.start();
 				}
 		}
 		if(checkCardContent(msgs[0])==22)
@@ -347,50 +453,39 @@ public class FantasticFeathersActivity extends Activity implements CreateNdefMes
 			if (Check(lowR,setCounter) == true)
 			{
 			//Correct Picture
-			correct();
+				new CountDownTimer(4000, 1000) {
+
+				     public void onTick(long millisUntilFinished) {
+				        //While counting
+				    	 tick4.setVisibility(View.VISIBLE);
+				     }
+
+				     public void onFinish() {
+				         //when finish
+				    	 tick4.setVisibility(View.INVISIBLE);
+				    	 setCounter++;
+				    	 score++;
+						 checkLevel(setCounter);
+				     }
+				  }.start();
 			
 		}else // Incorrect Picture
 			{
-			incorrect();
+			new CountDownTimer(2000, 1000) {
+
+			     public void onTick(long millisUntilFinished) {
+			        //While counting
+			    	 cross4.setVisibility(View.VISIBLE);
+			     }
+			     public void onFinish() {
+			         //when finish
+			    	 cross4.setVisibility(View.INVISIBLE);
+			    	 score--;
+			     }
+			  }.start();
 			}
 		
 		}
-	}
-	
-	
-	private void correct()
-	{
-		new CountDownTimer(4000, 1000) {
-
-		     public void onTick(long millisUntilFinished) {
-		        //While counting
-		    	 tick.setVisibility(View.VISIBLE);
-		     }
-
-		     public void onFinish() {
-		         //when finish
-		    	 tick.setVisibility(View.INVISIBLE);
-		    	 setCounter++;
-		    	 score++;
-				 checkLevel(setCounter);
-		     }
-		  }.start();
-	}
-	
-	private void incorrect()
-	{
-		new CountDownTimer(2000, 1000) {
-
-		     public void onTick(long millisUntilFinished) {
-		        //While counting
-		    	 cross.setVisibility(View.VISIBLE);
-		     }
-		     public void onFinish() {
-		         //when finish
-		    	 cross.setVisibility(View.INVISIBLE);
-		    	 score--;
-		     }
-		  }.start();
 	}
 	
 	
