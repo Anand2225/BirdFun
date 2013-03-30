@@ -1,0 +1,189 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center_horizontal"
+    android:orientation="horizontal" >
+
+    <LinearLayout
+        android:layout_width="555dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:weightSum="100" >
+
+   <LinearLayout
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:orientation="horizontal" >
+
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_weight="1.67"
+           android:paddingLeft="10dip"
+           android:paddingRight="10dip"
+           android:paddingTop="10dip"
+           android:text="Login"
+           android:textSize="17dip" />
+
+       <EditText
+           android:id="@+id/inputLogin"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_margin="5dip"
+           android:layout_marginBottom="15dip"
+           android:background="@drawable/textfield_focused_holo_dark"
+           android:ems="10"
+           android:focusable="true"
+           android:focusableInTouchMode="true"
+           android:inputType="text"
+           android:singleLine="true"
+           android:textColor="#ffb400"
+           android:textSize="20dp" />
+      
+   </LinearLayout>
+
+      <LinearLayout
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dip"
+                android:paddingRight="10dip"
+                android:paddingTop="10dip"
+                android:text="Password"
+                android:textSize="17dip" />
+
+        	<EditText
+                android:id="@+id/inputPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dip"
+                android:layout_marginBottom="15dip"
+                android:layout_weight="0.50"
+                android:background="@drawable/textfield_focused_holo_dark"
+                android:ems="10"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:inputType="textWebPassword"
+                android:singleLine="true"
+                android:textColor="#ffb400"
+                android:textSize="20dp" />
+        
+        </LinearLayout>
+        
+      
+       <!-- Layout for Buttons -->
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+    	 <!--  Button to Register   -->
+
+        <Button
+            android:id="@+id/btnlogin"
+            android:layout_width="152dp"
+            android:layout_height="wrap_content"
+            android:text="Login" />
+
+    		<!--  Button to Cancel   -->
+
+		<Button
+		    android:id="@+id/btncancel"
+		    android:layout_width="156dp"
+		    android:layout_height="wrap_content"
+		    android:text="Cancel" />
+    
+	</LinearLayout>
+</LinearLayout>
+<SlidingDrawer 
+    android:id="@+id/slidingDrawer"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:content="@+id/content"
+    android:gravity="center_horizontal"
+    android:handle="@+id/handle"
+    android:orientation="horizontal">
+    
+
+    <LinearLayout
+        android:id="@+id/handle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:measureWithLargestChild="true" >
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_launcher" />
+
+    </LinearLayout>
+
+	       <LinearLayout
+	           android:id="@+id/content"
+	           android:layout_width="wrap_content"
+	           android:layout_height="wrap_content"
+	           android:gravity="top|end"
+	           android:orientation="vertical">
+	
+	    <!-- Button to Save The Eggs -->
+
+    <!-- Button to Fantastic feathers acitivity -->
+
+    <Button
+        android:id="@+id/btnlogins"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="Log in" />
+
+    <!-- Button to The weapon acitivity -->
+
+    <Button
+        android:id="@+id/btnplays"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="Play" />
+
+    <Button
+        android:id="@+id/btnregiste"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="Register" />
+
+    <!-- Button to Login Activity -->
+
+    <Button
+        android:id="@+id/btnleaderboard"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="Leader Board" />
+
+    <!-- Button to Login Activity -->
+
+    <Button
+        android:id="@+id/btnquit"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="Quit" />
+	
+	</LinearLayout>
+</SlidingDrawer>
+
+</LinearLayout>
+

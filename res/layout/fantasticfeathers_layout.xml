@@ -1,0 +1,174 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:keepScreenOn="true"
+    android:id="@+id/container"
+    tools:context=".MainActivity" >
+
+    <LinearLayout
+        android:splitMotionEvents="false"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        tools:ignore="ObsoleteLayoutParam" >
+        	
+	<!-- Row 1 -->
+        <LinearLayout
+        android:splitMotionEvents="false" 
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+	    android:orientation="horizontal">
+           	<!-- top left -->
+            <LinearLayout
+            android:splitMotionEvents="false"
+    		android:layout_width="fill_parent"
+    		android:layout_height="fill_parent"
+    		android:layout_weight="1"
+			android:orientation="vertical"
+			android:background="#256">
+			
+			
+			<ImageView
+	        android:layout_centerHorizontal="true"
+			android:layout_centerVertical="true"
+			android:layout_width="fill_parent"
+			android:id="@+id/topleft"
+			android:scaleType="fitXY"
+			android:layout_height="fill_parent"
+			android:src="@drawable/fantasticfeathers_card7" >
+		    </ImageView>
+			</LinearLayout>
+			
+			<!-- top right -->
+            <LinearLayout
+            android:splitMotionEvents="false"
+    		android:layout_width="fill_parent"
+    		android:layout_height="fill_parent"
+    		android:layout_weight="1"
+			android:orientation="vertical"
+			android:background="#128">
+			
+			
+			<ImageView
+	        android:layout_centerHorizontal="true"
+			android:layout_centerVertical="true"
+			android:layout_width="fill_parent"
+			android:id="@+id/topright"
+			android:scaleType="fitXY"
+			android:layout_height="fill_parent"
+			android:src="@drawable/fantasticfeathers_card8" >
+		    </ImageView>
+			</LinearLayout>
+            
+        </LinearLayout>
+        
+    <!-- Row 2 -->
+        <LinearLayout
+        android:splitMotionEvents="false" 
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+	    android:orientation="horizontal">
+            <!-- low left -->
+            <LinearLayout
+    		android:layout_width="fill_parent"
+    		android:layout_height="fill_parent"
+    		android:layout_weight="1"
+			android:orientation="vertical"
+			android:background="#128">
+			
+            <ImageView
+	        android:layout_centerHorizontal="true"
+			android:layout_centerVertical="true"
+			android:layout_width="fill_parent"
+			android:id="@+id/lowleft"
+			android:scaleType="fitXY"
+			android:layout_height="fill_parent"
+			android:src="@drawable/fantasticfeathers_card9" >
+		    </ImageView>    
+                
+                
+                
+			</LinearLayout>
+			<!-- low right -->
+            <LinearLayout
+            android:splitMotionEvents="false"
+    		android:layout_width="fill_parent"
+    		android:layout_height="fill_parent"
+    		android:layout_weight="1"
+			android:orientation="vertical"
+			android:background="#256">
+            
+            <ImageView
+	        android:layout_centerHorizontal="true"
+			android:layout_centerVertical="true"
+			android:layout_width="fill_parent"
+			android:id="@+id/lowright"
+			android:scaleType="fitXY"
+			android:layout_height="fill_parent"
+			android:src="@drawable/fantasticfeathers_card10" >
+		    </ImageView>
+                
+                
+            
+			</LinearLayout>
+            
+        </LinearLayout>
+    </LinearLayout>
+    <AbsoluteLayout
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_gravity ="center" >
+        
+        
+        
+        <ImageView
+	        android:layout_centerHorizontal="true"
+			android:layout_centerVertical="true"
+			android:layout_width="fill_parent"
+			android:id="@+id/centre"
+			android:scaleType="fitXY"
+			android:layout_height="fill_parent"
+			android:src="@drawable/fantasticfeathers_round1" >
+		    </ImageView>
+		    
+        <ImageView
+	        android:layout_centerHorizontal="true"
+			android:layout_centerVertical="true"
+			android:layout_width="fill_parent"
+			android:id="@+id/cross"
+			android:scaleType="fitXY"
+			android:layout_height="fill_parent" >
+		    </ImageView>
+		    
+        <ImageView
+	        android:layout_centerHorizontal="true"
+			android:layout_centerVertical="true"
+			android:layout_width="fill_parent"
+			android:id="@+id/tick"
+			android:scaleType="fitXY"
+			android:layout_height="fill_parent">
+		    </ImageView>
+        
+        
+    </AbsoluteLayout>
+    <!-- This initially-hidden ImageView will hold the expanded/zoomed version of the
+         images above. Without transformations applied, it takes up the entire screen.
+         To achieve the "zoom" animation, this view's bounds are animated from the
+         bounds of the thumbnail buttons above, to its final laid-out bounds. The implementation
+         of this animation is in the ZoomActivity class. -->
+    
+    <ImageView
+        android:id="@+id/expanded_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible"
+        android:scaleType="fitXY"
+        />
+ 	    <include android:id="@+id/login_slider"
+             layout="@layout/sliding_bar"/>   
+</FrameLayout>
+

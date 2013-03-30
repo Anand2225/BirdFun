@@ -1,0 +1,57 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_vertical"
+    android:orientation="vertical" >
+
+    <!-- Button to Save The Eggs -->
+
+    <Button
+        android:id="@+id/btnplays"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="Play" />
+
+    <!-- Button to Fantastic feathers acitivity -->
+
+    <Button
+        android:id="@+id/btnlogins"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="Log in" />
+
+    <!-- Button to The weapon acitivity -->
+
+    <Button
+        android:id="@+id/btnregiste"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="Register" />
+
+    <!-- Button to Login Activity -->
+
+    <Button
+        android:id="@+id/btnleaderboard"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="Leader Board" />
+
+    <!-- Button to Login Activity -->
+
+    <Button
+        android:id="@+id/btnquit"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="Quit" />
+
+</LinearLayout>

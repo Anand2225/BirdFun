@@ -1,0 +1,24 @@
+<resources>
+
+	<style name="BirdFunTheme" parent="android:Theme.Light">
+  		<item name="android:windowFullscreen">true</item>
+  		<item name="android:windowNoTitle">true</item>
+  		<item name="android:buttonStyle">@style/ButtonAppTheme</item>
+  		<item name="android:editTextStyle">@style/EditTextAppTheme</item>	
+	</style>
+
+    <!-- Button Theme -->
+  <style name="ButtonAppTheme" parent="BirdFunTheme">
+	  <item name="android:background">@drawable/btn_default_holo_dark</item>
+	  <item name="android:minHeight">48dip</item>
+	  <item name="android:minWidth">64dip</item>
+	  <item name="android:textColor">#ffffff</item>
+  </style>
+   <!-- End of Button Theme -->
+    <!-- Edit Text  Theme -->
+  <style name="EditTextAppTheme" parent="BirdFunTheme">
+	  <item name="android:background">@drawable/edit_text_holo_dark</item>
+	  <item name="android:textColor">#ffffff</item>
+  </style>
+  <!-- Edit  Edit Text  Theme -->
+</resources>
