@@ -35,7 +35,7 @@ public class LeaderBoardActivity extends ListActivity {
     ArrayList<HashMap<String, String>> usersList;
     ArrayList<PlayerDetails> playerdata = new ArrayList<PlayerDetails>();
     // url to get all products list
-   
+   //jj
    //private static String leader_board ="http://172.23.194.143/leader_board.php";
    private static String leader_board="http://birdfun.net/leader_board.php";
    
