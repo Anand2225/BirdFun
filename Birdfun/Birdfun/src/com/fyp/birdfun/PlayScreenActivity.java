@@ -34,8 +34,8 @@ public class PlayScreenActivity extends Activity {
 
 	           PlayerDetails Currentplayer = (PlayerDetails) playerdata.get(0);
 	           String name = Currentplayer.Name;
-	           newtext =(TextView)findViewById(R.id.nametag);
-		       newtext.setText(name);
+	          // newtext =(TextView)findViewById(R.id.nametag);
+		      // newtext.setText(name);
 	       }
 	        
 	        // Buttons
