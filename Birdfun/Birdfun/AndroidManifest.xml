@@ -54,7 +54,10 @@
             android:name=".TheWeaponActivity"
             android:screenOrientation="landscape" 
            >
-              
+              <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+ 				<category android:name="android.intent.category.LAUNCHER" />
+ 				</intent-filter>  
         </activity>
           <!-- Register -->
         <activity
@@ -68,10 +71,7 @@
             android:name=".LogInActivity"
             android:screenOrientation="landscape"
             android:label="Log in" >     
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
- 				<category android:name="android.intent.category.LAUNCHER" />
- 				</intent-filter> 
+           
             
  		</activity>
  		<activity
