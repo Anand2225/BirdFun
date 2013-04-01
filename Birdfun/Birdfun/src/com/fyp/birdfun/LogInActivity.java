@@ -37,7 +37,7 @@ public class LogInActivity extends Activity{
     JSONParser jsonParser = new JSONParser();
  
     ArrayList<HashMap<String, String>> productsList;
-    ArrayList<PlayerDetails> playerdata = new ArrayList<PlayerDetails>();
+
     // url to get all products list
    //private static String url_login = "http://31.170.160.92/login_user.php";
    //private static String url_login ="http://172.23.194.143/login_user.php";
@@ -84,8 +84,7 @@ public class LogInActivity extends Activity{
 			//	 intent listener to open the specific activity
 				 //Intent myIntent = new Intent(LogInActivity.this, PlayScreenActivity.class);
 				 Intent playscreen = new Intent(getApplicationContext(), PlayScreenActivity.class);
-                 playscreen.putExtra("player",playerdata);  
-				 
+                 
 		            startActivity(playscreen);      
 				    finish();
 			}
@@ -243,9 +242,8 @@ public class LogInActivity extends Activity{
                    users = json.getJSONArray(TAG_USER);
                     	
                     // looping through All Products
-                    for (int i = 0; i < users.length(); i++) 
-                    {
-                    	JSONObject c = users.getJSONObject(i);
+                    
+                    	JSONObject c = users.getJSONObject(0);
                        // Storing each json item in player object
                     	
                     	PlayerDetails player=new PlayerDetails();
@@ -257,12 +255,16 @@ public class LogInActivity extends Activity{
                         player.FantasticFeathers=c.getInt(TAG_FANTASTIC);
                         player.TheWeapon=c.getInt(TAG_WEAPON);
                       
-                        playerdata.add(player);
+                        ((GlobalLoginApplication)getApplication()).setPlayerDetails(player);
+
                        
-                    }
+                    
+                    
+               
+
                    
                     Intent playscreen = new Intent(getApplicationContext(), PlayScreenActivity.class);
-                    playscreen.putExtra("player",playerdata);  
+
                     startActivity(playscreen);      
                     // closing this screen
                     finish();

@@ -12,10 +12,9 @@
             android:orientation="vertical" >
 
         <Button
-            android:id="@+id/btnlogin"
+            android:id="@+id/btnSaveTheEggs"
             android:layout_width="186dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/btnsavetheeggs"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="53dp"
             android:gravity="center"
@@ -40,5 +39,8 @@
                 android:text="The Weapon" />
         
         </LinearLayout>
+        <include
+    android:id="@+id/login_slider"
+    layout="@layout/sliding_bar" />
 
 </RelativeLayout>

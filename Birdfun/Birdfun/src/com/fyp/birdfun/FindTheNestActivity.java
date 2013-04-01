@@ -96,21 +96,11 @@ public class FindTheNestActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
     	
-//    	Intent intent =getIntent();
-//Bundle bundle = intent.getExtras();
-//         //recieve intent from other activities and update current player detials
-//        playerdata =  bundle.getParcelableArrayList("player");
-//        for (int count = 0; count < playerdata.size(); count++) {
-//
-//           PlayerDetails Currentplayer = (PlayerDetails) playerdata.get(count);
-// 
-//           }
         
         super.onCreate(savedInstanceState);
         setContentView(R.layout.find_the_nest);
     	nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         nfcPendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, this.getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP),0);
-    	
         final TextView scoreview=(TextView)findViewById(R.id.score);
      
         final TextView myCounter = (TextView)findViewById(R.id.mycounter);
@@ -168,91 +158,91 @@ public class FindTheNestActivity extends Activity {
 
         	counter.start();
         	//buttons needed for the hidden menu options
-//            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-//            Button Play= (Button) findViewById(R.id.btnplays);
-//            Button Register= (Button) findViewById(R.id.btnregiste);
-//            Button Login= (Button) findViewById(R.id.btnlogins);
-//            Button LeaderBoard= (Button) findViewById(R.id.btnleaderboard);
-//            Button Quit= (Button) findViewById(R.id.btnquit);
-//           // To the hidden menu option
-//          Play.setOnClickListener(new View.OnClickListener() {
-//    			
-//    			@Override
-//    			public void onClick(View v) {
-//    			//	 intent listener to open the specific activity
-//    				 //Intent myIntent = new Intent(FindTheNestActivity.this, PlayScreenActivity.class);
-//    				 Intent playscreen = new Intent(FindTheNestActivity.this, PlayScreenActivity.class);
-//                     playscreen.putExtra("player",playerdata);  
-//    				 
-//    		            startActivity(playscreen);      
-//    				    //finish();
-//    			}
-//    		});
-//          	
-//          Register.setOnClickListener(new View.OnClickListener() {
-//    			
-//    			@Override
-//    			public void onClick(View v) {
-//
-//    				//	 intent listener to open the specific activity
-//    					 Intent myIntent = new Intent(FindTheNestActivity.this, RegisterActivity.class);
-//
-//    			            startActivity(myIntent);      
-//    					    finish();
-//    				
-//
-//    			}
-//    		});
-//          
-//          Login.setOnClickListener(new View.OnClickListener() {
-//    			
-//    			@Override
-//    			public void onClick(View v) {
-//    				// TODO Auto-generated method stub
-//
-//    				//	 intent listener to open the specific activity
-//    					 Intent myIntent = new Intent(FindTheNestActivity.this, LogInActivity.class);
-//
-//    			            startActivity(myIntent);      
-//    					    finish();
-//    				
-//
-//    			}
-//    		});
-//          
-//          LeaderBoard.setOnClickListener(new View.OnClickListener() {
-//    			
-//    			@Override
-//    			public void onClick(View v) {
-//    				// TODO Auto-generated method stub
-//
-//    				//	 intent listener to open the specific activity
-//    					 Intent myIntent = new Intent(FindTheNestActivity.this, LeaderBoardActivity.class);
-//
-//    			            startActivity(myIntent);      
-//    					    finish();
-//    				
-//
-//    			}
-//    		});
-//          
-//          Quit.setOnClickListener(new View.OnClickListener() {
-//    			
-//    			@Override
-//    			public void onClick(View v) {
-//    				// TODO Auto-generated method stub
-//
-//    				//	 intent listener to open the specific activity
-//    					 Intent myIntent = new Intent(FindTheNestActivity.this, PlayScreenActivity.class);
-//
-//    			            startActivity(myIntent);      
-//    					    finish();
-//    				
-//
-//    			}
-//    		});
-//          
-//         
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+            Button Play= (Button) findViewById(R.id.btnplays);
+            Button Register= (Button) findViewById(R.id.btnregiste);
+            Button Login= (Button) findViewById(R.id.btnlogins);
+            Button LeaderBoard= (Button) findViewById(R.id.btnleaderboard);
+            Button Quit= (Button) findViewById(R.id.btnquit);
+           // To the hidden menu option
+          Play.setOnClickListener(new View.OnClickListener() {
+    			
+    			@Override
+    			public void onClick(View v) {
+    			//	 intent listener to open the specific activity
+    				 //Intent myIntent = new Intent(FindTheNestActivity.this, PlayScreenActivity.class);
+    				 Intent playscreen = new Intent(FindTheNestActivity.this, PlayScreenActivity.class);
+                     playscreen.putExtra("player",playerdata);  
+    				 
+    		            startActivity(playscreen);      
+    				    //finish();
+    			}
+    		});
+          	
+          Register.setOnClickListener(new View.OnClickListener() {
+    			
+    			@Override
+    			public void onClick(View v) {
+
+    				//	 intent listener to open the specific activity
+    					 Intent myIntent = new Intent(FindTheNestActivity.this, RegisterActivity.class);
+
+    			            startActivity(myIntent);      
+    					    finish();
+    				
+
+    			}
+    		});
+          
+          Login.setOnClickListener(new View.OnClickListener() {
+    			
+    			@Override
+    			public void onClick(View v) {
+    				// TODO Auto-generated method stub
+
+    				//	 intent listener to open the specific activity
+    					 Intent myIntent = new Intent(FindTheNestActivity.this, LogInActivity.class);
+
+    			            startActivity(myIntent);      
+    					    finish();
+    				
+
+    			}
+    		});
+          
+          LeaderBoard.setOnClickListener(new View.OnClickListener() {
+    			
+    			@Override
+    			public void onClick(View v) {
+    				// TODO Auto-generated method stub
+
+    				//	 intent listener to open the specific activity
+    					 Intent myIntent = new Intent(FindTheNestActivity.this, LeaderBoardActivity.class);
+
+    			            startActivity(myIntent);      
+    					    finish();
+    				
+
+    			}
+    		});
+          
+          Quit.setOnClickListener(new View.OnClickListener() {
+    			
+    			@Override
+    			public void onClick(View v) {
+    				// TODO Auto-generated method stub
+
+    				//	 intent listener to open the specific activity
+    					 Intent myIntent = new Intent(FindTheNestActivity.this, PlayScreenActivity.class);
+
+    			            startActivity(myIntent);      
+    					    finish();
+    				
+
+    			}
+    		});
+          
+         
         
     }
     
