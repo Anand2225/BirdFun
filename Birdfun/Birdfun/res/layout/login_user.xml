@@ -101,7 +101,10 @@
     
 	</LinearLayout>
 </LinearLayout>
-<include android:id="@+id/login_slider"
-             layout="@layout/sliding_bar"/>
+
+<include
+    android:id="@+id/login_slider"
+    layout="@layout/sliding_bar" />
+
 </RelativeLayout>
 
