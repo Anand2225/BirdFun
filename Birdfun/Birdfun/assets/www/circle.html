@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en-us">
+<head>
+  <meta name="viewport" content="width=device-width">
+	<link rel="stylesheet" href="css/lightbox.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="main.css" type="text/css" media="screen" />
+
+</head>
+<body background="images/background.jpg">
+
+
+
+<div class="container">
+    <div class="row">
+       <a href="images/examples/osprey_jpg.jpg" rel="lightbox[plants]" title="Osprey."> <img src="images/examples/osprey_png.png" " alt="" width="128" height="128"></a>
+       <a href="images/examples/bald_eagle_info_new.png" rel="lightbox[plants]" title="Bald Eagle."> <img src="images/examples/bald_eagle_png.png" " alt="" width="128" height="128"></a>
+    </div>
+
+    <div class="row">
+       <a href="images/examples/gull_jpg.jpg" rel="lightbox[plants]" title="California Gull"> <img src="images/examples/gull_png.jpg" " alt="" width="64" height="64"></a>
+       <a href="images/examples/wading_jpg.jpg" rel="lightbox[plants]" title="Wading Bird."> <img src="images/examples/wading_png.jpg" " alt="" width="64" height="64"></a>
+       <a href="images/examples/image-3.jpg" rel="lightbox[plants]" title="Sea Ducks."> <img src="images/examples/image-3.jpg" " alt="" width="100" height="100"></a>
+	   <a href="images/examples/image-3.jpg" rel="lightbox[plants]" title="Tundara Swan."> <img src="images/examples/image-3.jpg" " alt="" width="64" height="64"></a>
+       <a href="images/examples/image-3.jpg" rel="lightbox[plants]" title="Herbivours Ducks."> <img src="images/examples/image-3.jpg" " alt="" width="64" height="64"></a>
+	
+	</div>
+    <div class="row">
+       <a href="images/examples/image-3.jpg" rel="lightbox[plants]" title="Geese."> <img src="images/examples/image-3.jpg" " alt="" width="128" height="128"></a>
+	</div>
+	
+</div>
+<script src="js/jquery-1.7.2.min.js"></script>
+<script src="js/jquery-ui-1.8.18.custom.min.js"></script>
+<script src="js/jquery.smooth-scroll.min.js"></script>
+<script src="js/lightbox.js"></script>
+
+<script>
+  jQuery(document).ready(function($) {
+      $('a').smoothScroll({
+        speed: 1000,
+        easing: 'easeInOutCubic'
+      });
+
+      $('.showOlderChanges').on('click', function(e){
+        $('.changelog .old').slideDown('slow');
+        $(this).fadeOut();
+        e.preventDefault();
+      })
+  });
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-2196019-1']);
+  _gaq.push(['_trackPageview']);
+</script>
+</body>
+</html>
