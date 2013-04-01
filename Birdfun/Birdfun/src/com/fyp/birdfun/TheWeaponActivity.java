@@ -2,18 +2,14 @@ package com.fyp.birdfun;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Point;
-import android.graphics.Rect;
+import android.graphics.PixelFormat;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
@@ -22,8 +18,9 @@ import android.os.CountDownTimer;
 import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.AccelerateInterpolator;
-import android.view.animation.DecelerateInterpolator;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -43,9 +40,11 @@ public class TheWeaponActivity extends Activity  {
 	private Card playCards[];
 	//NFC declarations
 	private static String TAG = TheWeaponActivity.class.getSimpleName();
-	private static String TAG1 = "playids";
+	private static String TAG1 = "newturn";
 	private static String TAG2 = "firstTap";
 	private static String TAG3 = "secondTap";
+	private List myList = new ArrayList();
+	private boolean disableintent;
 	
 	protected NfcAdapter nfcAdapter;
     protected PendingIntent nfcPendingIntent;
@@ -55,13 +54,11 @@ public class TheWeaponActivity extends Activity  {
     private boolean newTurn;
 
     //Variable to store the read content
-    private String text;
+    
 	private int cardValue;
     private int prevReadPlayId;
 	private int prevReadCardID;
-	//animation part
-	private int mShortAnimationDuration;
-	private Animator mCurrentAnimator;
+	private int currentValue;
 	
 	//Variables for player details
 	 ArrayList<PlayerDetails> playerdata = new ArrayList<PlayerDetails>();   	
@@ -77,10 +74,14 @@ public class TheWeaponActivity extends Activity  {
 	//Managing android Activity life cycle
 	public void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
+	getWindow().setFormat(PixelFormat.RGBA_8888);
 	setContentView(R.layout.theweapon_layout);
 	
+	
+	
+	
 	//recieve intent from playscreen activities and update current player details
-	 Intent intent =getIntent();
+	/* Intent intent =getIntent();
      Bundle bundle = intent.getExtras();
      playerdata =  bundle.getParcelableArrayList("player");
      for (int count = 0; count < playerdata.size(); count++) {
@@ -93,7 +94,7 @@ public class TheWeaponActivity extends Activity  {
 	    //newtext.setText( this.thisGamescore);
 	       
         
-        }
+        }*/
      
 	//Create adapter and pending intent for NFC
 	nfcAdapter = NfcAdapter.getDefaultAdapter(this);
@@ -110,12 +111,22 @@ public class TheWeaponActivity extends Activity  {
 	ImageContainersBack=new int[NO_OF_VIEWS];
 	
 	// load the views to the array
+	LoadCards();
 	SetUpGame();
+	disableintent=false;
 	noofCardsSolved=0;
+	
 	prevReadPlayId=99;
 	prevReadCardID=99;
-	mShortAnimationDuration=300;
 	newTurn=true;
+	Button back= (Button) findViewById(R.id.btnback);
+	 back.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				SetUpGame();
+			}
+		});
 	}
 	@Override
 	protected void onResume() {
@@ -136,73 +147,186 @@ public class TheWeaponActivity extends Activity  {
 	//Game Logic
 	private void SetUpGame() {
 		// TODO Auto-generated method stub
-		LoadCards();
+	
 		shuffleCards();
 		selectCardsforView();
 		shufflePlayCards();
 		LoadPlayCardsToView();
 		showAndHideCards();
+		resetTicks();
+	}
+	private void resetTicks() {
+		// TODO Auto-generated method stub
+		for(int i=0;i<NO_OF_VIEWS;i++)
+		{
+			ShowtickAndWrong(playCards[i].position_id,false,false);
+			ShowtickAndWrong(playCards[i].position_id,true,false);
+		}
 	}
 	private void playGame() {
 		
         // check whether the tapped card is solved
-		 
-		if(playCards[cardValue].solved==false&&noofCardsSolved!=4){
+		//nfcAdapter.enable();
+		currentValue=cardValue;
+		
+		
+		if(playCards[currentValue].solved==false&&noofCardsSolved!=4){
 			if(newTurn){
 				//open the tapped card
-				Log.d(TAG2, "newTurn");
-				applyRotation(0,-90,false,playCards[cardValue].front_view_id,playCards[cardValue].back_view_id);
-				zoomImageFromThumb((ImageView)findViewById(playCards[cardValue].front_view_id),playCards[cardValue].front_drawable_id);
+				Log.d(TAG2, "firtap");
+				disableintent=true;
+				applyRotation(0,-90,false,playCards[currentValue].front_view_id,playCards[currentValue].back_view_id);
+				disableintent=false;
+				Log.d(TAG2, ""+currentValue);
+				ShowtickAndWrong(playCards[cardValue].position_id,true,true);
 				// remember the position
-				prevReadPlayId=playCards[cardValue].position_id;
+				prevReadPlayId=playCards[currentValue].position_id;
 				// remember the card id
-				prevReadCardID=playCards[cardValue].card_id;
+				prevReadCardID=playCards[currentValue].card_id;
 				newTurn=false;
 				}
 			
 			else 
 			{
-				Log.d(TAG2, "secondTurn");
+				/*
+				 * Position
+				 * Tick(true) or wrong(false)
+				 * visible(true) and invisible(false)
+				 */
+				
 				// check whether same card read if yes close it
-				if(playCards[cardValue].position_id ==prevReadPlayId)	
-			    	applyRotation(0,90,true,playCards[cardValue].front_view_id,playCards[cardValue].back_view_id);
+				if(playCards[currentValue].position_id ==prevReadPlayId)	
+				{	
+					//remove tick and add wrong
+					ShowtickAndWrong(playCards[cardValue].position_id,true,false);
+			    	applyRotation(0,90,true,playCards[currentValue].front_view_id,playCards[currentValue].back_view_id);
+			    	//remove wrong
+			    	
+				}
 				//check for correct  card if yes open it
-				else if(playCards[cardValue].card_id%16==prevReadCardID%16)
-		    	{	applyRotation(0,-90,false,playCards[cardValue].front_view_id,playCards[cardValue].back_view_id);
-		    		playCards[cardValue].solved=true;
+				else if(playCards[currentValue].card_id%16==prevReadCardID%16)
+					
+		    	{	
+					ShowtickAndWrong(playCards[cardValue].position_id,true,true);
+					applyRotation(0,-90,false,playCards[currentValue].front_view_id,playCards[currentValue].back_view_id);
+		    		playCards[currentValue].solved=true;
 		    		playCards[prevReadPlayId].solved=true;
 		    		noofCardsSolved++;
 		    	}
 				//check for wrong  card if then close first tapped card
 				else
 				{
+					//remove correct
+					//
+					//add wrong
+					ShowtickAndWrong(playCards[prevReadPlayId].position_id,true,false);
+				    
 					//open the current card
-					applyRotation(0,-90,false,playCards[cardValue].front_view_id,playCards[cardValue].back_view_id);
-					//zoom the current card
-					zoomImageFromThumb((ImageView)findViewById(playCards[cardValue].front_view_id),playCards[cardValue].front_drawable_id);
+					applyRotation(0,-90,false,playCards[currentValue].front_view_id,playCards[currentValue].back_view_id);
+					//wrong card 
+				     
+					 ShowtickAndWrong(playCards[currentValue].position_id,false,true);
+					 ShowtickAndWrong(playCards[prevReadPlayId].position_id,false,true);
+					new CountDownTimer(200, 100) {
+			
+					     public void onTick(long millisUntilFinished) {
+					    	 
+					    	
+					     }
+					     public void onFinish() {
+
+						 applyRotation(0,90,true,playCards[prevReadPlayId].front_view_id,playCards[prevReadPlayId].back_view_id);
+					     applyRotation(0,90,true,playCards[currentValue].front_view_id,playCards[currentValue].back_view_id);
+					    
+					     ShowtickAndWrong(playCards[currentValue].position_id,false,false);
+					     ShowtickAndWrong(playCards[prevReadPlayId].position_id,false,false);
+
+
+					     }
+					  }.start();
+					
 		    		//close the previous card
-					applyRotation(0,90,true,playCards[prevReadPlayId].front_view_id,playCards[prevReadPlayId].back_view_id);
+					
 		    		//close the current card
-					applyRotation(0,90,true,playCards[cardValue].front_view_id,playCards[cardValue].back_view_id);
+					
 				}
 				newTurn=true;
 			}
 		}
 		if(noofCardsSolved==4)
 		{
+			noofCardsSolved=0;
 			// reset all the playcard solved to false
 			for(int i=0;i<NO_OF_VIEWS;i++)
 			{
-				playCards[prevReadPlayId].solved=false;
+				playCards[i].solved=false;
 			}
 			//repeat the process
-			shuffleCards();
-			selectCardsforView();
-			shufflePlayCards();
-			LoadPlayCardsToView();
-			showAndHideCards();
+			SetUpGame();
 		}
+		
 	}	
+
+	private void ShowtickAndWrong(int position,boolean tick,boolean visibility){
+		ImageView ticks = null;
+	
+	switch(position)
+	{
+	case 0: 
+		if(tick)
+		{ticks=(ImageView)findViewById(R.id.correctView01);}
+		else
+		{ticks=(ImageView)findViewById(R.id.wrongView01);}
+		break;
+	case 1: 
+		if(tick)
+		{ticks=(ImageView)findViewById(R.id.correctView02);}
+		else
+		{ticks=(ImageView)findViewById(R.id.wrongView02);}
+		break;
+	case 2: 
+		if(tick)
+		{ticks=(ImageView)findViewById(R.id.correctView03);}
+		else
+		{ticks=(ImageView)findViewById(R.id.wrongView03);}
+		break;
+	case 3: 
+		if(tick)
+		{ticks=(ImageView)findViewById(R.id.correctView04);}
+		else
+		{ticks=(ImageView)findViewById(R.id.wrongView04);}
+		break;
+	case 4: 
+		if(tick)
+		{ticks=(ImageView)findViewById(R.id.correctView05);}
+		else
+		{ticks=(ImageView)findViewById(R.id.wrongView05);}
+		break;
+	case 5: 
+		if(tick)
+		{ticks=(ImageView)findViewById(R.id.correctView06);}
+		else
+		{ticks=(ImageView)findViewById(R.id.wrongView06);}
+		break;
+	case 6: 
+		if(tick)
+		{ticks=(ImageView)findViewById(R.id.correctView07);}
+		else
+		{ticks=(ImageView)findViewById(R.id.wrongView07);}
+		break;
+	case 7: 
+		if(tick)
+		{ticks=(ImageView)findViewById(R.id.correctView08);}
+		else
+		{ticks=(ImageView)findViewById(R.id.wrongView08);}
+		break;
+	}
+	if(visibility)
+	{ticks.setVisibility(View.VISIBLE);}
+	else
+	{ticks.setVisibility(View.INVISIBLE);}
+		
+	}
 	private void LoadPlayCardsToView() {
 		for(int i=0;i<NO_OF_VIEWS;i++)
 		{
@@ -217,9 +341,63 @@ public class TheWeaponActivity extends Activity  {
 		// TODO Auto-generated method stub
 		// This method will take the first 8 cards from the shuffled card and store it in 
 		//play cards
-		int j=0,cardIdFromDeck=0,TempCardIdFromDeck=0;
-		int  cardIdFromDeckMod=0,TempCardIdFromDeckMod=0;
-	  for(int i=0;i<NO_OF_PAIRS;i++)	
+		
+		int numberofCards=1;
+		//load the first card
+		playCards[0]=cards[0]; 
+		
+		long seed =System.currentTimeMillis();
+		Random randomGenerator=new Random(seed);
+		boolean exsists=false;
+		
+		while(numberofCards!=4)
+		{
+			//generate a number between 0 and 32
+			 int randomInt=randomGenerator.nextInt(NO_OF_CARDS);
+			 //loop through the first four cars to make sure this card is unique
+			for(int i=0;i<numberofCards;i++)
+			{
+			 
+			  if(playCards[i].card_id%16==cards[randomInt].card_id%16)
+			  { 
+			   exsists=true;
+			   break;
+			  }
+			}
+			
+			if(exsists==false){
+				playCards[numberofCards]=cards[randomInt];
+				 playCards[numberofCards].play_id=numberofCards;
+				
+				numberofCards++;
+				
+			}
+			 exsists=false;
+			}
+		
+		int cardIdFromDeck,TempCardIdFromDeck,cardIdFromDeckMod,TempCardIdFromDeckMod;
+		  for(int i=0;i<NO_OF_PAIRS;i++)	
+		  {
+			  cardIdFromDeck=playCards[i].card_id;
+			  cardIdFromDeckMod=cardIdFromDeck%16;
+			  Log.d("cardid",""+playCards[i].card_id);
+			for( int j=0;j<NO_OF_CARDS;j++)
+			{
+				TempCardIdFromDeck=cards[j].card_id;
+				TempCardIdFromDeckMod=TempCardIdFromDeck%16;
+				if((cardIdFromDeckMod==TempCardIdFromDeckMod)&&(TempCardIdFromDeck!=cardIdFromDeck))
+				{	playCards[i+4]=cards[j];
+			        playCards[i+4].play_id=i+4;
+			        Log.d("cardid",""+playCards[i+4].card_id);
+			        break;
+				}
+			
+			}
+		 }
+	  /*
+	   int j=0,cardIdFromDeck=0,TempCardIdFromDeck=0;
+		int  cardIdFromDeckMod=0,TempCardIdFromDeckMod=0; 
+	    for(int i=0;i<NO_OF_PAIRS;i++)	
 	  {
 		  
 		  playCards[i]=cards[i];
@@ -230,21 +408,22 @@ public class TheWeaponActivity extends Activity  {
 			{
 		    	TempCardIdFromDeck=cards[j].card_id;
 				TempCardIdFromDeckMod=TempCardIdFromDeck%16;
-				if(cardIdFromDeckMod==TempCardIdFromDeckMod)
+				if(cardIdFromDeckMod==TempCardIdFromDeckMod&&TempCardIdFromDeck!=cardIdFromDeck)
+				
 				{
-				if (cardIdFromDeck!=TempCardIdFromDeck)
-				{
+					Log.d("CardIdFromDeck",""+cardIdFromDeck );
 				Log.d("TempCardIdFromDeck",""+TempCardIdFromDeck );
-				Log.d("CardIdFromDeck",""+cardIdFromDeck );
+			
 			    playCards[i+4]=cards[j];
 			    playCards[i+4].play_id=i+4;
-				break;
+				//break;
 				}
-				}
+			
 			}
 		
 		  
-	  }
+	  }*/
+		
 	}
 	private void shufflePlayCards() {
 		
@@ -252,11 +431,7 @@ public class TheWeaponActivity extends Activity  {
 		long seed =System.currentTimeMillis();
 		Random randomGenerator=new Random(seed);
 		// Now shuffle the cards  and store it 
-		for(int i=0;i<NO_OF_VIEWS;i++)
-		{
-	
-		//Log.d(TAG1, "play id before shuffle is "+playCards[i].play_id);
-		}
+		
 		for(int j=NO_OF_VIEWS;j>0;j--)
 		{
 		   int randomInt=randomGenerator.nextInt(j);
@@ -283,9 +458,10 @@ public class TheWeaponActivity extends Activity  {
 		for(int j=NO_OF_CARDS;j>0;j--)
 		{
 		   int randomInt=randomGenerator.nextInt(j);
-		  
+		 
 		   if(j!=0)
 		   {
+			  
 			// store the current card  to temp
 		   temp=cards[j-1];
 		   //swamp the cards between random number location and current location
@@ -348,7 +524,7 @@ public class TheWeaponActivity extends Activity  {
 		
 		  }
 		  // hide it after 3 seconds
-		  new CountDownTimer(10000, 1000) {
+		  new CountDownTimer(3000, 1000) {
 
 			     public void onTick(long millisUntilFinished) {
 			    	
@@ -366,6 +542,7 @@ public class TheWeaponActivity extends Activity  {
 	//must take the start,end,Id of the images to rotate,
 	private void applyRotation(float start, float end,boolean rotate,int imageview1id,int imageview2id) {
 		// Find the center of image
+		disableintent=true;
 		 ImageView image1=(ImageView)findViewById(imageview1id);
 		 ImageView image2=(ImageView)findViewById(imageview2id);
 		 // Find the center of image
@@ -375,7 +552,7 @@ public class TheWeaponActivity extends Activity  {
 		 // The animation listener is used to trigger the next animation
 		 final Flip3dAnimation rotation =
 		 new Flip3dAnimation(start, end, centerX, centerY);
-		 rotation.setDuration(500);
+		 rotation.setDuration(50);
 		 rotation.setFillAfter(true);
 		 rotation.setInterpolator(new AccelerateInterpolator());
 		 rotation.setAnimationListener(new DisplayNextView(rotate, image1, image2));
@@ -384,144 +561,24 @@ public class TheWeaponActivity extends Activity  {
 			image1.startAnimation(rotation);
 		 else
 			 image2.startAnimation(rotation);
+		 disableintent=false;
 		}
-	private void zoomImageFromThumb(final View thumbView, int imageResId) {
-	        // If there's an animation in progress, cancel it immediately and proceed with this one.
-		   // hide it after 3 seconds
-		   final ImageView expandedImageView = (ImageView) findViewById(R.id.expanded_image);
-	        expandedImageView.setImageResource(imageResId);
-	        // Calculate the starting and ending bounds for the zoomed-in image. This step
-	       
-			  new CountDownTimer(2000, 1000) {
-				  // involves lots of math. Yay, math.
-			        final Rect startBounds = new Rect();
-			        final Rect finalBounds = new Rect();
-			        final Point globalOffset = new Point();
-			        float startScale;
-				     public void onTick(long millisUntilFinished) {
-				    	  // Load the high-resolution "zoomed-in" image					     
-					        // The start bounds are the global visible rectangle of the thumbnail, and the
-					        // final bounds are the global visible rectangle of the container view. Also
-					        // set the container view's offset as the origin for the bounds, since that's
-					        // the origin for the positioning animation properties (X, Y).
-					        thumbView.getGlobalVisibleRect(startBounds);
-					        findViewById(R.id.game).getGlobalVisibleRect(finalBounds, globalOffset);
-					        startBounds.offset(-globalOffset.x, -globalOffset.y);
-					        finalBounds.offset(-globalOffset.x, -globalOffset.y);
 
-					        // Adjust the start bounds to be the same aspect ratio as the final bounds using the
-					        // "center crop" technique. This prevents undesirable stretching during the animation.
-					        // Also calculate the start scaling factor (the end scaling factor is always 1.0).
-					        
-					        if ((float) finalBounds.width() / finalBounds.height()
-					                > (float) startBounds.width() / startBounds.height()) {
-					            // Extend start bounds horizontally
-					            startScale = (float) startBounds.height() / finalBounds.height();
-					            float startWidth = startScale * finalBounds.width();
-					            float deltaWidth = (startWidth - startBounds.width()) / 2;
-					            startBounds.left -= deltaWidth;
-					            startBounds.right += deltaWidth;
-					        } else {
-					            // Extend start bounds vertically
-					            startScale = (float) startBounds.width() / finalBounds.width();
-					            float startHeight = startScale * finalBounds.height();
-					            float deltaHeight = (startHeight - startBounds.height()) / 2;
-					            startBounds.top -= deltaHeight;
-					            startBounds.bottom += deltaHeight;
-					        }
-
-					        // Hide the thumbnail and show the zoomed-in view. When the animation begins,
-					        // it will position the zoomed-in view in the place of the thumbnail.
-					      
-					        expandedImageView.setVisibility(View.VISIBLE);
-
-					        // Set the pivot point for SCALE_X and SCALE_Y transformations to the top-left corner of
-					        // the zoomed-in view (the default is the center of the view).
-					        expandedImageView.setPivotX(0f);
-					        expandedImageView.setPivotY(0f);
-
-					        // Construct and run the parallel animation of the four translation and scale properties
-					        // (X, Y, SCALE_X, and SCALE_Y).
-					        AnimatorSet set = new AnimatorSet();
-					        set.play(ObjectAnimator.ofFloat(expandedImageView, View.X, startBounds.left,
-					                        finalBounds.left))
-					                .with(ObjectAnimator.ofFloat(expandedImageView, View.Y, startBounds.top,
-					                        finalBounds.top))
-					                .with(ObjectAnimator.ofFloat(expandedImageView, View.SCALE_X, startScale, 1f))
-					                .with(ObjectAnimator.ofFloat(expandedImageView, View.SCALE_Y, startScale, 1f));
-					        set.setDuration(mShortAnimationDuration);
-					        set.setInterpolator(new DecelerateInterpolator());
-					        set.addListener(new AnimatorListenerAdapter() {
-					            @Override
-					            public void onAnimationEnd(Animator animation) {
-					                mCurrentAnimator = null;
-					            }
-
-					            @Override
-					            public void onAnimationCancel(Animator animation) {
-					                mCurrentAnimator = null;
-					            }
-					        });
-					        set.start();
-					        mCurrentAnimator = set;
-				     }
-				     public void onFinish() {
-				    	 
-				    	 //zoom in 
-					        final float startScaleFinal = startScale;
-					        
-					        if (mCurrentAnimator != null) {
-				                mCurrentAnimator.cancel();
-				            }
-
-					        AnimatorSet set = new AnimatorSet();
-				            set.play(ObjectAnimator.ofFloat(expandedImageView, View.X, startBounds.left))
-				                    .with(ObjectAnimator.ofFloat(expandedImageView, View.Y, startBounds.top))
-				                    .with(ObjectAnimator
-				                            .ofFloat(expandedImageView, View.SCALE_X, startScaleFinal))
-				                    .with(ObjectAnimator
-				                            .ofFloat(expandedImageView, View.SCALE_Y, startScaleFinal));
-				            set.setDuration(mShortAnimationDuration);
-				            set.setInterpolator(new DecelerateInterpolator());
-				            set.addListener(new AnimatorListenerAdapter() {
-				                @Override
-				                public void onAnimationEnd(Animator animation) {
-				                    thumbView.setAlpha(1f);
-				                    expandedImageView.setVisibility(View.GONE);
-				                    mCurrentAnimator = null;
-				                }
-
-				                @Override
-				                public void onAnimationCancel(Animator animation) {
-				                    thumbView.setAlpha(1f);
-				                    expandedImageView.setVisibility(View.GONE);
-				                    mCurrentAnimator = null;
-				                }
-				            });
-				            set.start();
-				            mCurrentAnimator = set;
-					        
-				            if (mCurrentAnimator != null) {
-					            mCurrentAnimator.cancel();
-					        }
-				    	 
-				     }
-				  }.start();         
-	        
-	    }
-	//NFC part 
 	@Override
 	public void onNewIntent(Intent intent) { //
-	Log.d(TAG, "onNewIntent");
+	Log.d(TAG2, "onNewIntent");
+	if(disableintent==false){
 	NdefMessage[] msgs = getNdefMessages(intent);
 	if(checkCardContent(msgs[0]))
 	{
 		playGame();
 	}
 	}
+	}
 	//get Ndef Messages from NFC Card
 	NdefMessage[] getNdefMessages(Intent intent) {
     // Parse the intent
+	String text;
     NdefMessage[] msgs = null;
     String action = intent.getAction();
     if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(action)
@@ -554,7 +611,7 @@ public class TheWeaponActivity extends Activity  {
 	boolean checkCardContent(final NdefMessage msg) {
      try {
         byte[] payload = msg.getRecords()[0].getPayload();
-       
+        String text;
         String textEncoding = ((payload[0] & 0200) == 0) ? "UTF-8" : "UTF-16";
         int languageCodeLength = payload[0] & 0077;      
         
@@ -594,8 +651,6 @@ public class TheWeaponActivity extends Activity  {
 	}
     
 
-	
-	
 	
 	
 }
