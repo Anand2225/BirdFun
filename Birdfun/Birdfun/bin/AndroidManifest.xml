@@ -11,12 +11,12 @@
 	<uses-feature android:name="android.hardware.nfc" android:required="true" />
 	<uses-permission android:name="android.permission.INTERNET" />
     <application
-        android:name="com.fyp.birdfun.helpers.GlobaLoginApplication"
+        android:name="com.fyp.birdfun.GlobalLoginApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/BirdFunTheme"  
-        android:configChanges="orientation">
+        android:configChanges="orientation" android:logo="@drawable/ic_launcher">
          <!-- Main Screen Activity  -->
         <activity
             android:name=".PlayScreenActivity"
@@ -53,7 +53,7 @@
         <activity
             android:name=".TheWeaponActivity"
             android:screenOrientation="landscape" 
-            android:label="The Weapon" >
+           >
               <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
  				<category android:name="android.intent.category.LAUNCHER" />
