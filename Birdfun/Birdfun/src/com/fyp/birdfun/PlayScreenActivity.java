@@ -108,58 +108,58 @@ public class PlayScreenActivity extends Activity {
 	 			}
 	 		});
 	        
-//	        // Buttons
-//	        btnSaveTheEggs = (Button) findViewById(R.id.btnSaveTheEggs);
-//	        btnFantasticFeathers = (Button) findViewById(R.id.btnfantasticfeathers);
-//	        btntheweapon = (Button) findViewById(R.id.btntheweapon);
+	        // Buttons
+	        btnSaveTheEggs = (Button) findViewById(R.id.btnSaveTheEggs);
+	        btnFantasticFeathers = (Button) findViewById(R.id.btnfantasticfeathers);
+	        btntheweapon = (Button) findViewById(R.id.btntheweapon);
 	     
 	        // Save The Eggs  click event
-//	        btnSaveTheEggs.setOnClickListener(new View.OnClickListener() {
-//	 
-//	            
-//	            public void onClick(View view) {
-//	                // Launching All The weapon Activity 
-//	            	//send the player details
-//	                Intent i = new Intent(getApplicationContext(), FindTheNestActivity.class);
-//	                //i.putExtra("player",playerdata);  
-//	                startActivity(i);
-//	                finish();
-//	               
-//	 
-//	            }
-//	        });
+	        btnSaveTheEggs.setOnClickListener(new View.OnClickListener() {
+	 
+	            
+	            public void onClick(View view) {
+	                // Launching All The weapon Activity 
+	            	//send the player details
+	                Intent i = new Intent(getApplicationContext(), FindTheNestActivity.class);
+	                //i.putExtra("player",playerdata);  
+	                startActivity(i);
+	                finish();
+	               
+	 
+	            }
+	        });
 
-//	        // Fantastic feathers click event
-//	        btnFantasticFeathers.setOnClickListener(new View.OnClickListener() {
-//	 
-//	            
-//	            public void onClick(View view) {
-//	            	// Launching All The weapon Activity 
-//	            	//send the send the current score and total
-//	                Intent i = new Intent(getApplicationContext(), FantasticFeathersActivity.class);
-//	             
-//
-//	                startActivity(i);
-//	 
-//	                finish();
-//	            }
-//	        });
-//	       
-//	        // The weapon click even
-//	        btntheweapon.setOnClickListener(new View.OnClickListener() {
-//	       	 
-//	            
-//	            public void onClick(View view) {
-//	                // Launching create the weapon  activity
-//	                Intent theweapon = new Intent(getApplicationContext(), TheWeaponActivity.class);
-//	              
-//
-//	                startActivity(theweapon);
-//	                finish();
-//	 
-//	            }
-//	        });
-//	    }
+	        // Fantastic feathers click event
+	        btnFantasticFeathers.setOnClickListener(new View.OnClickListener() {
+	 
+	            
+	            public void onClick(View view) {
+	            	// Launching All The weapon Activity 
+	            	//send the send the current score and total
+	                Intent i = new Intent(getApplicationContext(), FantasticFeathersActivity.class);
+	             
+
+	                startActivity(i);
+	 
+	                finish();
+	            }
+	        });
+	       
+	        // The weapon click even
+	        btntheweapon.setOnClickListener(new View.OnClickListener() {
+	       	 
+	            
+	            public void onClick(View view) {
+	                // Launching create the weapon  activity
+	                Intent theweapon = new Intent(getApplicationContext(), TheWeaponActivity.class);
+	              
+
+	                startActivity(theweapon);
+	                finish();
+	 
+	            }
+	        });
+	    }
 	    
 	    //To-do Add exit button
 	    //To-do Sign up acitivty to update the score to the server
@@ -170,6 +170,6 @@ public class PlayScreenActivity extends Activity {
 		//User Comes back from playing Save the Eggs
 		//User Comes back from playing The weapon game
 	    //User Comes back from playing Fantastic feathers
-	    }   
+	      
 	    
 }

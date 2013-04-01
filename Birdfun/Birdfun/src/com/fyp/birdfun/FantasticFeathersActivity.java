@@ -33,6 +33,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.Button;
 import android.widget.ImageView;
 
 public class FantasticFeathersActivity extends Activity implements CreateNdefMessageCallback, OnNdefPushCompleteCallback{
@@ -300,7 +301,89 @@ public class FantasticFeathersActivity extends Activity implements CreateNdefMes
       
         // Retrieve and cache the system's default "short" animation time.
         mShortAnimationDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
-		
+	
+      //buttons to add the side option menu and also the listener methods for this side menu
+        Button Play= (Button) findViewById(R.id.btnplays);
+        Button Register= (Button) findViewById(R.id.btnregiste);
+        Button Login= (Button) findViewById(R.id.btnlogins);
+        Button LeaderBoard= (Button) findViewById(R.id.btnleaderboard);
+        Button Quit= (Button) findViewById(R.id.btnquit);
+       // To the hidden menu option
+      Play.setOnClickListener(new View.OnClickListener() {
+   			
+   			@Override
+   			public void onClick(View v) {
+   			//	 intent listener to open the specific activity
+   				 Intent myIntent = new Intent(FantasticFeathersActivity.this, PlayScreenActivity.class);
+   				
+   		            startActivity(myIntent);      
+   				    finish();
+   			}
+   		});
+      	
+      Register.setOnClickListener(new View.OnClickListener() {
+   			
+   			@Override
+   			public void onClick(View v) {
+
+   				//	 intent listener to open the specific activity
+   					 Intent myIntent = new Intent(FantasticFeathersActivity.this, RegisterActivity.class);
+
+   			            startActivity(myIntent);      
+   					    finish();
+   				
+
+   			}
+   		});
+      
+      Login.setOnClickListener(new View.OnClickListener() {
+   			
+   			@Override
+   			public void onClick(View v) {
+   				// TODO Auto-generated method stub
+
+   				//	 intent listener to open the specific activity
+   					 Intent myIntent = new Intent(FantasticFeathersActivity.this, LogInActivity.class);
+
+   			            startActivity(myIntent);      
+   					    finish();
+   				
+
+   			}
+   		});
+      
+      LeaderBoard.setOnClickListener(new View.OnClickListener() {
+   			
+   			@Override
+   			public void onClick(View v) {
+   				// TODO Auto-generated method stub
+
+   				//	 intent listener to open the specific activity
+   					 Intent myIntent = new Intent(FantasticFeathersActivity.this, LeaderBoardActivity.class);
+
+   			            startActivity(myIntent);      
+   					    finish();
+   				
+
+   			}
+   		});
+      
+      Quit.setOnClickListener(new View.OnClickListener() {
+   			
+   			@Override
+   			public void onClick(View v) {
+   				// TODO Auto-generated method stub
+
+   				//	 intent listener to open the specific activity
+   					 Intent myIntent = new Intent(FantasticFeathersActivity.this, PlayScreenActivity.class);
+
+   			            startActivity(myIntent);      
+   					    finish();
+   				
+
+   			}
+   		}); 
+
 		
 	   
 	}

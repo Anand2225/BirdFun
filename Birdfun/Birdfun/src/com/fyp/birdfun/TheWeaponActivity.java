@@ -127,6 +127,89 @@ public class TheWeaponActivity extends Activity  {
 				SetUpGame();
 			}
 		});
+	//buttons to add the side option menu and also the listener methods for this side menu
+     Button Play= (Button) findViewById(R.id.btnplays);
+     Button Register= (Button) findViewById(R.id.btnregiste);
+     Button Login= (Button) findViewById(R.id.btnlogins);
+     Button LeaderBoard= (Button) findViewById(R.id.btnleaderboard);
+     Button Quit= (Button) findViewById(R.id.btnquit);
+    // To the hidden menu option
+   Play.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+			//	 intent listener to open the specific activity
+				 Intent myIntent = new Intent(TheWeaponActivity.this, PlayScreenActivity.class);
+				
+		            startActivity(myIntent);      
+				    finish();
+			}
+		});
+   	
+   Register.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+
+				//	 intent listener to open the specific activity
+					 Intent myIntent = new Intent(TheWeaponActivity.this, RegisterActivity.class);
+
+			            startActivity(myIntent);      
+					    finish();
+				
+
+			}
+		});
+   
+   Login.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+
+				//	 intent listener to open the specific activity
+					 Intent myIntent = new Intent(TheWeaponActivity.this, LogInActivity.class);
+
+			            startActivity(myIntent);      
+					    finish();
+				
+
+			}
+		});
+   
+   LeaderBoard.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+
+				//	 intent listener to open the specific activity
+					 Intent myIntent = new Intent(TheWeaponActivity.this, LeaderBoardActivity.class);
+
+			            startActivity(myIntent);      
+					    finish();
+				
+
+			}
+		});
+   
+   Quit.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+
+				//	 intent listener to open the specific activity
+					 Intent myIntent = new Intent(TheWeaponActivity.this, PlayScreenActivity.class);
+
+			            startActivity(myIntent);      
+					    finish();
+				
+
+			}
+		}); 
+	
+	
 	}
 	@Override
 	protected void onResume() {

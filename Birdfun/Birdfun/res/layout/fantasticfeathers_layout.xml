@@ -1,216 +1,219 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/RelativeLayer"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:keepScreenOn="true"
-    android:id="@+id/container"
-    tools:context=".MainActivity" >
+    android:layout_height="match_parent" >
 
-    <LinearLayout
-        android:splitMotionEvents="false"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        tools:ignore="ObsoleteLayoutParam" >
-        	
-	<!-- Row 1 -->
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:keepScreenOn="true"
+        tools:context=".MainActivity" >
+
         <LinearLayout
-        android:splitMotionEvents="false" 
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_weight="1"
-	    android:orientation="horizontal">
-           	<!-- top left -->
-            <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
             android:splitMotionEvents="false"
-    		android:layout_width="fill_parent"
-    		android:layout_height="fill_parent"
-    		android:layout_weight="1"
-			android:orientation="vertical"
-			android:background="#256">
-			
-			
-			<ImageView
-	        android:layout_centerHorizontal="true"
-			android:layout_centerVertical="true"
-			android:layout_width="fill_parent"
-			android:id="@+id/topleft"
-			android:scaleType="fitXY"
-			android:layout_height="fill_parent">
-		    </ImageView>
+            tools:ignore="ObsoleteLayoutParam" >
 
-			<ImageView
-			    android:id="@+id/tick11"
-			    android:layout_width="fill_parent"
-			    android:layout_height="fill_parent"
-			    android:scaleType="fitXY" />
-		    
-			<ImageView
-	        android:layout_centerHorizontal="true"
-			android:layout_centerVertical="true"
-			android:layout_width="fill_parent"
-			android:id="@+id/cross11"
-			android:scaleType="fitXY"
-			android:layout_height="fill_parent" >
-		    </ImageView>
-			</FrameLayout>
-			
-			<!-- top right -->
-            <FrameLayout
-            android:splitMotionEvents="false"
-    		android:layout_width="fill_parent"
-    		android:layout_height="fill_parent"
-    		android:layout_weight="1"
-			android:orientation="vertical"
-			android:background="#128">
+            <!-- Row 1 -->
 
-			<ImageView
-			    android:id="@+id/topright"
-			    android:layout_width="fill_parent"
-			    android:layout_height="fill_parent"
-			    android:scaleType="fitXY" />
-		    
-			<ImageView
-	        android:layout_centerHorizontal="true"
-			android:layout_centerVertical="true"
-			android:layout_width="fill_parent"
-			android:id="@+id/cross12"
-			android:scaleType="fitXY"
-			android:layout_height="fill_parent" >
-		    </ImageView>
-		    
-        <ImageView
-	        android:layout_centerHorizontal="true"
-			android:layout_centerVertical="true"
-			android:layout_width="fill_parent"
-			android:id="@+id/tick12"
-			android:scaleType="fitXY"
-			android:layout_height="fill_parent">
-		    </ImageView>
-			</FrameLayout>
-            
-        </LinearLayout>
-        
-    <!-- Row 2 -->
-        <LinearLayout
-        android:splitMotionEvents="false" 
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_weight="1"
-	    android:orientation="horizontal">
-            <!-- low left -->
-            <FrameLayout
-    		android:layout_width="fill_parent"
-    		android:layout_height="fill_parent"
-    		android:layout_weight="1"
-			android:orientation="vertical"
-			android:background="#128">
-			
-            <ImageView
-	        android:layout_centerHorizontal="true"
-			android:layout_centerVertical="true"
-			android:layout_width="fill_parent"
-			android:id="@+id/lowleft"
-			android:scaleType="fitXY"
-			android:layout_height="fill_parent">
-		    </ImageView>    
-                
-            <ImageView
-	        android:layout_centerHorizontal="true"
-			android:layout_centerVertical="true"
-			android:layout_width="fill_parent"
-			android:id="@+id/cross21"
-			android:scaleType="fitXY"
-			android:layout_height="fill_parent" >
-		    </ImageView>
-		    
-            <ImageView
-	        android:layout_centerHorizontal="true"
-			android:layout_centerVertical="true"
-			android:layout_width="fill_parent"
-			android:id="@+id/tick21"
-			android:scaleType="fitXY"
-			android:layout_height="fill_parent">
-		    </ImageView>
-                
-			</FrameLayout>
-			<!-- low right -->
-
-            <FrameLayout
+            <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
-                android:background="#256"
                 android:orientation="horizontal"
                 android:splitMotionEvents="false" >
-            
-            <ImageView
-	        android:layout_centerHorizontal="true"
-			android:layout_centerVertical="true"
-			android:layout_width="fill_parent"
-			android:id="@+id/lowright"
-			android:scaleType="fitXY"
-			android:layout_height="fill_parent">
-		    </ImageView>
-		    
-            <ImageView
-	        android:layout_centerHorizontal="true"
-			android:layout_centerVertical="true"
-			android:layout_width="fill_parent"
-			android:id="@+id/cross22"
-			android:scaleType="fitXY"
-			android:layout_height="fill_parent" >
-		    </ImageView>
-		    
-        <ImageView
-	        android:layout_centerHorizontal="true"
-			android:layout_centerVertical="true"
-			android:layout_width="fill_parent"
-			android:id="@+id/tick22"
-			android:scaleType="fitXY"
-			android:layout_height="fill_parent">
-		    </ImageView>
-                
-                
-            
-			</FrameLayout>
-            
-        </LinearLayout>
-    </LinearLayout>
-    <AbsoluteLayout
-        android:layout_width="250dp"
-        android:layout_height="250dp"
-        android:layout_gravity ="center" >
-        
-        
-        
-        <ImageView
-	        android:layout_centerHorizontal="true"
-			android:layout_centerVertical="true"
-			android:layout_width="fill_parent"
-			android:id="@+id/centre"
-			android:scaleType="fitXY"
-			android:layout_height="fill_parent" >
-		    </ImageView>
-		    
-        
-        
-        
-    </AbsoluteLayout>
-    <!-- This initially-hidden ImageView will hold the expanded/zoomed version of the
-         images above. Without transformations applied, it takes up the entire screen.
-         To achieve the "zoom" animation, this view's bounds are animated from the
-         bounds of the thumbnail buttons above, to its final laid-out bounds. The implementation
-         of this animation is in the ZoomActivity class. -->
-    
-    <ImageView
-        android:id="@+id/expanded_image"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="invisible"
-        android:scaleType="fitXY"
-        />
-    
-</FrameLayout>
 
+                <!-- top left -->
+
+                <FrameLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="#256"
+                    android:orientation="vertical"
+                    android:splitMotionEvents="false" >
+
+                    <ImageView
+                        android:id="@+id/topleft"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:scaleType="fitXY" >
+                    </ImageView>
+
+                    <ImageView
+                        android:id="@+id/tick11"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:scaleType="fitXY" />
+
+                    <ImageView
+                        android:id="@+id/cross11"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:scaleType="fitXY" >
+                    </ImageView>
+                </FrameLayout>
+
+                <!-- top right -->
+
+                <FrameLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="#128"
+                    android:orientation="vertical"
+                    android:splitMotionEvents="false" >
+
+                    <ImageView
+                        android:id="@+id/topright"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:scaleType="fitXY" />
+
+                    <ImageView
+                        android:id="@+id/cross12"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:scaleType="fitXY" >
+                    </ImageView>
+
+                    <ImageView
+                        android:id="@+id/tick12"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:scaleType="fitXY" >
+                    </ImageView>
+                </FrameLayout>
+            </LinearLayout>
+
+            <!-- Row 2 -->
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:splitMotionEvents="false" >
+
+                <!-- low left -->
+
+                <FrameLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="#128"
+                    android:orientation="vertical" >
+
+                    <ImageView
+                        android:id="@+id/lowleft"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:scaleType="fitXY" >
+                    </ImageView>
+
+                    <ImageView
+                        android:id="@+id/cross21"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:scaleType="fitXY" >
+                    </ImageView>
+
+                    <ImageView
+                        android:id="@+id/tick21"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:scaleType="fitXY" >
+                    </ImageView>
+                </FrameLayout>
+                <!-- low right -->
+
+                <FrameLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="#256"
+                    android:orientation="horizontal"
+                    android:splitMotionEvents="false" >
+
+                    <ImageView
+                        android:id="@+id/lowright"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:scaleType="fitXY" >
+                    </ImageView>
+
+                    <ImageView
+                        android:id="@+id/cross22"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:scaleType="fitXY" >
+                    </ImageView>
+
+                    <ImageView
+                        android:id="@+id/tick22"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:scaleType="fitXY" >
+                    </ImageView>
+                </FrameLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <AbsoluteLayout
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_gravity="center" >
+
+            <ImageView
+                android:id="@+id/centre"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:scaleType="fitXY" >
+            </ImageView>
+        </AbsoluteLayout>
+        <!--
+             This initially-hidden ImageView will hold the expanded/zoomed version of the
+             images above. Without transformations applied, it takes up the entire screen.
+             To achieve the "zoom" animation, this view's bounds are animated from the
+             bounds of the thumbnail buttons above, to its final laid-out bounds. The implementation
+             of this animation is in the ZoomActivity class.
+        -->
+
+        <ImageView
+            android:id="@+id/expanded_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:visibility="invisible" />
+    </FrameLayout>
+<include
+    android:id="@+id/login_slider"
+    layout="@layout/sliding_bar" />
+</RelativeLayout>
