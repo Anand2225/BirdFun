@@ -1,461 +1,517 @@
-<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/relativeLayout"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/game"
     android:layout_width="wrap_content"
     android:layout_height="fill_parent"
-    android:layout_weight="1" >
+    android:layout_weight="1"
+    android:background="@drawable/play_menu"
+    android:orientation="vertical" >
 
-    <LinearLayout
-        android:id="@+id/game"
-        android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
-        android:orientation="vertical" >
+<LinearLayout
+      android:layout_width="fill_parent"
+      android:layout_height="34dp"
+      android:orientation="horizontal" >
 
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="34dp"
-            android:orientation="horizontal" >
+     <Button
+         android:id="@+id/btnback"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:text="Shuffle" />
+      
+       <TextView
+          
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:paddingLeft="10dip"
+           android:paddingRight="10dip"
+           android:paddingTop="10dip"
+           android:text="Total:"
+           android:textSize="17dip" />
+       
+       <TextView
+           android:id="@+id/totaltag"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:paddingLeft="10dip"
+           android:paddingRight="10dip"
+           android:paddingTop="10dip"
+           android:text="00000"
+           android:textSize="17dip" />
+       
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_weight="1.67"
+           android:paddingLeft="10dip"
+           android:paddingRight="10dip"
+           android:paddingTop="10dip"
+           android:text="Current high:"
+           android:textSize="17dip" />
+           
+           <TextView
+           android:id="@+id/currenthightag"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_weight="1.67"
+           android:paddingLeft="10dip"
+           android:paddingRight="10dip"
+           android:paddingTop="10dip"
+           android:text="00000"
+           android:textSize="17dip" />
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_weight="1.67"
+           android:paddingLeft="10dip"
+           android:paddingRight="10dip"
+           android:paddingTop="10dip"
+           android:text="Score:"
+           android:textSize="17dip" />
+       
+       <TextView
+            android:id="@+id/scoretag"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_weight="1.67"
+           android:paddingLeft="10dip"
+           android:paddingRight="10dip"
+           android:paddingTop="10dip"
+           android:text="00000"
+           android:textSize="17dip" />
 
-            <!-- <Button -->
-            <!-- android:id="@+id/btnback" -->
-            <!-- android:layout_width="wrap_content" -->
-            <!-- android:layout_height="wrap_content" -->
-            <!-- android:text="Back" /> -->
+     </LinearLayout>   
+<LinearLayout 
+     android:layout_width="wrap_content"
+     android:layout_height="fill_parent"
+     android:layout_weight="1"
+      >
+<FrameLayout 
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+				>
+ <RelativeLayout
+				 android:layout_width="fill_parent"
+				 android:layout_height="fill_parent"
+				>
+ <LinearLayout 
+       
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:layout_weight="1">
+<!-- Row 1 This is for birds-->
+<LinearLayout 
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_weight="1"
+	android:orientation="horizontal">
+<!-- Row 1 colloum 1 Item 1 -->
+ <LinearLayout 
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_weight="1">
+    	<FrameLayout
+    	 android:id="@+id/container1"
+		 android:layout_width="fill_parent"
+		 android:layout_height="fill_parent">
+		  
+		 <RelativeLayout android:id="@+id/Layout01"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent">
+		 <ImageView
+	        android:layout_centerHorizontal="true"
+			android:layout_centerVertical="true"
+			android:layout_width="fill_parent"
+			android:id="@+id/BirdView01"
+			android:scaleType="fitXY"
+			android:layout_height="fill_parent"
+			android:src="@drawable/theweapon_card1" >
+		</ImageView> 
+		<ImageView
+			android:layout_centerHorizontal="true"
+			android:layout_centerVertical="true"
+			android:layout_width="fill_parent"
+			android:id="@+id/BackView01"
+			android:scaleType="fitXY"
+			android:layout_height="fill_parent"
+			android:src="@drawable/birdfun_background">
+		</ImageView>
+	   <ImageView
+		     android:id="@+id/correctView01"
+		     android:layout_width="wrap_content"
+		     android:layout_height="wrap_content"
+		     android:paddingTop="@dimen/activity_vertical_margin"
+		     android:src="@drawable/fantasticfeathers_correct"
+		     android:visibility="invisible" >
+		</ImageView>
+		 <ImageView
+		     android:id="@+id/wrongView01"
+		     android:layout_width="wrap_content"
+		     android:layout_height="wrap_content"
+		     android:paddingTop="@dimen/activity_vertical_margin"
+		     android:src="@drawable/fantasticfeathers_wrong"
+		     android:visibility="invisible" >
+		</ImageView>
+		</RelativeLayout>
+		 </FrameLayout>
+ </LinearLayout>
+ <!-- Row 1 column 2 Item 2 -->
+<LinearLayout 
+   		 android:layout_width="fill_parent"
+    	android:layout_height="fill_parent"
+    	android:layout_weight="1">
+    	<FrameLayout
+    	 android:id="@+id/container2"
+		 android:layout_width="fill_parent"
+		 android:layout_height="fill_parent">
+		 <RelativeLayout android:id="@+id/Layout02"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent">
+		 <ImageView
+	        android:layout_centerHorizontal="true"
+			android:layout_centerVertical="true"
+			android:layout_width="fill_parent"
+			android:id="@+id/BirdView02"
+			android:scaleType="fitXY"
+			android:layout_height="fill_parent"
+			android:src="@drawable/theweapon_card2" >
+		</ImageView>
+		<ImageView
+			android:layout_centerHorizontal="true"
+			android:layout_centerVertical="true"
+			android:layout_width="fill_parent"
+			android:id="@+id/BackView02"
+			android:scaleType="fitXY"
+			android:layout_height="fill_parent"
+			android:src="@drawable/birdfun_background">
+		</ImageView>
+		 <ImageView
+		     android:id="@+id/correctView02"
+		     android:layout_width="wrap_content"
+		     android:layout_height="wrap_content"
+		     android:paddingTop="@dimen/activity_vertical_margin"
+		     android:src="@drawable/fantasticfeathers_correct"
+		     android:visibility="invisible" >
+		</ImageView>
+		<ImageView
+		     android:id="@+id/wrongView02"
+		     android:layout_width="wrap_content"
+		     android:layout_height="wrap_content"
+		     android:paddingTop="@dimen/activity_vertical_margin"
+		     android:src="@drawable/fantasticfeathers_wrong"
+		     android:visibility="invisible" >
+		</ImageView>
+		</RelativeLayout>
+		 </FrameLayout>
+</LinearLayout>
+<!-- Row 1 column 3 Item 3 -->
+<LinearLayout 
+   		 android:layout_width="fill_parent"
+    	android:layout_height="fill_parent"
+    	android:layout_weight="1">
+    	<FrameLayout
+    	 android:id="@+id/container3"
+		 android:layout_width="fill_parent"
+		 android:layout_height="fill_parent">
+		 <RelativeLayout android:id="@+id/Layout02"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent">
+		 <ImageView
+	        android:layout_centerHorizontal="true"
+			android:layout_centerVertical="true"
+			android:layout_width="fill_parent"
+			android:id="@+id/BirdView03"
+			android:scaleType="fitXY"
+			android:layout_height="fill_parent"
+			android:src="@drawable/theweapon_card3" >
+		</ImageView>
+		<ImageView
+			android:layout_centerHorizontal="true"
+			android:layout_centerVertical="true"
+			android:layout_width="fill_parent"
+			android:id="@+id/BackView03"
+			android:scaleType="fitXY"
+			android:layout_height="fill_parent"
+			android:src="@drawable/birdfun_background">
+		</ImageView>
+		 <ImageView
+		     android:id="@+id/correctView03"
+		     android:layout_width="wrap_content"
+		     android:layout_height="wrap_content"
+		     android:paddingTop="@dimen/activity_vertical_margin"
+		     android:src="@drawable/fantasticfeathers_correct"
+		     android:visibility="invisible" >
+		</ImageView>
+		<ImageView
+		     android:id="@+id/wrongView03"
+		     android:layout_width="wrap_content"
+		     android:layout_height="wrap_content"
+		     android:paddingTop="@dimen/activity_vertical_margin"
+		     android:src="@drawable/fantasticfeathers_wrong"
+		     android:visibility="invisible" >
+		</ImageView>
+		</RelativeLayout>
+		 </FrameLayout>
+ </LinearLayout>
+ <!-- Row 1 column 4 Item 4 -->
+<LinearLayout 
+   		 android:layout_width="fill_parent"
+    	android:layout_height="fill_parent"
+    	android:layout_weight="1">
+    	<FrameLayout
+    	 android:id="@+id/container4"
+		 android:layout_width="fill_parent"
+		 android:layout_height="fill_parent">
+		 <RelativeLayout android:id="@+id/Layout02"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent">
+		 <ImageView
+	        android:layout_centerHorizontal="true"
+			android:layout_centerVertical="true"
+			android:layout_width="fill_parent"
+			android:id="@+id/BirdView04"
+			android:scaleType="fitXY"
+			android:layout_height="fill_parent"
+			android:src="@drawable/theweapon_card4" >
+		</ImageView>
+		<ImageView
+			android:layout_centerHorizontal="true"
+			android:layout_centerVertical="true"
+			android:layout_width="fill_parent"
+			android:id="@+id/BackView04"
+			android:scaleType="fitXY"
+			android:layout_height="fill_parent"
+			android:src="@drawable/birdfun_background">
+		</ImageView>
+		 <ImageView
+		     android:id="@+id/correctView04"
+		     android:layout_width="wrap_content"
+		     android:layout_height="wrap_content"
+		     android:paddingTop="@dimen/activity_vertical_margin"
+		     android:src="@drawable/fantasticfeathers_correct"
+		     android:visibility="invisible" >
+		</ImageView>
+		<ImageView
+		     android:id="@+id/wrongView04"
+		     android:layout_width="wrap_content"
+		     android:layout_height="wrap_content"
+		     android:paddingTop="@dimen/activity_vertical_margin"
+		     android:src="@drawable/fantasticfeathers_wrong"
+		     android:visibility="invisible" >
+		</ImageView>
+		</RelativeLayout>
+		 </FrameLayout>
+ 	</LinearLayout>	
+</LinearLayout>		
+<!-- Row 2 This is for Flags-->
+<LinearLayout 
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="1"
+	android:orientation="horizontal">
+<!-- Row 2 collum 1 flag 1 -->
+ <LinearLayout 
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_weight="1">
+    	<FrameLayout
+    	 android:id="@+id/container5"
+		 android:layout_width="fill_parent"
+		 android:layout_height="fill_parent">
+		 <RelativeLayout android:id="@+id/Layout01"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent">
+		 <ImageView
+	        android:layout_centerHorizontal="true"
+			android:layout_centerVertical="true"
+			android:layout_width="fill_parent"
+			android:id="@+id/FlagView01"
+			android:scaleType="fitXY"
+			android:layout_height="fill_parent"
+			android:src="@drawable/theweapon_card17" >
+		</ImageView>
+		<ImageView
+			android:layout_centerHorizontal="true"
+			android:layout_centerVertical="true"
+			android:layout_width="fill_parent"
+			android:id="@+id/BackView05"
+			android:scaleType="fitXY"
+			android:layout_height="fill_parent"
+			android:src="@drawable/birdfun_background">
+		</ImageView>
+		 <ImageView
+		     android:id="@+id/correctView05"
+		     android:layout_width="wrap_content"
+		     android:layout_height="wrap_content"
+		     android:paddingTop="@dimen/activity_vertical_margin"
+		     android:src="@drawable/fantasticfeathers_correct"
+		     android:visibility="invisible" >
+		</ImageView>
+		<ImageView
+		     android:id="@+id/wrongView05"
+		     android:layout_width="wrap_content"
+		     android:layout_height="wrap_content"
+		     android:paddingTop="@dimen/activity_vertical_margin"
+		     android:src="@drawable/fantasticfeathers_wrong"
+		     android:visibility="invisible" >
+		</ImageView>
+		</RelativeLayout>
+		
+		 </FrameLayout>
+ </LinearLayout>
+ <!-- Row 2 column 2 flag 2 -->
+<LinearLayout 
+   		 android:layout_width="fill_parent"
+    	android:layout_height="fill_parent"
+    	android:layout_weight="1">
+    	<FrameLayout
+    	 android:id="@+id/container1"
+		 android:layout_width="fill_parent"
+		 android:layout_height="fill_parent">
+		 <RelativeLayout android:id="@+id/Layout02"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent">
+		 <ImageView
+	        android:layout_centerHorizontal="true"
+			android:layout_centerVertical="true"
+			android:layout_width="fill_parent"
+			android:id="@+id/FlagView02"
+			android:scaleType="fitXY"
+			android:layout_height="fill_parent"
+			android:src="@drawable/theweapon_card18" >
+		</ImageView>
+		<ImageView
+			android:layout_centerHorizontal="true"
+			android:layout_centerVertical="true"
+			android:layout_width="fill_parent"
+			android:id="@+id/BackView06"
+			android:scaleType="fitXY"
+			android:layout_height="fill_parent"
+			android:src="@drawable/birdfun_background">
+		</ImageView>
+		<ImageView
+		     android:id="@+id/correctView06"
+		     android:layout_width="wrap_content"
+		     android:layout_height="wrap_content"
+		     android:paddingTop="@dimen/activity_vertical_margin"
+		     android:src="@drawable/fantasticfeathers_correct"
+		     android:visibility="invisible" >
+		</ImageView>
+		<ImageView
+		     android:id="@+id/wrongView06"
+		     android:layout_width="wrap_content"
+		     android:layout_height="wrap_content"
+		     android:paddingTop="@dimen/activity_vertical_margin"
+		     android:src="@drawable/fantasticfeathers_wrong"
+		     android:visibility="invisible" >
+		</ImageView>
+		</RelativeLayout>
+		 </FrameLayout>
+ 	</LinearLayout>
+   <!-- Row 2 column 3 flag 3 -->
+<LinearLayout 
+   		 android:layout_width="fill_parent"
+    	android:layout_height="fill_parent"
+    	android:layout_weight="1">
+    	<FrameLayout
+    	 android:id="@+id/container1"
+		 android:layout_width="fill_parent"
+		 android:layout_height="fill_parent">
+		 <RelativeLayout android:id="@+id/Layout02"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent">
+		 <ImageView
+	        android:layout_centerHorizontal="true"
+			android:layout_centerVertical="true"
+			android:layout_width="fill_parent"
+			android:id="@+id/FlagView03"
+			android:scaleType="fitXY"
+			android:layout_height="fill_parent"
+			android:src="@drawable/theweapon_card19" >
+		</ImageView>
+		<ImageView
+			android:layout_centerHorizontal="true"
+			android:layout_centerVertical="true"
+			android:layout_width="fill_parent"
+			android:id="@+id/BackView07"
+			android:scaleType="fitXY"
+			android:layout_height="fill_parent"
+			android:src="@drawable/birdfun_background">
+		</ImageView>
+		<ImageView
+		     android:id="@+id/correctView07"
+		     android:layout_width="wrap_content"
+		     android:layout_height="wrap_content"
+		     android:paddingTop="@dimen/activity_vertical_margin"
+		     android:src="@drawable/fantasticfeathers_correct"
+		     android:visibility="invisible" >
+		 </ImageView>
+		 <ImageView
+		     android:id="@+id/wrongView07"
+		     android:layout_width="wrap_content"
+		     android:layout_height="wrap_content"
+		     android:paddingTop="@dimen/activity_vertical_margin"
+		     android:src="@drawable/fantasticfeathers_wrong"
+		     android:visibility="invisible" >
+		</ImageView>
+		
+		</RelativeLayout>
+		 </FrameLayout>
+ </LinearLayout>
+ <!-- Row 2 column 4 flag 4 -->
+<LinearLayout 
+   		 android:layout_width="fill_parent"
+    	android:layout_height="fill_parent"
+    	android:layout_weight="1">
+    	<FrameLayout
+    	 android:id="@+id/container1"
+		 android:layout_width="fill_parent"
+		 android:layout_height="fill_parent">
+		 <RelativeLayout android:id="@+id/Layout02"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent">
+		 <ImageView
+	        android:layout_centerHorizontal="true"
+			android:layout_centerVertical="true"
+			android:layout_width="fill_parent"
+			android:id="@+id/FlagView04"
+			android:scaleType="fitXY"
+			android:layout_height="fill_parent"
+			android:src="@drawable/theweapon_card20" >
+		</ImageView>
+		<ImageView
+			android:layout_centerHorizontal="true"
+			android:layout_centerVertical="true"
+			android:layout_width="fill_parent"
+			android:id="@+id/BackView08"
+			android:scaleType="fitXY"
+			android:layout_height="fill_parent"
+			android:src="@drawable/birdfun_background">
+		</ImageView>
+		<ImageView
+		     android:id="@+id/correctView08"
+		     android:layout_width="wrap_content"
+		     android:layout_height="wrap_content"
+		     android:paddingTop="@dimen/activity_vertical_margin"
+		     android:src="@drawable/fantasticfeathers_correct"
+		     android:visibility="invisible" >
+		</ImageView>
+		<ImageView
+		     android:id="@+id/wrongView08"
+		     android:layout_width="wrap_content"
+		     android:layout_height="wrap_content"
+		     android:paddingTop="@dimen/activity_vertical_margin"
+		     android:src="@drawable/fantasticfeathers_wrong"
+		     android:visibility="invisible" >
+		</ImageView>
+		</RelativeLayout>
+		 </FrameLayout>
+ 	</LinearLayout>	
+</LinearLayout>	
+			
+</LinearLayout>		
+</RelativeLayout>
+</FrameLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="10dip"
-                android:paddingRight="10dip"
-                android:paddingTop="10dip"
-                android:text="Total:"
-                android:textSize="17dip" />
-
-            <TextView
-                android:id="@+id/totaltag"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="10dip"
-                android:paddingRight="10dip"
-                android:paddingTop="10dip"
-                android:text="00000"
-                android:textSize="17dip" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.67"
-                android:paddingLeft="10dip"
-                android:paddingRight="10dip"
-                android:paddingTop="10dip"
-                android:text="Current high:"
-                android:textSize="17dip" />
-
-            <TextView
-                android:id="@+id/currenthightag"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.67"
-                android:paddingLeft="10dip"
-                android:paddingRight="10dip"
-                android:paddingTop="10dip"
-                android:text="00000"
-                android:textSize="17dip" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.67"
-                android:paddingLeft="10dip"
-                android:paddingRight="10dip"
-                android:paddingTop="10dip"
-                android:text="Score:"
-                android:textSize="17dip" />
-
-            <TextView
-                android:id="@+id/scoretag"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.67"
-                android:paddingLeft="10dip"
-                android:paddingRight="10dip"
-                android:paddingTop="10dip"
-                android:text="00000"
-                android:textSize="17dip" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_weight="1" >
-
-            <FrameLayout
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent" >
-
-                <RelativeLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent" >
-
-                    <LinearLayout
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:layout_weight="1"
-                        android:orientation="vertical" >
-
-                        <!-- Row 1 This is for birds -->
-
-                        <LinearLayout
-                            android:layout_width="fill_parent"
-                            android:layout_height="fill_parent"
-                            android:layout_weight="1"
-                            android:orientation="horizontal" >
-
-                            <!-- Row 1 colloum 1 Item 1 -->
-
-                            <LinearLayout
-                                android:layout_width="fill_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1" >
-
-                                <FrameLayout
-                                    android:id="@+id/container1"
-                                    android:layout_width="fill_parent"
-                                    android:layout_height="fill_parent" >
-
-                                    <RelativeLayout
-                                        android:id="@+id/Layout01"
-                                        android:layout_width="fill_parent"
-                                        android:layout_height="fill_parent" >
-
-                                        <ImageView
-                                            android:id="@+id/BirdView01"
-                                            android:layout_width="fill_parent"
-                                            android:layout_height="fill_parent"
-                                            android:layout_centerHorizontal="true"
-                                            android:layout_centerVertical="true"
-                                            android:scaleType="fitXY"
-                                            android:src="@drawable/theweapon_card1" >
-                                        </ImageView>
-                                    </RelativeLayout>
-
-                                    <RelativeLayout
-                                        android:id="@+id/Layout01"
-                                        android:layout_width="fill_parent"
-                                        android:layout_height="fill_parent" >
-
-                                        <ImageView
-                                            android:id="@+id/BackView01"
-                                            android:layout_width="fill_parent"
-                                            android:layout_height="fill_parent"
-                                            android:layout_centerHorizontal="true"
-                                            android:layout_centerVertical="true"
-                                            android:scaleType="fitXY"
-                                            android:src="@drawable/birdfun_background" >
-                                        </ImageView>
-                                    </RelativeLayout>
-                                </FrameLayout>
-                            </LinearLayout>
-                            <!-- Row 1 column 2 Item 2 -->
-
-                            <LinearLayout
-                                android:layout_width="fill_parent"
-                                android:layout_height="fill_parent"
-                                android:layout_weight="1" >
-
-                                <FrameLayout
-                                    android:id="@+id/container2"
-                                    android:layout_width="fill_parent"
-                                    android:layout_height="fill_parent" >
-
-                                    <RelativeLayout
-                                        android:id="@+id/Layout02"
-                                        android:layout_width="fill_parent"
-                                        android:layout_height="fill_parent" >
-
-                                        <ImageView
-                                            android:id="@+id/BirdView02"
-                                            android:layout_width="fill_parent"
-                                            android:layout_height="fill_parent"
-                                            android:layout_centerHorizontal="true"
-                                            android:layout_centerVertical="true"
-                                            android:scaleType="fitXY"
-                                            android:src="@drawable/theweapon_card2" >
-                                        </ImageView>
-
-                                        <ImageView
-                                            android:id="@+id/BackView02"
-                                            android:layout_width="fill_parent"
-                                            android:layout_height="fill_parent"
-                                            android:layout_centerHorizontal="true"
-                                            android:layout_centerVertical="true"
-                                            android:scaleType="fitXY"
-                                            android:src="@drawable/birdfun_background" >
-                                        </ImageView>
-                                    </RelativeLayout>
-                                </FrameLayout>
-                            </LinearLayout>
-                            <!-- Row 1 column 3 Item 3 -->
-
-                            <LinearLayout
-                                android:layout_width="fill_parent"
-                                android:layout_height="fill_parent"
-                                android:layout_weight="1" >
-
-                                <FrameLayout
-                                    android:id="@+id/container3"
-                                    android:layout_width="fill_parent"
-                                    android:layout_height="fill_parent" >
-
-                                    <RelativeLayout
-                                        android:id="@+id/Layout02"
-                                        android:layout_width="fill_parent"
-                                        android:layout_height="fill_parent" >
-
-                                        <ImageView
-                                            android:id="@+id/BirdView03"
-                                            android:layout_width="fill_parent"
-                                            android:layout_height="fill_parent"
-                                            android:layout_centerHorizontal="true"
-                                            android:layout_centerVertical="true"
-                                            android:scaleType="fitXY"
-                                            android:src="@drawable/theweapon_card3" >
-                                        </ImageView>
-
-                                        <ImageView
-                                            android:id="@+id/BackView03"
-                                            android:layout_width="fill_parent"
-                                            android:layout_height="fill_parent"
-                                            android:layout_centerHorizontal="true"
-                                            android:layout_centerVertical="true"
-                                            android:scaleType="fitXY"
-                                            android:src="@drawable/birdfun_background" >
-                                        </ImageView>
-                                    </RelativeLayout>
-                                </FrameLayout>
-                            </LinearLayout>
-                            <!-- Row 1 column 4 Item 4 -->
-
-                            <LinearLayout
-                                android:layout_width="fill_parent"
-                                android:layout_height="fill_parent"
-                                android:layout_weight="1" >
-
-                                <FrameLayout
-                                    android:id="@+id/container4"
-                                    android:layout_width="fill_parent"
-                                    android:layout_height="fill_parent" >
-
-                                    <RelativeLayout
-                                        android:id="@+id/Layout02"
-                                        android:layout_width="fill_parent"
-                                        android:layout_height="fill_parent" >
-
-                                        <ImageView
-                                            android:id="@+id/BirdView04"
-                                            android:layout_width="fill_parent"
-                                            android:layout_height="fill_parent"
-                                            android:layout_centerHorizontal="true"
-                                            android:layout_centerVertical="true"
-                                            android:scaleType="fitXY"
-                                            android:src="@drawable/theweapon_card4" >
-                                        </ImageView>
-
-                                        <ImageView
-                                            android:id="@+id/BackView04"
-                                            android:layout_width="fill_parent"
-                                            android:layout_height="fill_parent"
-                                            android:layout_centerHorizontal="true"
-                                            android:layout_centerVertical="true"
-                                            android:scaleType="fitXY"
-                                            android:src="@drawable/birdfun_background" >
-                                        </ImageView>
-                                    </RelativeLayout>
-                                </FrameLayout>
-                            </LinearLayout>
-                        </LinearLayout>
-                        <!-- Row 2 This is for Flags -->
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:orientation="horizontal" >
-
-                            <!-- Row 2 collum 1 flag 1 -->
-
-                            <LinearLayout
-                                android:layout_width="fill_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1" >
-
-                                <FrameLayout
-                                    android:id="@+id/container5"
-                                    android:layout_width="fill_parent"
-                                    android:layout_height="fill_parent" >
-
-                                    <RelativeLayout
-                                        android:id="@+id/Layout01"
-                                        android:layout_width="fill_parent"
-                                        android:layout_height="fill_parent" >
-
-                                        <ImageView
-                                            android:id="@+id/FlagView01"
-                                            android:layout_width="fill_parent"
-                                            android:layout_height="fill_parent"
-                                            android:layout_centerHorizontal="true"
-                                            android:layout_centerVertical="true"
-                                            android:scaleType="fitXY"
-                                            android:src="@drawable/theweapon_card17" >
-                                        </ImageView>
-                                    </RelativeLayout>
-
-                                    <RelativeLayout
-                                        android:id="@+id/Layout01"
-                                        android:layout_width="fill_parent"
-                                        android:layout_height="fill_parent" >
-
-                                        <ImageView
-                                            android:id="@+id/BackView05"
-                                            android:layout_width="fill_parent"
-                                            android:layout_height="fill_parent"
-                                            android:layout_centerHorizontal="true"
-                                            android:layout_centerVertical="true"
-                                            android:scaleType="fitXY"
-                                            android:src="@drawable/birdfun_background" >
-                                        </ImageView>
-                                    </RelativeLayout>
-                                </FrameLayout>
-                            </LinearLayout>
-                            <!-- Row 2 column 2 flag 2 -->
-
-                            <LinearLayout
-                                android:layout_width="fill_parent"
-                                android:layout_height="fill_parent"
-                                android:layout_weight="1" >
-
-                                <FrameLayout
-                                    android:id="@+id/container1"
-                                    android:layout_width="fill_parent"
-                                    android:layout_height="fill_parent" >
-
-                                    <RelativeLayout
-                                        android:id="@+id/Layout02"
-                                        android:layout_width="fill_parent"
-                                        android:layout_height="fill_parent" >
-
-                                        <ImageView
-                                            android:id="@+id/FlagView02"
-                                            android:layout_width="fill_parent"
-                                            android:layout_height="fill_parent"
-                                            android:layout_centerHorizontal="true"
-                                            android:layout_centerVertical="true"
-                                            android:scaleType="fitXY"
-                                            android:src="@drawable/theweapon_card18" >
-                                        </ImageView>
-
-                                        <ImageView
-                                            android:id="@+id/BackView06"
-                                            android:layout_width="fill_parent"
-                                            android:layout_height="fill_parent"
-                                            android:layout_centerHorizontal="true"
-                                            android:layout_centerVertical="true"
-                                            android:scaleType="fitXY"
-                                            android:src="@drawable/birdfun_background" >
-                                        </ImageView>
-                                    </RelativeLayout>
-                                </FrameLayout>
-                            </LinearLayout>
-                            <!-- Row 2 column 3 flag 3 -->
-
-                            <LinearLayout
-                                android:layout_width="fill_parent"
-                                android:layout_height="fill_parent"
-                                android:layout_weight="1" >
-
-                                <FrameLayout
-                                    android:id="@+id/container1"
-                                    android:layout_width="fill_parent"
-                                    android:layout_height="fill_parent" >
-
-                                    <RelativeLayout
-                                        android:id="@+id/Layout02"
-                                        android:layout_width="fill_parent"
-                                        android:layout_height="fill_parent" >
-
-                                        <ImageView
-                                            android:id="@+id/FlagView03"
-                                            android:layout_width="fill_parent"
-                                            android:layout_height="fill_parent"
-                                            android:layout_centerHorizontal="true"
-                                            android:layout_centerVertical="true"
-                                            android:scaleType="fitXY"
-                                            android:src="@drawable/theweapon_card19" >
-                                        </ImageView>
-
-                                        <ImageView
-                                            android:id="@+id/BackView07"
-                                            android:layout_width="fill_parent"
-                                            android:layout_height="fill_parent"
-                                            android:layout_centerHorizontal="true"
-                                            android:layout_centerVertical="true"
-                                            android:scaleType="fitXY"
-                                            android:src="@drawable/birdfun_background" >
-                                        </ImageView>
-                                    </RelativeLayout>
-                                </FrameLayout>
-                            </LinearLayout>
-                            <!-- Row 2 column 4 flag 4 -->
-
-                            <LinearLayout
-                                android:layout_width="fill_parent"
-                                android:layout_height="fill_parent"
-                                android:layout_weight="1" >
-
-                                <FrameLayout
-                                    android:id="@+id/container1"
-                                    android:layout_width="fill_parent"
-                                    android:layout_height="fill_parent" >
-
-                                    <RelativeLayout
-                                        android:id="@+id/Layout02"
-                                        android:layout_width="fill_parent"
-                                        android:layout_height="fill_parent" >
-
-                                        <ImageView
-                                            android:id="@+id/FlagView04"
-                                            android:layout_width="fill_parent"
-                                            android:layout_height="fill_parent"
-                                            android:layout_centerHorizontal="true"
-                                            android:layout_centerVertical="true"
-                                            android:scaleType="fitXY"
-                                            android:src="@drawable/theweapon_card20" >
-                                        </ImageView>
-
-                                        <ImageView
-                                            android:id="@+id/BackView08"
-                                            android:layout_width="fill_parent"
-                                            android:layout_height="fill_parent"
-                                            android:layout_centerHorizontal="true"
-                                            android:layout_centerVertical="true"
-                                            android:scaleType="fitXY"
-                                            android:src="@drawable/birdfun_background" >
-                                        </ImageView>
-                                    </RelativeLayout>
-                                </FrameLayout>
-                            </LinearLayout>
-                        </LinearLayout>
-                    </LinearLayout>
-                </RelativeLayout>
-
-                <ImageView
-                    android:id="@+id/expanded_image"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:visibility="invisible" />
-            </FrameLayout>
-        </LinearLayout>
-    </LinearLayout>
- <include android:id="@+id/login_slider"
-             layout="@layout/sliding_bar"/> 
-    
-</GridLayout>
+</LinearLayout>
+      
+ </LinearLayout>	
