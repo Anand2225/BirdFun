@@ -2,13 +2,15 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@drawable/play_menu"
-    android:gravity="center_horizontal"
+
     android:orientation="vertical"
     android:visibility="visible" >
+"
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:orientation="vertical" >
 
         <Button
@@ -39,8 +41,10 @@
                 android:text="The Weapon" />
         
         </LinearLayout>
+
         <include
-    android:id="@+id/login_slider"
-    layout="@layout/sliding_bar" />
+            android:id="@+id/login_slider"
+            android:layout_centerInParent="true"
+            layout="@layout/sliding_bar" />
 
 </RelativeLayout>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal" >
+    
+     
+       <LinearLayout
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal" 
+           android:layout_weight="1"
+           android:gravity="center">
+
+     	  <TextView
+           android:id="@+id/maxScoreText"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+          
+                    android:paddingLeft="10dip"
+               android:paddingRight="10dip"
+               android:paddingTop="10dip"
+           android:textSize="30sp" />
+     
+           <TextView
+               android:id="@+id/maxScore"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:paddingLeft="10dip"
+               android:paddingRight="10dip"
+               android:paddingTop="10dip"
+               android:textSize="50sp"/>
+             
+          </LinearLayout> 
+     
+       <LinearLayout
+                   	android:id="@+id/myTimer"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal" 
+           android:layout_weight="1"
+           android:gravity="center"   
+            android:animateLayoutChanges="true">
+
+     	  <TextView
+           android:id="@+id/myCounterText"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_gravity="center"
+                    android:paddingLeft="10dip"
+               android:paddingRight="10dip"
+               android:paddingTop="10dip"
+           android:textSize="30sp" />
+     
+           <TextView
+               android:id="@+id/myCounter"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:paddingLeft="10dip"
+               android:paddingRight="10dip"
+               android:paddingTop="10dip"
+               android:textSize="50sp"/>
+             
+          </LinearLayout> 
+
+    <LinearLayout
+
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal" 
+           android:layout_weight="1"
+           android:gravity="center">
+
+     	  <TextView
+           android:id="@+id/scoreViewText"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_gravity="center"
+                    android:paddingLeft="10dip"
+               android:paddingRight="10dip"
+               android:paddingTop="10dip"
+           android:textSize="30sp" />
+           
+           <TextView
+               android:id="@+id/scoreView"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:paddingLeft="10dip"
+               android:paddingRight="10dip"
+               android:paddingTop="10dip"
+               android:textSize="50sp"/>
+             
+          </LinearLayout> 
+
+</LinearLayout>
