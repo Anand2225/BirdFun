@@ -88,7 +88,7 @@ public class HelpActivity extends Activity {
 
 			}
 		});
-   
+    
    Quit.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
