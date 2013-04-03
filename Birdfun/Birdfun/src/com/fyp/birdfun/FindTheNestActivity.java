@@ -114,8 +114,20 @@ public class FindTheNestActivity extends Activity {
 		} else {
 			maxScoreText.setText("Register\nYour score");
 			maxScoreText.setTextSize(20);
-	 
+			maxScoreText.setOnClickListener(new View.OnClickListener() {
 
+				@Override
+				public void onClick(View v) {
+					// intent listener to open the specific activity
+					// Intent myIntent = new Intent(FindTheNestActivity.this,
+					// PlayScreenActivity.class);
+					Intent playscreen = new Intent(FindTheNestActivity.this,
+							RegisterActivity.class);
+
+					startActivity(playscreen);
+					// finish();
+				}
+			});
 		}
 		
 		
