@@ -8,6 +8,8 @@ import java.util.Map;
 
 
 
+
+
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
@@ -35,6 +37,7 @@ import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 public class FantasticFeathersActivity extends Activity implements CreateNdefMessageCallback, OnNdefPushCompleteCallback{
 
@@ -132,7 +135,9 @@ public class FantasticFeathersActivity extends Activity implements CreateNdefMes
 	private Animator mCurrentAnimator;
 	private int mShortAnimationDuration;
 	private int setCounter =0 ;
-	private int score = 0; // score.
+	public int Total_score = 0; // score.
+	public int Current_score = 10; // score.
+	public int prev_score = 0;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -191,6 +196,10 @@ public class FantasticFeathersActivity extends Activity implements CreateNdefMes
 		
 		//Call set cards, eg: setCards(0) == set 1
 		setCards(setCounter);
+		
+		
+		scoreUpdate();
+		
 		
        // Hook up clicks on the thumbnail views.
 
@@ -432,7 +441,10 @@ public class FantasticFeathersActivity extends Activity implements CreateNdefMes
 				         //when finish
 				    	 tick1.setVisibility(View.INVISIBLE);
 				    	 setCounter++;
-				    	 score++;
+				    	 prev_score = Total_score; //Get Previous Total Score
+				    	 Total_score = prev_score + Current_score; //Combine with current score to get total score
+				    	 Current_score = 10; //Reset current score to 10
+				    	 scoreUpdate();
 						 checkLevel(setCounter);
 				     }
 				  }.start();
@@ -449,7 +461,8 @@ public class FantasticFeathersActivity extends Activity implements CreateNdefMes
 				     public void onFinish() {
 				         //when finish
 				    	 cross1.setVisibility(View.INVISIBLE);
-				    	 score--;
+				    	 Current_score--;
+				    	 scoreUpdate();
 				     }
 				  }.start();
 				}
@@ -469,7 +482,10 @@ public class FantasticFeathersActivity extends Activity implements CreateNdefMes
 				         //when finish
 				    	 tick2.setVisibility(View.INVISIBLE);
 				    	 setCounter++;
-				    	 score++;
+				    	 prev_score = Total_score;
+				    	 Total_score = prev_score + Current_score;
+				    	 Current_score = 10;
+				    	 scoreUpdate();
 						 checkLevel(setCounter);
 				     }
 				  }.start();
@@ -486,7 +502,8 @@ public class FantasticFeathersActivity extends Activity implements CreateNdefMes
 				     public void onFinish() {
 				         //when finish
 				    	 cross2.setVisibility(View.INVISIBLE);
-				    	 score--;
+				    	 Current_score--;
+				    	 scoreUpdate();
 				     }
 				  }.start();
 				}
@@ -508,7 +525,10 @@ public class FantasticFeathersActivity extends Activity implements CreateNdefMes
 				         //when finish
 				    	 tick3.setVisibility(View.INVISIBLE);
 				    	 setCounter++;
-				    	 score++;
+				    	 prev_score = Total_score;
+				    	 Total_score = prev_score + Current_score;
+				    	 Current_score = 10;
+				    	 scoreUpdate();
 						 checkLevel(setCounter);
 				     }
 				  }.start();
@@ -525,7 +545,8 @@ public class FantasticFeathersActivity extends Activity implements CreateNdefMes
 				     public void onFinish() {
 				         //when finish
 				    	 cross3.setVisibility(View.INVISIBLE);
-				    	 score--;
+				    	 Current_score--;
+				    	 scoreUpdate();
 				     }
 				  }.start();
 				}
@@ -547,7 +568,10 @@ public class FantasticFeathersActivity extends Activity implements CreateNdefMes
 				         //when finish
 				    	 tick4.setVisibility(View.INVISIBLE);
 				    	 setCounter++;
-				    	 score++;
+				    	 prev_score = Total_score;
+				    	 Total_score = prev_score + Current_score;
+				    	 Current_score = 10;
+				    	 scoreUpdate();
 						 checkLevel(setCounter);
 				     }
 				  }.start();
@@ -563,7 +587,8 @@ public class FantasticFeathersActivity extends Activity implements CreateNdefMes
 			     public void onFinish() {
 			         //when finish
 			    	 cross4.setVisibility(View.INVISIBLE);
-			    	 score--;
+			    	 Current_score--;
+			    	 scoreUpdate();
 			     }
 			  }.start();
 			}
@@ -571,6 +596,14 @@ public class FantasticFeathersActivity extends Activity implements CreateNdefMes
 		}
 	}
 	
+	
+	public void scoreUpdate()
+	{
+		TextView totalscore = (TextView)findViewById(R.id.totaltag);
+		TextView currentscore = (TextView)findViewById(R.id.scoretag);
+		totalscore.setText(String.valueOf(Total_score));
+		currentscore.setText(String.valueOf(Current_score));
+	}
 	
 	private void checkLevel(int counter)
 	{
