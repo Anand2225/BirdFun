@@ -88,7 +88,7 @@ public class HelpActivity extends Activity {
 
 			}
 		});
-   
+    
    Quit.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
@@ -105,7 +105,7 @@ public class HelpActivity extends Activity {
 			}
 		});
   
-   wv.loadUrl("file:///android_asset/www/circle.html");
+   wv.loadUrl("file:///android_asset/www/gallery/index.html");
    wv.setWebViewClient(new HelpViewClient());
 	}
 	private class HelpViewClient extends WebViewClient {
