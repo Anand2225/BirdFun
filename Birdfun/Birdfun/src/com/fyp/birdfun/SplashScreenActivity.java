@@ -1,7 +1,5 @@
 package com.fyp.birdfun;
 
-
-
 import android.app.Activity;
 import android.graphics.Rect;
 import android.opengl.GLSurfaceView;

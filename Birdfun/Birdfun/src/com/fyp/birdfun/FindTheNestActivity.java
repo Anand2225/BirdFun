@@ -3,14 +3,13 @@ package com.fyp.birdfun;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
-import com.fyp.birdfun.helpers.PlayerDetails;
-
 import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Point;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
@@ -21,11 +20,14 @@ import android.os.Parcelable;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.fyp.birdfun.helpers.PlayerDetails;
 
 public class FindTheNestActivity extends Activity {
 	int score=0;
@@ -43,7 +45,7 @@ public class FindTheNestActivity extends Activity {
 	
 	protected NfcAdapter nfcAdapter;
     protected PendingIntent nfcPendingIntent;
-    
+    private ViewGroup mContainerView;
     
 	 private int[] birdArray = {
 			 R.drawable.ftn_burrow_1,
@@ -90,9 +92,9 @@ public class FindTheNestActivity extends Activity {
 	 int index=0;
 	 int prevIndex=0;
 	 int userAnswer=-1;
-	    ArrayList<PlayerDetails> playerdata = new ArrayList<PlayerDetails>();
+
 	    PlayerDetails Currentplayer=new PlayerDetails();
-  
+	    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
     	
@@ -101,9 +103,39 @@ public class FindTheNestActivity extends Activity {
         setContentView(R.layout.find_the_nest);
     	nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         nfcPendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, this.getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP),0);
-        final TextView scoreview=(TextView)findViewById(R.id.score);
-     
-        final TextView myCounter = (TextView)findViewById(R.id.mycounter);
+       
+        //setting the fonts
+        final TextView scoreView=(TextView)findViewById(R.id.scoreView);
+        final TextView scoreViewText=(TextView)findViewById(R.id.scoreViewText);
+        final TextView myCounter = (TextView)findViewById(R.id.myCounter);
+        final TextView myCounterText = (TextView)findViewById(R.id.myCounterText);
+        final TextView maxScore=(TextView)findViewById(R.id.maxScore);
+        final TextView maxScoreText=(TextView)findViewById(R.id.maxScoreText);
+
+      
+        Typeface typeface= Typeface.createFromAsset(getAssets(),"Fonts/Flipper_Font_New 2.ttf");
+        myCounter.setTypeface(typeface);
+        maxScore.setTypeface(typeface);
+        scoreView.setTypeface(typeface);
+        
+         typeface= Typeface.createFromAsset(getAssets(),"Fonts/street.ttf");
+         myCounterText.setTypeface(typeface);
+         maxScoreText.setTypeface(typeface);
+        scoreViewText.setTypeface(typeface);
+        
+        myCounterText.setText("Time ");
+        maxScoreText.setText("Your Top");
+        scoreViewText.setText("Score ");
+        //setting the players score
+        PlayerDetails currentPlayer=((GlobalLoginApplication)getApplication()).getPlayerDetails();
+        if(((GlobalLoginApplication)getApplication()).loginStatus()){
+        	maxScore.setText(String.valueOf(currentPlayer.SaveTheeggs));
+        }
+        else{
+        	maxScoreText.setText("Register\nYour score");
+        	maxScoreText.setTextSize(20);
+
+        }
         Context context = getApplicationContext();
         toast = Toast.makeText(context,"Game Beginning. Good Luck :)", 0);
         toast.show();
@@ -118,7 +150,7 @@ public class FindTheNestActivity extends Activity {
       	      
         CharSequence timeUp= "Time is UP!. Game Over";
      
-        scoreview.setText(String.valueOf(score) );
+        scoreView.setText(Integer.toString(score) );
  	    
  	    answerIndex=-1;
 	       if(time==100){
@@ -147,10 +179,11 @@ public class FindTheNestActivity extends Activity {
         @Override
         public void onTick(long millisUntilFinished) {
         // TODO Auto-generated method stub
-       
+     
         	time=(int)(100-millisUntilFinished/1000);
-        	myCounter.setText("  "+String.valueOf(time));
-        	
+        	//myCounter.setType
+        	myCounter.setText(""+Integer.toString(time));
+
         } 
 
         };
@@ -172,8 +205,7 @@ public class FindTheNestActivity extends Activity {
     			//	 intent listener to open the specific activity
     				 //Intent myIntent = new Intent(FindTheNestActivity.this, PlayScreenActivity.class);
     				 Intent playscreen = new Intent(FindTheNestActivity.this, PlayScreenActivity.class);
-                     playscreen.putExtra("player",playerdata);  
-    				 
+                	 
     		            startActivity(playscreen);      
     				    //finish();
     			}
