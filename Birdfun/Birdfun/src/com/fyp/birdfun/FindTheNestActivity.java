@@ -278,8 +278,6 @@ public class FindTheNestActivity extends Activity {
         
     }
     
-
-
     public void checkAnswer(){
     	if(userAnswer==answerIndex){
     		  numCorrAns++;
@@ -301,8 +299,7 @@ public class FindTheNestActivity extends Activity {
      	  
     	}
     }
-    
-    
+     
     public void imageUpdate(){
     	
     	//setting the image relative to the screen size
@@ -403,10 +400,7 @@ public class FindTheNestActivity extends Activity {
        	}
           	
     }
-  
-
-    
-
+ 
     @Override
 	protected void onResume() {
 	super.onResume();
