@@ -5,28 +5,36 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.PixelFormat;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.fyp.birdfun.RegisterActivity.CreateNewUser;
 import com.fyp.birdfun.helpers.Card;
 import com.fyp.birdfun.helpers.DisplayNextView;
 import com.fyp.birdfun.helpers.Flip3dAnimation;
+import com.fyp.birdfun.helpers.JSONParser;
 import com.fyp.birdfun.helpers.PlayerDetails;
 
 public class TheWeaponActivity extends Activity  {
@@ -68,7 +76,20 @@ public class TheWeaponActivity extends Activity  {
 	 private int thisGamescore;
 	 private int total;
 	 private int CurrentScore;
+	 private static String url_score ="http://birdfun.net/update_score.php";
 	 
+	  JSONParser jsonParser = new JSONParser();
+	 
+	  private boolean done=false;
+	 // Progress Dialog
+	 private ProgressDialog pDialog;
+	 //Tags to update the score
+	 private static final String TAG_SUCCESS = "success";
+	 private static final String TAG_PID = "pid";
+	 private static final String TAG_TOTAL = "total";
+	 private static final String TAG_SAVETHEEGGS = "savetheeggs";
+	 private static final String TAG_THEWEAPON= "theweapon";
+	 private static final String TAG_FANTASTICFEATHERS= "fantasticfeathers";
 	 // for score display
 	 TextView newtext;
 	//Managing android Activity life cycle
@@ -124,7 +145,9 @@ public class TheWeaponActivity extends Activity  {
 			
 			@Override
 			public void onClick(View v) {
-				SetUpGame();
+				
+				 new UpdateUserScore().execute();
+				
 			}
 		});
 	//buttons to add the side option menu and also the listener methods for this side menu
@@ -732,7 +755,82 @@ public class TheWeaponActivity extends Activity  {
 
 	nfcAdapter.disableForegroundDispatch(this);
 	}
-    
+	 /**
+     * Background Async Task to  Save product Details
+     * */
+    class UpdateUserScore extends AsyncTask<String, String, String> {
+ 
+        /**
+         * Before starting background thread Show Progress Dialog
+         * */
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pDialog = new ProgressDialog(TheWeaponActivity.this);
+            pDialog.setMessage("updating score ...");
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(true);
+            pDialog.show();
+        }
+ 
+        /**
+         * Saving product
+         * */
+        protected String doInBackground(String... args) {
+            // getting updated data from EditTexts
+           
+            // Building Parameters
+            List<NameValuePair> params = new ArrayList<NameValuePair>();
+            params.add(new BasicNameValuePair(TAG_PID, "4"));
+            params.add(new BasicNameValuePair(TAG_TOTAL, "777"));
+            params.add(new BasicNameValuePair(TAG_SAVETHEEGGS, "199"));
+            params.add(new BasicNameValuePair(TAG_FANTASTICFEATHERS, "100"));
+            params.add(new BasicNameValuePair(TAG_THEWEAPON, "0"));
+   
+            // sending modified data through http request
+            // Notice that update product url accepts POST method
+            
+            JSONObject json = jsonParser.makeHttpRequest(url_score,
+                    "POST", params);
+ 
+            // check json success tag
+            try {
+                int success = json.getInt(TAG_SUCCESS);
+ 
+                if (success == 1) {
+                    // successfully updated
+                    Intent i = getIntent();
+                    // send result code 100 to notify about product update
+                    setResult(100, i);
+                    finish();
+                } else {
+                    // failed to update product
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+ 
+            return null;
+        }
+ 
+        /**
+         * After completing background task Dismiss the progress dialog
+         * **/
+        protected void onPostExecute(String file_url) {
+            // dismiss the dialog once product uupdated
+        
+            pDialog.dismiss();
+             
+			 Intent myIntent = new Intent(TheWeaponActivity.this, PlayScreenActivity.class);
+				
+	            startActivity(myIntent);      
+			    finish();
+			
+        }
+       
+        
+    }
+ 
 
 	
 	
