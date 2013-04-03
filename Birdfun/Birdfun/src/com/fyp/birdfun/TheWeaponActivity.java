@@ -78,6 +78,8 @@ public class TheWeaponActivity extends Activity  {
 	 private int CurrentScore;
 	 private static String url_score ="http://birdfun.net/update_score.php";
 	 
+	 private int  roundCounter;
+	 
 	  JSONParser jsonParser = new JSONParser();
 	 
 	  private boolean done=false;
@@ -97,10 +99,7 @@ public class TheWeaponActivity extends Activity  {
 	super.onCreate(savedInstanceState);
 	getWindow().setFormat(PixelFormat.RGBA_8888);
 	setContentView(R.layout.theweapon_layout);
-	
-	
-	
-	
+
 	//recieve intent from playscreen activities and update current player details
 	/* Intent intent =getIntent();
      Bundle bundle = intent.getExtras();
@@ -136,6 +135,8 @@ public class TheWeaponActivity extends Activity  {
 	SetUpGame();
 	disableintent=false;
 	noofCardsSolved=0;
+	
+	roundCounter=0;
 	
 	prevReadPlayId=99;
 	prevReadCardID=99;
@@ -222,11 +223,10 @@ public class TheWeaponActivity extends Activity  {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 
-				//	 intent listener to open the specific activity
-					 Intent myIntent = new Intent(TheWeaponActivity.this, PlayScreenActivity.class);
-
-			            startActivity(myIntent);      
-					    finish();
+				Intent intent = new Intent(Intent.ACTION_MAIN);
+				intent.addCategory(Intent.CATEGORY_HOME);
+				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				startActivity(intent);
 				
 
 			}
@@ -260,6 +260,10 @@ public class TheWeaponActivity extends Activity  {
 		LoadPlayCardsToView();
 		showAndHideCards();
 		resetTicks();
+		if(roundCounter!=10)
+		roundCounter++;
+		
+		
 	}
 	private void resetTicks() {
 		// TODO Auto-generated method stub

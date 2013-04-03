@@ -585,4 +585,32 @@
 <include
     android:id="@+id/login_slider"
     layout="@layout/sliding_bar" />
+
+
+
+    <ImageView
+        android:id="@+id/round"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+   	    android:layout_centerVertical="true"
+  	    android:layout_centerHorizontal="true"
+        android:src="@drawable/round"
+        android:visibility="invisible" />
+
+   
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/roundcounter"
+        android:layout_centerVertical="true"
+  	    android:layout_centerHorizontal="true"
+        android:layout_marginRight="34dp"
+        android:paddingLeft="10dip"
+        android:paddingRight="10dip"
+        android:paddingTop="10dip"
+        android:text="1"
+        android:textSize="80dip"
+        android:visibility="invisible" />
+
+
 </RelativeLayout>
