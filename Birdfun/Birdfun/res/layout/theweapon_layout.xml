@@ -588,15 +588,7 @@
 
 
 
-    <ImageView
-        android:id="@+id/round"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-   	    android:layout_centerVertical="true"
-  	    android:layout_centerHorizontal="true"
-        android:src="@drawable/round"
-        android:visibility="invisible" />
-
+   
    
     <TextView
         android:layout_width="wrap_content"
