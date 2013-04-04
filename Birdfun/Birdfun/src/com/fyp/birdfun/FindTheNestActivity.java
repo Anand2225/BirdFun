@@ -2,23 +2,29 @@ package com.fyp.birdfun;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Point;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Parcelable;
 import android.util.Log;
-import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -27,24 +33,39 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.fyp.birdfun.helpers.JSONParser;
 import com.fyp.birdfun.helpers.PlayerDetails;
 
 public class FindTheNestActivity extends Activity {
 	int score = 0;
 	int time = 0;
-	int wrongInput = 0;
 	CountDownTimer counter;
-	Toast toast;
+	int wrongInput = 0;
 
+	Toast toast;
+		
+	
+	// Parameters to update score once done to server side
+	private static String url_score ="http://birdfun.net/update_score.php";
+	 
+	  JSONParser jsonParser = new JSONParser();
+	  PlayerDetails currentPlayer;
+	
+	 // Progress Dialog
+	 private ProgressDialog pDialog;
+	 //Tags to update the score
+	 private static final String TAG_SUCCESS = "success";
+	 private static final String TAG_PID = "pid";
+	 private static final String TAG_TOTAL = "total";
+	 private static final String TAG_SAVETHEEGGS = "savetheeggs";
+	 private static final String TAG_THEWEAPON= "theweapon";
+	 private static final String TAG_FANTASTICFEATHERS= "fantasticfeathers";
+	 
 	// NFC declarations
 	private static String TAG = FindTheNestActivity.class.getSimpleName();
-	private static String TAG1 = "playids";
-	private static String TAG2 = "firstTap";
-	private static String TAG3 = "secondTap";
 
 	protected NfcAdapter nfcAdapter;
 	protected PendingIntent nfcPendingIntent;
-	private ViewGroup mContainerView;
 
 	private int[] birdArray = { R.drawable.ftn_burrow_1,
 			R.drawable.ftn_burrow_2, R.drawable.ftn_burrow_3,
@@ -65,8 +86,6 @@ public class FindTheNestActivity extends Activity {
 	private int answerIndex = -1;
 	private int[] indexObjects = { 0, 0, 0, 0 };
 
-	private String[] textAnswers = { "burrow", "cavity", "cup", "mound",
-			"pendant", "plate", "platform", "scrape", "sphere" };
 	int index = 0;
 	int prevIndex = 0;
 	int userAnswer = -1;
@@ -107,7 +126,7 @@ public class FindTheNestActivity extends Activity {
 		maxScoreText.setText("Your Top");
 		scoreViewText.setText("Score ");
 		// setting the players score
-		PlayerDetails currentPlayer = ((GlobalLoginApplication) getApplication())
+		currentPlayer = ((GlobalLoginApplication) getApplication())
 				.getPlayerDetails();
 		if (((GlobalLoginApplication) getApplication()).loginStatus()) {
 			maxScore.setText(String.valueOf(currentPlayer.SaveTheeggs));
@@ -186,9 +205,12 @@ public class FindTheNestActivity extends Activity {
 				// PlayScreenActivity.class);
 				Intent playscreen = new Intent(FindTheNestActivity.this,
 						PlayScreenActivity.class);
-
+				
+				if (((GlobalLoginApplication) getApplication()).loginStatus()) {
+					 new UpdateUserScore().execute();
+				}
 				startActivity(playscreen);
-				// finish();
+				finish();
 			}
 		});
 
@@ -200,6 +222,9 @@ public class FindTheNestActivity extends Activity {
 				// intent listener to open the specific activity
 				Intent myIntent = new Intent(FindTheNestActivity.this,
 						RegisterActivity.class);
+				if (((GlobalLoginApplication) getApplication()).loginStatus()) {
+					 new UpdateUserScore().execute();
+				}
 
 				startActivity(myIntent);
 				finish();
@@ -216,6 +241,9 @@ public class FindTheNestActivity extends Activity {
 				// intent listener to open the specific activity
 				Intent myIntent = new Intent(FindTheNestActivity.this,
 						LogInActivity.class);
+				if (((GlobalLoginApplication) getApplication()).loginStatus()) {
+					 new UpdateUserScore().execute();
+				}
 
 				startActivity(myIntent);
 				finish();
@@ -232,6 +260,9 @@ public class FindTheNestActivity extends Activity {
 				// intent listener to open the specific activity
 				Intent myIntent = new Intent(FindTheNestActivity.this,
 						LeaderBoardActivity.class);
+				if (((GlobalLoginApplication) getApplication()).loginStatus()) {
+					 new UpdateUserScore().execute();
+				}
 
 				startActivity(myIntent);
 				finish();
@@ -248,6 +279,9 @@ public class FindTheNestActivity extends Activity {
 				// intent listener to open the specific activity
 				Intent myIntent = new Intent(FindTheNestActivity.this,
 						PlayScreenActivity.class);
+				if (((GlobalLoginApplication) getApplication()).loginStatus()) {
+					 new UpdateUserScore().execute();
+				}
 
 				startActivity(myIntent);
 				finish();
@@ -534,5 +568,77 @@ public class FindTheNestActivity extends Activity {
 
 		nfcAdapter.disableForegroundDispatch(this);
 	}
+	 /**
+     * Background Async Task to  Save product Details
+     * */
 
+    class UpdateUserScore extends AsyncTask<String, String, String> {
+    	 
+        /**
+         * Before starting background thread Show Progress Dialog
+         * */
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pDialog = new ProgressDialog(FindTheNestActivity.this);
+            pDialog.setMessage("updating score ...");
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(true);
+            pDialog.show();
+        }
+ 
+        /**
+         * Saving product
+         * */
+        protected String doInBackground(String... args) {
+            // getting updated data from EditTexts
+           
+            // Building Parameters
+            List<NameValuePair> params = new ArrayList<NameValuePair>();
+            params.add(new BasicNameValuePair(TAG_PID, Integer.toString(currentPlayer.Pid)));
+            params.add(new BasicNameValuePair(TAG_TOTAL,Integer.toString(currentPlayer.Total)));
+            params.add(new BasicNameValuePair(TAG_SAVETHEEGGS, Integer.toString(score)));
+            params.add(new BasicNameValuePair(TAG_FANTASTICFEATHERS, Integer.toString(currentPlayer.FantasticFeathers)));
+            params.add(new BasicNameValuePair(TAG_THEWEAPON, Integer.toString(currentPlayer.TheWeapon)));
+   
+            // sending modified data through http request
+            // Notice that update product url accepts POST method
+            
+            
+          
+            JSONObject json = jsonParser.makeHttpRequest(url_score,
+                    "POST", params);
+ 
+            // check json success tag
+            try {
+                int success = json.getInt(TAG_SUCCESS);
+ 
+                if (success == 1) {
+                    // successfully updated
+                    Intent i = getIntent();
+                    // send result code 100 to notify about product update
+                    setResult(100, i);
+                    finish();
+                } else {
+                    // failed to update product
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            
+            //Pushing to local application class to maintain local data
+            currentPlayer.SaveTheeggs=score;
+            ((GlobalLoginApplication) getApplication()).setPlayerDetails(currentPlayer);
+            
+            
+            return null;
+        }
+ 
+
+       
+        
+    }
+ 
+
+	
 }

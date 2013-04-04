@@ -21,7 +21,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="53dp"
             android:gravity="center"
-            android:text="Save the Eggs" />
+            android:text="Find the Nest" />
 
         <Button
             android:id="@+id/btnfantasticfeathers"
