@@ -225,7 +225,7 @@ public class TheWeaponActivity extends Activity  {
 			@Override
 			public void onClick(View v) {
 				
-				 new UpdateUserScore().execute();
+					// Renga fill this portion up 
 				
 			}
 		});
