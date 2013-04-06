@@ -136,9 +136,11 @@ public class TheWeaponActivity extends Activity  {
 	maxScoreText.setText("Your Top");
 	scoreViewText.setText("Score ");
 	// setting the players score
-	PlayerDetails currentPlayer = ((GlobalLoginApplication) getApplication())
-			.getPlayerDetails();
+	
 	if (((GlobalLoginApplication) getApplication()).loginStatus()) {
+		currentPlayer = ((GlobalLoginApplication) getApplication())
+				.getPlayerDetails();
+
 		maxScore.setText(String.valueOf(currentPlayer.SaveTheeggs));
 	} else {
 		maxScoreText.setText("Register\nYour score");
@@ -181,7 +183,7 @@ public class TheWeaponActivity extends Activity  {
 		public void onTick(long millisUntilFinished) {
 			// TODO Auto-generated method stub
 
-			time = (int) (100 - millisUntilFinished / 1000);
+			time = (int) (millisUntilFinished / 1000);
 			// myCounter.setType
 			myCounter.setText("" + Integer.toString(time));
 			scoreView.setText(Integer.toString(score));
@@ -244,12 +246,8 @@ public class TheWeaponActivity extends Activity  {
 				changeScreen = new Intent(TheWeaponActivity.this,
 						PlayScreenActivity.class);
 				
-				if (((GlobalLoginApplication) getApplication()).loginStatus()) {
-					 new UpdateUserScore().execute();
-				}
+					new UpdateUserScore().execute();
 
-				startActivity(changeScreen);
-				finish();
 			}
 		});
 
@@ -262,13 +260,7 @@ public class TheWeaponActivity extends Activity  {
 				changeScreen = new Intent(TheWeaponActivity.this,
 						RegisterActivity.class);
 				
-				if (((GlobalLoginApplication) getApplication()).loginStatus()) {
-					 new UpdateUserScore().execute();
-				}
-
-
-				startActivity(changeScreen);
-				finish();
+					new UpdateUserScore().execute();
 
 			}
 		});
@@ -282,12 +274,7 @@ public class TheWeaponActivity extends Activity  {
 				// intent listener to open the specific activity
 				changeScreen = new Intent(TheWeaponActivity.this,
 						LogInActivity.class);
-				if (((GlobalLoginApplication) getApplication()).loginStatus()) {
-					 new UpdateUserScore().execute();
-				}
-
-				startActivity(changeScreen);
-				finish();
+					new UpdateUserScore().execute();
 
 			}
 		});
@@ -301,12 +288,8 @@ public class TheWeaponActivity extends Activity  {
 				// intent listener to open the specific activity
 				changeScreen = new Intent(TheWeaponActivity.this,
 						LeaderBoardActivity.class);
-				if (((GlobalLoginApplication) getApplication()).loginStatus()) {
-					 new UpdateUserScore().execute();
-				}
+					new UpdateUserScore().execute();
 
-				startActivity(changeScreen);
-				finish();
 
 			}
 		});
@@ -320,12 +303,7 @@ public class TheWeaponActivity extends Activity  {
 				// intent listener to open the specific activity
 				changeScreen = new Intent(TheWeaponActivity.this,
 						PlayScreenActivity.class);
-				if (((GlobalLoginApplication) getApplication()).loginStatus()) {
-					 new UpdateUserScore().execute();
-				}
-
-				startActivity(changeScreen);
-				finish();
+					new UpdateUserScore().execute();
 
 			}
 		});
@@ -880,15 +858,20 @@ public class TheWeaponActivity extends Activity  {
          * */
         protected String doInBackground(String... args) {
             // getting updated data from EditTexts
-           
-            // Building Parameters
-            List<NameValuePair> params = new ArrayList<NameValuePair>();
-            params.add(new BasicNameValuePair(TAG_PID, Integer.toString(currentPlayer.Pid)));
-            params.add(new BasicNameValuePair(TAG_TOTAL,Integer.toString(currentPlayer.Total)));
-            params.add(new BasicNameValuePair(TAG_SAVETHEEGGS, Integer.toString(currentPlayer.SaveTheeggs)));
-            params.add(new BasicNameValuePair(TAG_FANTASTICFEATHERS, Integer.toString(currentPlayer.FantasticFeathers)));
-            params.add(new BasicNameValuePair(TAG_THEWEAPON, Integer.toString(score)));
-   
+        	if (((GlobalLoginApplication) getApplication()).loginStatus()){
+ 	           
+        	if(score>currentPlayer.TheWeapon){
+         	   currentPlayer.TheWeapon=score;
+            }
+            
+             // Building Parameters
+             List<NameValuePair> params = new ArrayList<NameValuePair>();
+             params.add(new BasicNameValuePair(TAG_PID, Integer.toString(currentPlayer.Pid)));
+             params.add(new BasicNameValuePair(TAG_TOTAL,Integer.toString(currentPlayer.Total)));
+             params.add(new BasicNameValuePair(TAG_SAVETHEEGGS, Integer.toString(currentPlayer.SaveTheeggs)));
+             params.add(new BasicNameValuePair(TAG_FANTASTICFEATHERS, Integer.toString(currentPlayer.FantasticFeathers)));
+             params.add(new BasicNameValuePair(TAG_THEWEAPON, Integer.toString(currentPlayer.TheWeapon)));
+    
             // sending modified data through http request
             // Notice that update product url accepts POST method
             
@@ -914,16 +897,27 @@ public class TheWeaponActivity extends Activity  {
                 e.printStackTrace();
             }
             
-            //Pushing to local application class to maintain local data
-            currentPlayer.TheWeapon=score;
             ((GlobalLoginApplication) getApplication()).setPlayerDetails(currentPlayer);
-            
-        	startActivity(changeScreen);
+        	}
+     	   startActivity(changeScreen);
 			finish();
+
             return null;
         }
  
 
+        /**
+         * After completing background task Dismiss the progress dialog
+         * **/
+        protected void onPostExecute(String file_url) {
+            // dismiss the dialog once done
+
+        	
+            pDialog.dismiss();
+      	   startActivity(changeScreen);
+ 			finish();
+
+        }
        
         
     }

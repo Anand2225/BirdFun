@@ -127,8 +127,8 @@ public class FindTheNestActivity extends Activity {
 		maxScoreText.setText("Your Top");
 		scoreViewText.setText("Score ");
 		// setting the players score
-		currentPlayer = ((GlobalLoginApplication) getApplication())
-				.getPlayerDetails();
+		currentPlayer = ((GlobalLoginApplication) getApplication()).getPlayerDetails();
+		
 		if (((GlobalLoginApplication) getApplication()).loginStatus()) {
 			maxScore.setText(String.valueOf(currentPlayer.SaveTheeggs));
 		} else {
@@ -205,12 +205,8 @@ public class FindTheNestActivity extends Activity {
 				changeScreen = new Intent(FindTheNestActivity.this,
 						PlayScreenActivity.class);
 				
-				if (((GlobalLoginApplication) getApplication()).loginStatus()) {
-					 new UpdateUserScore().execute();
-				}
-
-				startActivity(changeScreen);
-				finish();
+				 new UpdateUserScore().execute();
+			
 			}
 		});
 
@@ -222,14 +218,8 @@ public class FindTheNestActivity extends Activity {
 				// intent listener to open the specific activity
 				changeScreen = new Intent(FindTheNestActivity.this,
 						RegisterActivity.class);
-				
-				if (((GlobalLoginApplication) getApplication()).loginStatus()) {
-					 new UpdateUserScore().execute();
-				}
-
-
-				startActivity(changeScreen);
-				finish();
+			
+				 new UpdateUserScore().execute();
 
 			}
 		});
@@ -243,12 +233,9 @@ public class FindTheNestActivity extends Activity {
 				// intent listener to open the specific activity
 				changeScreen = new Intent(FindTheNestActivity.this,
 						LogInActivity.class);
-				if (((GlobalLoginApplication) getApplication()).loginStatus()) {
-					 new UpdateUserScore().execute();
-				}
+			
+				new UpdateUserScore().execute();
 
-				startActivity(changeScreen);
-				finish();
 
 			}
 		});
@@ -262,13 +249,9 @@ public class FindTheNestActivity extends Activity {
 				// intent listener to open the specific activity
 				changeScreen = new Intent(FindTheNestActivity.this,
 						LeaderBoardActivity.class);
-				if (((GlobalLoginApplication) getApplication()).loginStatus()) {
-					 new UpdateUserScore().execute();
-				}
-
-				startActivity(changeScreen);
-				finish();
-
+				
+				 new UpdateUserScore().execute();
+		
 			}
 		});
 
@@ -281,12 +264,8 @@ public class FindTheNestActivity extends Activity {
 				// intent listener to open the specific activity
 				changeScreen = new Intent(FindTheNestActivity.this,
 						PlayScreenActivity.class);
-				if (((GlobalLoginApplication) getApplication()).loginStatus()) {
-					 new UpdateUserScore().execute();
-				}
-
-				startActivity(changeScreen);
-				finish();
+				
+				 new UpdateUserScore().execute();
 
 			}
 		});
@@ -616,12 +595,16 @@ public class FindTheNestActivity extends Activity {
          * */
         protected String doInBackground(String... args) {
             // getting updated data from EditTexts
+        	if (((GlobalLoginApplication)getApplication()).loginStatus()){
+           if(score>currentPlayer.SaveTheeggs){
+        	   currentPlayer.SaveTheeggs=score;
+           }
            
             // Building Parameters
             List<NameValuePair> params = new ArrayList<NameValuePair>();
             params.add(new BasicNameValuePair(TAG_PID, Integer.toString(currentPlayer.Pid)));
             params.add(new BasicNameValuePair(TAG_TOTAL,Integer.toString(currentPlayer.Total)));
-            params.add(new BasicNameValuePair(TAG_SAVETHEEGGS, Integer.toString(score)));
+            params.add(new BasicNameValuePair(TAG_SAVETHEEGGS, Integer.toString(currentPlayer.SaveTheeggs)));
             params.add(new BasicNameValuePair(TAG_FANTASTICFEATHERS, Integer.toString(currentPlayer.FantasticFeathers)));
             params.add(new BasicNameValuePair(TAG_THEWEAPON, Integer.toString(currentPlayer.TheWeapon)));
    
@@ -650,16 +633,25 @@ public class FindTheNestActivity extends Activity {
                 e.printStackTrace();
             }
             
-            //Pushing to local application class to maintain local data
-            currentPlayer.SaveTheeggs=score;
+
             ((GlobalLoginApplication) getApplication()).setPlayerDetails(currentPlayer);
-            
-        	startActivity(changeScreen);
-			finish();
+        	}
+        	
+      	   startActivity(changeScreen);
+ 			finish();
+        	
             return null;
         }
  
+        protected void onPostExecute(String file_url) {
+            // dismiss the dialog once done
+        
+        	pDialog.dismiss();
+      	   startActivity(changeScreen);
+ 			finish();
 
+
+        }
        
         
     }

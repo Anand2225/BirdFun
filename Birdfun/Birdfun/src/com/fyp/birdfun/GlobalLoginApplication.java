@@ -5,6 +5,7 @@ import com.fyp.birdfun.helpers.PlayerDetails;
 import android.app.Application;
 
 public class GlobalLoginApplication extends Application{
+	
 	private PlayerDetails currentPlayer=new PlayerDetails() ;
 	private boolean loggedIn = false;
  
@@ -16,6 +17,11 @@ public class GlobalLoginApplication extends Application{
 	public void setPlayerDetails(PlayerDetails Details){
 		currentPlayer = Details;
 		loggedIn=true;
+	}
+	
+	public void resetPlayerDetails(PlayerDetails Details){
+		currentPlayer = null;
+		loggedIn=false;
 	}
 	
 	@Override
