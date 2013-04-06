@@ -145,7 +145,7 @@ public class FindTheNestActivity extends Activity {
 							RegisterActivity.class);
 
 					startActivity(playscreen);
-					// finish();
+					 finish();
 				}
 			});
 		}
