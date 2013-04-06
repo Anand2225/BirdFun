@@ -231,7 +231,6 @@ public class FantasticFeathersActivity extends Activity implements CreateNdefMes
 							RegisterActivity.class);
 
 					startActivity(playscreen);
-					// finish();
 				}
 			});
 		}
