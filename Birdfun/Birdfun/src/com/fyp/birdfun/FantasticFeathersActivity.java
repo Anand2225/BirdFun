@@ -79,6 +79,7 @@ public class FantasticFeathersActivity extends Activity implements CreateNdefMes
 		 private static final String TAG_SAVETHEEGGS = "savetheeggs";
 		 private static final String TAG_THEWEAPON= "theweapon";
 		 private static final String TAG_FANTASTICFEATHERS= "fantasticfeathers";
+		 Intent changeScreen;
 	//parameters to update score ends
 		 
 
@@ -1064,70 +1065,74 @@ public class FantasticFeathersActivity extends Activity implements CreateNdefMes
 
 			nfcAdapter.disableForegroundDispatch(this);
 		}
-		
-		  class UpdateUserScore extends AsyncTask<String, String, String> {
-		    	 
-		        /**
-		         * Before starting background thread Show Progress Dialog
-		         * */
-		        @Override
-		        protected void onPreExecute() {
-		            super.onPreExecute();
-		            pDialog = new ProgressDialog(FantasticFeathersActivity.this);
-		            pDialog.setMessage("updating score ...");
-		            pDialog.setIndeterminate(false);
-		            pDialog.setCancelable(true);
-		            pDialog.show();
-		        }
-		 
-		        /**
-		         * Saving product
-		         * */
-		        protected String doInBackground(String... args) {
-		            // getting updated data from EditTexts
-		           
-		            // Building Parameters
-		            List<NameValuePair> params = new ArrayList<NameValuePair>();
-		            params.add(new BasicNameValuePair(TAG_PID, Integer.toString(currentPlayer.Pid)));
-		            params.add(new BasicNameValuePair(TAG_TOTAL,Integer.toString(currentPlayer.Total)));
-		            params.add(new BasicNameValuePair(TAG_SAVETHEEGGS, Integer.toString(currentPlayer.SaveTheeggs)));
-		            params.add(new BasicNameValuePair(TAG_FANTASTICFEATHERS, Integer.toString(Total_score)));
-		            params.add(new BasicNameValuePair(TAG_THEWEAPON, Integer.toString(currentPlayer.TheWeapon)));
-		   
-		            // sending modified data through http request
-		            // Notice that update product url accepts POST method
-		            
-		            
-		          
-		            JSONObject json = jsonParser.makeHttpRequest(url_score,
-		                    "POST", params);
-		 
-		            // check json success tag
-		            try {
-		                int success = json.getInt(TAG_SUCCESS);
-		 
-		                if (success == 1) {
-		                    // successfully updated
-		                    Intent i = getIntent();
-		                    // send result code 100 to notify about product update
-		                    setResult(100, i);
-		                    finish();
-		                } else {
-		                    // failed to update product
-		                }
-		            } catch (JSONException e) {
-		                e.printStackTrace();
-		            }
-		            
-		            //Pushing to local application class to maintain local data
-		            currentPlayer.SaveTheeggs=Total_score;
-		            ((GlobalLoginApplication) getApplication()).setPlayerDetails(currentPlayer);
-		            
-		            
-		            return null;
-		        }
-		  }
-	
+	    class UpdateUserScore extends AsyncTask<String, String, String> {
+	    	 
+	        /**
+	         * Before starting background thread Show Progress Dialog
+	         * */
+	        @Override
+	        protected void onPreExecute() {
+	            super.onPreExecute();
+	            pDialog = new ProgressDialog(FantasticFeathersActivity.this);
+	            pDialog.setMessage("updating score ...");
+	            pDialog.setIndeterminate(false);
+	            pDialog.setCancelable(true);
+	            pDialog.show();
+	        }
+	 
+	        /**
+	         * Saving product
+	         * */
+	        protected String doInBackground(String... args) {
+	            // getting updated data from EditTexts
+	           
+	            // Building Parameters
+	            List<NameValuePair> params = new ArrayList<NameValuePair>();
+	            params.add(new BasicNameValuePair(TAG_PID, Integer.toString(currentPlayer.Pid)));
+	            params.add(new BasicNameValuePair(TAG_TOTAL,Integer.toString(currentPlayer.Total)));
+	            params.add(new BasicNameValuePair(TAG_SAVETHEEGGS, Integer.toString(currentPlayer.SaveTheeggs)));
+	            params.add(new BasicNameValuePair(TAG_FANTASTICFEATHERS, Integer.toString(Total_score)));
+	            params.add(new BasicNameValuePair(TAG_THEWEAPON, Integer.toString(currentPlayer.TheWeapon)));
+	   
+	            // sending modified data through http request
+	            // Notice that update product url accepts POST method
+	            
+	            
+	          
+	            JSONObject json = jsonParser.makeHttpRequest(url_score,
+	                    "POST", params);
+	 
+	            // check json success tag
+	            try {
+	                int success = json.getInt(TAG_SUCCESS);
+	 
+	                if (success == 1) {
+	                    // successfully updated
+	                    Intent i = getIntent();
+	                    // send result code 100 to notify about product update
+	                    setResult(100, i);
+	                    finish();
+	                } else {
+	                    // failed to update product
+	                }
+	            } catch (JSONException e) {
+	                e.printStackTrace();
+	            }
+	            
+	            //Pushing to local application class to maintain local data
+	            currentPlayer.FantasticFeathers=Total_score;
+	            ((GlobalLoginApplication) getApplication()).setPlayerDetails(currentPlayer);
+	            
+	        	startActivity(changeScreen);
+				finish();
+	            return null;
+	        }
+	 
+
+	       
+	        
+	    }
+	 
 	
 
 }

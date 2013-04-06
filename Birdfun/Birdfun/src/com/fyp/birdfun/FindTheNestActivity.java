@@ -23,10 +23,10 @@ import android.nfc.NfcAdapter;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -60,6 +60,7 @@ public class FindTheNestActivity extends Activity {
 	 private static final String TAG_SAVETHEEGGS = "savetheeggs";
 	 private static final String TAG_THEWEAPON= "theweapon";
 	 private static final String TAG_FANTASTICFEATHERS= "fantasticfeathers";
+	 Intent changeScreen;
 	 
 	// NFC declarations
 	private static String TAG = FindTheNestActivity.class.getSimpleName();
@@ -144,7 +145,7 @@ public class FindTheNestActivity extends Activity {
 							RegisterActivity.class);
 
 					startActivity(playscreen);
-					// finish();
+					 finish();
 				}
 			});
 		}
@@ -200,16 +201,15 @@ public class FindTheNestActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				// intent listener to open the specific activity
-				// Intent myIntent = new Intent(FindTheNestActivity.this,
-				// PlayScreenActivity.class);
-				Intent playscreen = new Intent(FindTheNestActivity.this,
+			
+				changeScreen = new Intent(FindTheNestActivity.this,
 						PlayScreenActivity.class);
 				
 				if (((GlobalLoginApplication) getApplication()).loginStatus()) {
 					 new UpdateUserScore().execute();
 				}
-				startActivity(playscreen);
+
+				startActivity(changeScreen);
 				finish();
 			}
 		});
@@ -220,13 +220,15 @@ public class FindTheNestActivity extends Activity {
 			public void onClick(View v) {
 
 				// intent listener to open the specific activity
-				Intent myIntent = new Intent(FindTheNestActivity.this,
+				changeScreen = new Intent(FindTheNestActivity.this,
 						RegisterActivity.class);
+				
 				if (((GlobalLoginApplication) getApplication()).loginStatus()) {
 					 new UpdateUserScore().execute();
 				}
 
-				startActivity(myIntent);
+
+				startActivity(changeScreen);
 				finish();
 
 			}
@@ -239,13 +241,13 @@ public class FindTheNestActivity extends Activity {
 				// TODO Auto-generated method stub
 
 				// intent listener to open the specific activity
-				Intent myIntent = new Intent(FindTheNestActivity.this,
+				changeScreen = new Intent(FindTheNestActivity.this,
 						LogInActivity.class);
 				if (((GlobalLoginApplication) getApplication()).loginStatus()) {
 					 new UpdateUserScore().execute();
 				}
 
-				startActivity(myIntent);
+				startActivity(changeScreen);
 				finish();
 
 			}
@@ -258,13 +260,13 @@ public class FindTheNestActivity extends Activity {
 				// TODO Auto-generated method stub
 
 				// intent listener to open the specific activity
-				Intent myIntent = new Intent(FindTheNestActivity.this,
+				changeScreen = new Intent(FindTheNestActivity.this,
 						LeaderBoardActivity.class);
 				if (((GlobalLoginApplication) getApplication()).loginStatus()) {
 					 new UpdateUserScore().execute();
 				}
 
-				startActivity(myIntent);
+				startActivity(changeScreen);
 				finish();
 
 			}
@@ -277,13 +279,13 @@ public class FindTheNestActivity extends Activity {
 				// TODO Auto-generated method stub
 
 				// intent listener to open the specific activity
-				Intent myIntent = new Intent(FindTheNestActivity.this,
+				changeScreen = new Intent(FindTheNestActivity.this,
 						PlayScreenActivity.class);
 				if (((GlobalLoginApplication) getApplication()).loginStatus()) {
 					 new UpdateUserScore().execute();
 				}
 
-				startActivity(myIntent);
+				startActivity(changeScreen);
 				finish();
 
 			}
@@ -313,7 +315,18 @@ public class FindTheNestActivity extends Activity {
 			default:
 				score += 0;
 			}
-
+			
+			 
+				
+			 Handler handler = new Handler(); 
+			    handler.postDelayed(new Runnable() { 
+			         public void run() { 
+			        	 ShowtickAndWrong( userAnswer, true, false);		
+			        		resetAll();
+			         } 
+			    }, 2000); 
+			    
+			    ShowtickAndWrong( userAnswer, true, true);
 			// scoreView.setText(Integer.toString(time));
 
 			toast.cancel();
@@ -329,7 +342,7 @@ public class FindTheNestActivity extends Activity {
 				toast.show();
 			}
 
-			resetAll();
+		
 
 		} else {
 
@@ -338,7 +351,18 @@ public class FindTheNestActivity extends Activity {
 			toast = Toast.makeText(getApplicationContext(),
 					"Wrong answer.Try again!", Toast.LENGTH_SHORT);
 			toast.show();
-			ImageView image = (ImageView) findViewById(R.id.nestView1);
+			
+			
+			 Handler handler = new Handler(); 
+			    handler.postDelayed(new Runnable() { 
+			         public void run() { 
+			        	 ShowtickAndWrong( userAnswer, false, false);			            
+			         } 
+			    }, 2000); 
+
+	        	 ShowtickAndWrong( userAnswer, false, true);
+			    
+			//ImageView image = (ImageView) findViewById(R.id.nestView1);
 			// ShowtickAndWrong(image.getL.position_id,false,true);
 		}
 	}
@@ -630,7 +654,8 @@ public class FindTheNestActivity extends Activity {
             currentPlayer.SaveTheeggs=score;
             ((GlobalLoginApplication) getApplication()).setPlayerDetails(currentPlayer);
             
-            
+        	startActivity(changeScreen);
+			finish();
             return null;
         }
  

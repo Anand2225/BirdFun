@@ -57,7 +57,8 @@ public class TheWeaponActivity extends Activity  {
 	private static String TAG3 = "secondTap";
 	private List myList = new ArrayList();
 	private boolean disableintent;
-	
+	 Intent changeScreen;
+	 
 	protected NfcAdapter nfcAdapter;
     protected PendingIntent nfcPendingIntent;
 	// Variables for playing the game
@@ -235,95 +236,99 @@ public class TheWeaponActivity extends Activity  {
      Button LeaderBoard= (Button) findViewById(R.id.btnleaderboard);
      Button Quit= (Button) findViewById(R.id.btnquit);
     // To the hidden menu option
-   Play.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-			//	 intent listener to open the specific activity
-				 Intent myIntent = new Intent(TheWeaponActivity.this, PlayScreenActivity.class);
-					if (((GlobalLoginApplication) getApplication()).loginStatus()) {
-						 new UpdateUserScore().execute();
-					}
-		            startActivity(myIntent);      
-				    finish();
-			}
-		});
-   	
-   Register.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
+		Play.setOnClickListener(new View.OnClickListener() {
 
-				//	 intent listener to open the specific activity
-					 Intent myIntent = new Intent(TheWeaponActivity.this, RegisterActivity.class);
-					 
-					 if (((GlobalLoginApplication) getApplication()).loginStatus()) {
-							 new UpdateUserScore().execute();
-					}
-			        
-					 startActivity(myIntent);      
-					    finish();
+			@Override
+			public void onClick(View v) {
+			
+				changeScreen = new Intent(TheWeaponActivity.this,
+						PlayScreenActivity.class);
 				
-
-			}
-		});
-   
-   Login.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-
-				//	 intent listener to open the specific activity
-					 Intent myIntent = new Intent(TheWeaponActivity.this, LogInActivity.class);
-				    
-					 if (((GlobalLoginApplication) getApplication()).loginStatus()) {
-							 new UpdateUserScore().execute();
-						}			            
-					 startActivity(myIntent);      
-					 
-					finish();
-				
-
-			}
-		});
-   
-   LeaderBoard.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-
-				//	 intent listener to open the specific activity
-					 Intent myIntent = new Intent(TheWeaponActivity.this, LeaderBoardActivity.class);
-					 if (((GlobalLoginApplication) getApplication()).loginStatus()) {
-							 new UpdateUserScore().execute();
-					 }
-			         
-					 startActivity(myIntent);      
-					    finish();
-				
-
-			}
-		});
-   
-   Quit.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
 				if (((GlobalLoginApplication) getApplication()).loginStatus()) {
 					 new UpdateUserScore().execute();
 				}
+
+				startActivity(changeScreen);
+				finish();
+			}
+		});
+
+		Register.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+
+				// intent listener to open the specific activity
+				changeScreen = new Intent(TheWeaponActivity.this,
+						RegisterActivity.class);
 				
-				Intent intent = new Intent(Intent.ACTION_MAIN);
-				intent.addCategory(Intent.CATEGORY_HOME);
-				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				startActivity(intent);
-				
+				if (((GlobalLoginApplication) getApplication()).loginStatus()) {
+					 new UpdateUserScore().execute();
+				}
+
+
+				startActivity(changeScreen);
+				finish();
 
 			}
-		}); 
+		});
+
+		Login.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+
+				// intent listener to open the specific activity
+				changeScreen = new Intent(TheWeaponActivity.this,
+						LogInActivity.class);
+				if (((GlobalLoginApplication) getApplication()).loginStatus()) {
+					 new UpdateUserScore().execute();
+				}
+
+				startActivity(changeScreen);
+				finish();
+
+			}
+		});
+
+		LeaderBoard.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+
+				// intent listener to open the specific activity
+				changeScreen = new Intent(TheWeaponActivity.this,
+						LeaderBoardActivity.class);
+				if (((GlobalLoginApplication) getApplication()).loginStatus()) {
+					 new UpdateUserScore().execute();
+				}
+
+				startActivity(changeScreen);
+				finish();
+
+			}
+		});
+
+		Quit.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+
+				// intent listener to open the specific activity
+				changeScreen = new Intent(TheWeaponActivity.this,
+						PlayScreenActivity.class);
+				if (((GlobalLoginApplication) getApplication()).loginStatus()) {
+					 new UpdateUserScore().execute();
+				}
+
+				startActivity(changeScreen);
+				finish();
+
+			}
+		});
 	
 	
 	}
@@ -856,7 +861,7 @@ public class TheWeaponActivity extends Activity  {
      * Background Async Task to  Save product Details
      * */
     class UpdateUserScore extends AsyncTask<String, String, String> {
- 
+   	 
         /**
          * Before starting background thread Show Progress Dialog
          * */
@@ -887,6 +892,8 @@ public class TheWeaponActivity extends Activity  {
             // sending modified data through http request
             // Notice that update product url accepts POST method
             
+            
+          
             JSONObject json = jsonParser.makeHttpRequest(url_score,
                     "POST", params);
  
@@ -907,12 +914,12 @@ public class TheWeaponActivity extends Activity  {
                 e.printStackTrace();
             }
             
-            currentPlayer.TheWeapon=score;
-            
             //Pushing to local application class to maintain local data
+            currentPlayer.TheWeapon=score;
             ((GlobalLoginApplication) getApplication()).setPlayerDetails(currentPlayer);
             
- 
+        	startActivity(changeScreen);
+			finish();
             return null;
         }
  
