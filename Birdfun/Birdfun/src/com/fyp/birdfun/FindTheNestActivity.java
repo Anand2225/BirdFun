@@ -70,10 +70,7 @@ public class FindTheNestActivity extends Activity {
 	int index = 0;
 	int prevIndex = 0;
 	int userAnswer = -1;
-
 	PlayerDetails Currentplayer = new PlayerDetails();
-
-
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
