@@ -263,13 +263,7 @@ public class LogInActivity extends Activity{
                
 
                    
-                    Intent playscreen = new Intent(getApplicationContext(), PlayScreenActivity.class);
-
-                    startActivity(playscreen);      
-                    // closing this screen
-                    finish();
-                    } 
-                    
+                   
                     
                     
                     //if success == 0, invalid user
@@ -284,6 +278,12 @@ public class LogInActivity extends Activity{
                     	checkSuccess3 = true;
                     }
                     
+                    Intent playscreen = new Intent(getApplicationContext(), PlayScreenActivity.class);
+
+                    startActivity(playscreen);      
+                    // closing this screen
+                    finish();
+                    } 
                     
                     
                    

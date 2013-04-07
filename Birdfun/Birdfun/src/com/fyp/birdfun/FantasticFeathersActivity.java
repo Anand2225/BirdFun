@@ -1,8 +1,19 @@
 package com.fyp.birdfun;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.fyp.birdfun.FindTheNestActivity.UpdateUserScore;
+import com.fyp.birdfun.helpers.JSONParser;
+import com.fyp.birdfun.helpers.PlayerDetails;
 
 
 
@@ -16,16 +27,20 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.PendingIntent;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
 import android.nfc.NfcAdapter.CreateNdefMessageCallback;
 import android.nfc.NfcAdapter.OnNdefPushCompleteCallback;
 import android.nfc.NfcEvent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Parcelable;
@@ -38,6 +53,7 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class FantasticFeathersActivity extends Activity implements CreateNdefMessageCallback, OnNdefPushCompleteCallback{
 
@@ -45,6 +61,26 @@ public class FantasticFeathersActivity extends Activity implements CreateNdefMes
 	protected NfcAdapter nfcAdapter;
 	protected PendingIntent nfcPendingIntent;
 	private Map<Integer, Integer> drawableMap = new HashMap<Integer, Integer>();
+	
+	int time = 0;
+	CountDownTimer counter;
+	// Parameters to update score once done to server side
+		private static String url_score ="http://birdfun.net/update_score.php";
+		 
+		  JSONParser jsonParser = new JSONParser();
+		  PlayerDetails currentPlayer;
+		
+		 // Progress Dialog
+		 private ProgressDialog pDialog;
+		 //Tags to update the score
+		 private static final String TAG_SUCCESS = "success";
+		 private static final String TAG_PID = "pid";
+		 private static final String TAG_TOTAL = "total";
+		 private static final String TAG_SAVETHEEGGS = "savetheeggs";
+		 private static final String TAG_THEWEAPON= "theweapon";
+		 private static final String TAG_FANTASTICFEATHERS= "fantasticfeathers";
+		 Intent changeScreen;
+	//parameters to update score ends
 
 
 		
@@ -149,6 +185,88 @@ public class FantasticFeathersActivity extends Activity implements CreateNdefMes
 		;
 		setContentView(R.layout.fantasticfeathers_layout);
 		
+		// for score updating by anand
+		
+
+		
+
+		// setting the fonts
+		final TextView scoreView = (TextView) findViewById(R.id.scoreView);
+		final TextView scoreViewText = (TextView) findViewById(R.id.scoreViewText);
+		final TextView myCounter = (TextView) findViewById(R.id.myCounter);
+		final TextView myCounterText = (TextView) findViewById(R.id.myCounterText);
+		final TextView maxScore = (TextView) findViewById(R.id.maxScore);
+		final TextView maxScoreText = (TextView) findViewById(R.id.maxScoreText);
+
+		Typeface typeface = Typeface.createFromAsset(getAssets(),
+				"Fonts/Flipper_Font_New 2.ttf");
+		myCounter.setTypeface(typeface);
+		maxScore.setTypeface(typeface);
+		scoreView.setTypeface(typeface);
+
+		typeface = Typeface.createFromAsset(getAssets(), "Fonts/street.ttf");
+		myCounterText.setTypeface(typeface);
+		maxScoreText.setTypeface(typeface);
+		scoreViewText.setTypeface(typeface);
+
+		myCounterText.setText("Time ");
+		maxScoreText.setText("Your Top");
+		scoreViewText.setText("Score ");
+		// setting the players score
+			if (((GlobalLoginApplication) getApplication()).loginStatus()) {
+				currentPlayer = ((GlobalLoginApplication) getApplication())
+						.getPlayerDetails();
+			
+			maxScore.setText(String.valueOf(currentPlayer.SaveTheeggs));
+		} else {
+			maxScoreText.setText("Register\nYour score");
+			maxScoreText.setTextSize(20);
+			maxScoreText.setOnClickListener(new View.OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					// intent listener to open the specific activity
+					// Intent myIntent = new Intent(FindTheNestActivity.this,
+					// PlayScreenActivity.class);
+					Intent playscreen = new Intent(FantasticFeathersActivity.this,
+							RegisterActivity.class);
+
+					startActivity(playscreen);
+				}
+			});
+		}
+		
+
+
+
+		// setImage();
+		counter = new CountDownTimer(100000, 1000) {
+
+			public void onFinish() {
+
+				
+				if (time == 100) {
+					counter.cancel();
+
+				}
+
+			}
+
+			@Override
+			public void onTick(long millisUntilFinished) {
+				// TODO Auto-generated method stub
+
+				time = (int) (100 - millisUntilFinished / 1000);
+				// myCounter.setType
+				myCounter.setText("" + Integer.toString(time));
+				scoreView.setText(Integer.toString(Total_score));
+
+			}
+
+		};
+
+		counter.start();
+		//score updating portion done
 		topL = (ImageView) findViewById(R.id.topleft);
 		topR = (ImageView) findViewById(R.id.topright);
 		lowL = (ImageView) findViewById(R.id.lowleft);
@@ -198,7 +316,7 @@ public class FantasticFeathersActivity extends Activity implements CreateNdefMes
 		setCards(setCounter);
 		
 		
-		scoreUpdate();
+		//scoreUpdate();
 		
 		
        // Hook up clicks on the thumbnail views.
@@ -323,10 +441,10 @@ public class FantasticFeathersActivity extends Activity implements CreateNdefMes
    			@Override
    			public void onClick(View v) {
    			//	 intent listener to open the specific activity
-   				 Intent myIntent = new Intent(FantasticFeathersActivity.this, PlayScreenActivity.class);
-   				
-   		            startActivity(myIntent);      
-   				    finish();
+   				changeScreen = new Intent(FantasticFeathersActivity.this, PlayScreenActivity.class);
+ 				
+					new UpdateUserScore().execute();
+
    			}
    		});
       	
@@ -336,10 +454,10 @@ public class FantasticFeathersActivity extends Activity implements CreateNdefMes
    			public void onClick(View v) {
 
    				//	 intent listener to open the specific activity
-   					 Intent myIntent = new Intent(FantasticFeathersActivity.this, RegisterActivity.class);
+   				changeScreen= new Intent(FantasticFeathersActivity.this, RegisterActivity.class);
+   				
+    					new UpdateUserScore().execute();
 
-   			            startActivity(myIntent);      
-   					    finish();
    				
 
    			}
@@ -352,10 +470,9 @@ public class FantasticFeathersActivity extends Activity implements CreateNdefMes
    				// TODO Auto-generated method stub
 
    				//	 intent listener to open the specific activity
-   					 Intent myIntent = new Intent(FantasticFeathersActivity.this, LogInActivity.class);
+   				changeScreen = new Intent(FantasticFeathersActivity.this, LogInActivity.class);
+    					new UpdateUserScore().execute();
 
-   			            startActivity(myIntent);      
-   					    finish();
    				
 
    			}
@@ -368,11 +485,8 @@ public class FantasticFeathersActivity extends Activity implements CreateNdefMes
    				// TODO Auto-generated method stub
 
    				//	 intent listener to open the specific activity
-   					 Intent myIntent = new Intent(FantasticFeathersActivity.this, LeaderBoardActivity.class);
-
-   			            startActivity(myIntent);      
-   					    finish();
-   				
+   				changeScreen= new Intent(FantasticFeathersActivity.this, LeaderBoardActivity.class);
+    					new UpdateUserScore().execute();
 
    			}
    		});
@@ -384,11 +498,10 @@ public class FantasticFeathersActivity extends Activity implements CreateNdefMes
    				// TODO Auto-generated method stub
 
    				//	 intent listener to open the specific activity
-   					 Intent myIntent = new Intent(FantasticFeathersActivity.this, PlayScreenActivity.class);
+   				changeScreen= new Intent(FantasticFeathersActivity.this, PlayScreenActivity.class);
+   					
+   					new UpdateUserScore().execute();
 
-   			            startActivity(myIntent);      
-   					    finish();
-   				
 
    			}
    		}); 
@@ -444,7 +557,7 @@ public class FantasticFeathersActivity extends Activity implements CreateNdefMes
 				    	 prev_score = Total_score; //Get Previous Total Score
 				    	 Total_score = prev_score + Current_score; //Combine with current score to get total score
 				    	 Current_score = 10; //Reset current score to 10
-				    	 scoreUpdate();
+				    	 //scoreUpdate();
 						 checkLevel(setCounter);
 				     }
 				  }.start();
@@ -462,7 +575,7 @@ public class FantasticFeathersActivity extends Activity implements CreateNdefMes
 				         //when finish
 				    	 cross1.setVisibility(View.INVISIBLE);
 				    	 Current_score--;
-				    	 scoreUpdate();
+				    	 //scoreUpdate();
 				     }
 				  }.start();
 				}
@@ -485,7 +598,7 @@ public class FantasticFeathersActivity extends Activity implements CreateNdefMes
 				    	 prev_score = Total_score;
 				    	 Total_score = prev_score + Current_score;
 				    	 Current_score = 10;
-				    	 scoreUpdate();
+				    	 //scoreUpdate();
 						 checkLevel(setCounter);
 				     }
 				  }.start();
@@ -503,7 +616,7 @@ public class FantasticFeathersActivity extends Activity implements CreateNdefMes
 				         //when finish
 				    	 cross2.setVisibility(View.INVISIBLE);
 				    	 Current_score--;
-				    	 scoreUpdate();
+				    	 //scoreUpdate();
 				     }
 				  }.start();
 				}
@@ -528,7 +641,7 @@ public class FantasticFeathersActivity extends Activity implements CreateNdefMes
 				    	 prev_score = Total_score;
 				    	 Total_score = prev_score + Current_score;
 				    	 Current_score = 10;
-				    	 scoreUpdate();
+				    	 //scoreUpdate();
 						 checkLevel(setCounter);
 				     }
 				  }.start();
@@ -546,7 +659,7 @@ public class FantasticFeathersActivity extends Activity implements CreateNdefMes
 				         //when finish
 				    	 cross3.setVisibility(View.INVISIBLE);
 				    	 Current_score--;
-				    	 scoreUpdate();
+				    	 //scoreUpdate();
 				     }
 				  }.start();
 				}
@@ -571,7 +684,7 @@ public class FantasticFeathersActivity extends Activity implements CreateNdefMes
 				    	 prev_score = Total_score;
 				    	 Total_score = prev_score + Current_score;
 				    	 Current_score = 10;
-				    	 scoreUpdate();
+				    	// scoreUpdate();
 						 checkLevel(setCounter);
 				     }
 				  }.start();
@@ -588,7 +701,7 @@ public class FantasticFeathersActivity extends Activity implements CreateNdefMes
 			         //when finish
 			    	 cross4.setVisibility(View.INVISIBLE);
 			    	 Current_score--;
-			    	 scoreUpdate();
+			    	 //scoreUpdate();
 			     }
 			  }.start();
 			}
@@ -597,14 +710,14 @@ public class FantasticFeathersActivity extends Activity implements CreateNdefMes
 	}
 	
 	
-	public void scoreUpdate()
-	{
-		TextView totalscore = (TextView)findViewById(R.id.totaltag);
-		TextView currentscore = (TextView)findViewById(R.id.scoretag);
-		totalscore.setText(String.valueOf(Total_score));
-		currentscore.setText(String.valueOf(Current_score));
-	}
-	
+//	public void scoreUpdate()
+//	{
+//		TextView totalscore = (TextView)findViewById(R.id.totaltag);
+//		TextView currentscore = (TextView)findViewById(R.id.scoretag);
+//		totalscore.setText(String.valueOf(Total_score));
+//		currentscore.setText(String.valueOf(Current_score));
+//	}
+//	
 	private void checkLevel(int counter)
 	{
 		if(counter < 8)
@@ -934,6 +1047,84 @@ public class FantasticFeathersActivity extends Activity implements CreateNdefMes
 
 			nfcAdapter.disableForegroundDispatch(this);
 		}
+	    class UpdateUserScore extends AsyncTask<String, String, String> {
+	    	 
+	        /**
+	         * Before starting background thread Show Progress Dialog
+	         * */
+	        @Override
+	        protected void onPreExecute() {
+	            super.onPreExecute();
+	            pDialog = new ProgressDialog(FantasticFeathersActivity.this);
+	            pDialog.setMessage("updating score ...");
+	            pDialog.setIndeterminate(false);
+	            pDialog.setCancelable(true);
+	            pDialog.show();
+	        }
+	 
+	        /**
+	         * Saving product
+	         * */
+	        protected String doInBackground(String... args) {
+	            // getting updated data from EditTexts
+	        	if (((GlobalLoginApplication) getApplication()).loginStatus()){
+	           
+	        	if(Total_score>currentPlayer.FantasticFeathers){
+	          	   currentPlayer.FantasticFeathers=Total_score;
+	             }
+	             
+	              // Building Parameters
+	              List<NameValuePair> params = new ArrayList<NameValuePair>();
+	              params.add(new BasicNameValuePair(TAG_PID, Integer.toString(currentPlayer.Pid)));
+	              params.add(new BasicNameValuePair(TAG_TOTAL,Integer.toString(currentPlayer.Total)));
+	              params.add(new BasicNameValuePair(TAG_SAVETHEEGGS, Integer.toString(currentPlayer.SaveTheeggs)));
+	              params.add(new BasicNameValuePair(TAG_FANTASTICFEATHERS, Integer.toString(currentPlayer.FantasticFeathers)));
+	              params.add(new BasicNameValuePair(TAG_THEWEAPON, Integer.toString(currentPlayer.TheWeapon)));
+	              
+	          
+	            JSONObject json = jsonParser.makeHttpRequest(url_score,
+	                    "POST", params);
+	 
+	            // check json success tag
+	            try {
+	                int success = json.getInt(TAG_SUCCESS);
+	 
+	                if (success == 1) {
+	                    // successfully updated
+	                    Intent i = getIntent();
+	                    // send result code 100 to notify about product update
+	                    setResult(100, i);
+	                    finish();
+	                } else {
+	                    // failed to update product
+	                }
+	            } catch (JSONException e) {
+	                e.printStackTrace();
+	            }
+	            
+	            //Pushing to local application class to maintain local data
+	            currentPlayer.FantasticFeathers=Total_score;
+	            ((GlobalLoginApplication) getApplication()).setPlayerDetails(currentPlayer);
+	            
+	        	}
+	        	   startActivity(changeScreen);
+	   				finish();
+	            
+	            return null;
+	        }
+	 
+
+	        protected void onPostExecute(String file_url) {
+	            // dismiss the dialog once done
+	        	pDialog.dismiss();
+	      	   startActivity(changeScreen);
+				finish();
+
+	        	
+	        }
+	        
+	    }
+	 
 	
 
 }
