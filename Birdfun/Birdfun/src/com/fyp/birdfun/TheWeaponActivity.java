@@ -164,7 +164,7 @@ public class TheWeaponActivity extends Activity  {
 	
 
 
-	counter = new CountDownTimer(1000000, 1000) {
+	counter = new CountDownTimer(300000, 1000) {
 
 		public void onFinish() {
 
@@ -183,7 +183,7 @@ public class TheWeaponActivity extends Activity  {
 		public void onTick(long millisUntilFinished) {
 			// TODO Auto-generated method stub
 
-			time = (int) (millisUntilFinished / 1000);
+			time = (int) (30- millisUntilFinished / 1000);
 			// myCounter.setType
 			myCounter.setText("" + Integer.toString(time));
 			scoreView.setText(Integer.toString(score));
@@ -221,16 +221,7 @@ public class TheWeaponActivity extends Activity  {
 	prevReadPlayId=99;
 	prevReadCardID=99;
 	newTurn=true;
-	Button back= (Button) findViewById(R.id.btnback);
-	 back.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				
-					// Renga fill this portion up 
-				
-			}
-		});
+	
 	//buttons to add the side option menu and also the listener methods for this side menu
      Button Play= (Button) findViewById(R.id.btnplays);
      Button Register= (Button) findViewById(R.id.btnregiste);
