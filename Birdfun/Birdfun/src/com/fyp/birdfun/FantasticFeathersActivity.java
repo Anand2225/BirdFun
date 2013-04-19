@@ -152,21 +152,7 @@ public class FantasticFeathersActivity extends Activity implements CreateNdefMes
 		   R.drawable.fantasticfeathers_round10,
 
 		};
-	public static Integer[] AnswerOptions = {
-		   R.drawable.fantasticfeathers_card2,
-		   R.drawable.fantasticfeathers_card8,
-		   R.drawable.fantasticfeathers_card9,
-		   R.drawable.fantasticfeathers_card11,
-		   R.drawable.fantasticfeathers_card14
-		   ,
-		   
-		   R.drawable.fantasticfeathers_card22,
-		   R.drawable.fantasticfeathers_card28,
-		   R.drawable.fantasticfeathers_card29,
-		   R.drawable.fantasticfeathers_card31,
-		   R.drawable.fantasticfeathers_card34,
-
-		};
+	
 	
 	private Animator mCurrentAnimator;
 	private int mShortAnimationDuration;
@@ -584,7 +570,7 @@ public class FantasticFeathersActivity extends Activity implements CreateNdefMes
 		{
 			//select option B
 			if (Check(topR,setCounter) == true){
-				new CountDownTimer(4000, 1000) {
+				new CountDownTimer(2000, 1000) {
 
 				     public void onTick(long millisUntilFinished) {
 				        //While counting
@@ -720,7 +706,7 @@ public class FantasticFeathersActivity extends Activity implements CreateNdefMes
 //	
 	private void checkLevel(int counter)
 	{
-		if(counter < 8)
+		if(counter < 11)
 		{
 			setCards(counter);
 		}
@@ -762,11 +748,11 @@ public class FantasticFeathersActivity extends Activity implements CreateNdefMes
 	    drawableMap.put(3, R.drawable.fantasticfeathers_card15);
 		drawableMap.put(4, R.drawable.fantasticfeathers_card18);
 		
-		drawableMap.put(5, R.drawable.fantasticfeathers_card22);
-	    drawableMap.put(6, R.drawable.fantasticfeathers_card28);
+		drawableMap.put(5, R.drawable.fantasticfeathers_card24);
+	    drawableMap.put(6, R.drawable.fantasticfeathers_card27);
 		drawableMap.put(7, R.drawable.fantasticfeathers_card29);
-	    drawableMap.put(8, R.drawable.fantasticfeathers_card35);
-		drawableMap.put(9, R.drawable.fantasticfeathers_card38);
+	    drawableMap.put(8, R.drawable.fantasticfeathers_card36);
+		drawableMap.put(9, R.drawable.fantasticfeathers_card40);
 	   	
 		try {
 	
