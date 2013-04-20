@@ -174,7 +174,7 @@ public class FindTheNestActivity extends Activity {
 			public void onTick(long millisUntilFinished) {
 				// TODO Auto-generated method stub
 
-				time = (int) (100 - millisUntilFinished / 1000);
+				time = (int) (300 - millisUntilFinished / 1000);
 				// myCounter.setType
 				myCounter.setText("" + Integer.toString(time));
 				scoreView.setText(Integer.toString(score));
