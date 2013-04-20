@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.lang.Math;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
@@ -37,11 +38,14 @@ import com.fyp.birdfun.helpers.JSONParser;
 import com.fyp.birdfun.helpers.PlayerDetails;
 
 public class FindTheNestActivity extends Activity {
+	//for score 
 	int score = 0;
 	int time = 0;
 	CountDownTimer counter;
 	int wrongInput = 0;
-
+	int score_B=0;
+	int qn_num=0;
+			
 	Toast toast;
 		
 	
@@ -154,22 +158,17 @@ public class FindTheNestActivity extends Activity {
 
 		// setImage();
 		imageUpdate();
-		counter = new CountDownTimer(100000, 1000) {
+		counter = new CountDownTimer(300000, 1000) {
 
 			public void onFinish() {
-
-				CharSequence timeUp = "Time is UP!. Game Over";
-
-				if (time == 100) {
-					toast.cancel();
-					toast = Toast.makeText(getApplicationContext(), timeUp,
-							Toast.LENGTH_SHORT);
-					toast.show();
-					counter.cancel();
-
-				}
-
+				
+					//update scoreB
+				score+=score_B;
+				scoreView.setText(Integer.toString(score));
+				
 			}
+
+			
 
 			@Override
 			public void onTick(long millisUntilFinished) {
@@ -273,52 +272,67 @@ public class FindTheNestActivity extends Activity {
 		answerIndex = -1;
 		wrongInput = 0;
 		imageUpdate();
+		qn_num++;
+		if(qn_num==16){
+			//compute component b and update 
+			update_scoreB();
+			counter.onFinish();
+		
+		}
+			
+		
+	}
+	
+	public void update_scoreB(){
+		 score_B=(int)Math.exp(7+2*(time/300));
+		
 	}
 
 	public void checkAnswer() {
 		if (userAnswer == answerIndex) {
-			numCorrAns++;
-			switch (wrongInput) {
-			case 0:
-				score += 5;
-				break;
-			case 1:
-				score += 3;
-				break;
-			case 2:
-				score += 1;
-				break;
-			default:
-				score += 0;
-			}
+//			numCorrAns++;
+//			switch (wrongInput) {
+//			case 0:
+//				score += 5;
+//				break;
+//			case 1:
+//				score += 3;
+//				break;
+//			case 2:
+//				score += 1;
+//				break;
+//			default:
+//				score += 0;
+//			}
+//			
 			
 			 
 				
 			 Handler handler = new Handler(); 
 			    handler.postDelayed(new Runnable() { 
 			         public void run() { 
-			        	 ShowtickAndWrong( userAnswer, true, false);		
+			        	 ShowtickAndWrong( userAnswer, true, false);
+			        	 score+=100;
+			        	 
 			        		resetAll();
 			         } 
 			    }, 2000); 
 			    
 			    ShowtickAndWrong( userAnswer, true, true);
-			// scoreView.setText(Integer.toString(time));
+			 //scoreView.setText(Integer.toString(time));
 
 			toast.cancel();
 			toast = Toast.makeText(getApplicationContext(), "Good Job!",
 					Toast.LENGTH_SHORT);
 			toast.show();
 
-			if (numCorrAns % 10 == 0 && numCorrAns != 0) {
-				toast.cancel();
-				toast = Toast.makeText(getApplicationContext(),
-						"congratualtions you've gotten" + numCorrAns
-								+ "correct answers", Toast.LENGTH_SHORT);
-				toast.show();
-			}
-
-		
+//			if (numCorrAns % 10 == 0 && numCorrAns != 0) {
+//				toast.cancel();
+//				toast = Toast.makeText(getApplicationContext(),
+//						"congratualtions you've gotten" + numCorrAns
+//								+ "correct answers", Toast.LENGTH_SHORT);
+//				toast.show();
+//			}
 
 		} else {
 
