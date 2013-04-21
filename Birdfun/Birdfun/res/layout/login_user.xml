@@ -90,7 +90,9 @@
             android:id="@+id/btnlogin"
             android:layout_width="152dp"
             android:layout_height="wrap_content"
-            android:text="Login" />
+            android:text="Login" 
+            android:textAlignment="center"
+            />
 
     		<!--  Button to Cancel   -->
 
@@ -98,7 +100,9 @@
 		    android:id="@+id/btncancel"
 		    android:layout_width="156dp"
 		    android:layout_height="wrap_content"
-		    android:text="Cancel" />
+		    android:text="Cancel" 
+		    
+            android:textAlignment="center"/>
     
 	</LinearLayout>
 </LinearLayout>

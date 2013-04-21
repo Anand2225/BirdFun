@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.fyp.birdfun.TheWeaponActivity.UpdateUserScore;
 import com.fyp.birdfun.helpers.PlayerDetails;
 import com.fyp.birdfun.helpers.ToastMaker;
 
@@ -77,6 +78,20 @@ public class PlayScreenActivity extends Activity {
 	        Button Login= (Button) findViewById(R.id.btnlogins);
 	        Button LeaderBoard= (Button) findViewById(R.id.btnleaderboard);
 	        Button Quit= (Button) findViewById(R.id.btnquit);
+	        Button Help = (Button) findViewById(R.id.btnhelp);
+	        // To the hidden menu option
+
+	        Help.setOnClickListener(new View.OnClickListener() {
+
+	        @Override
+	        public void onClick(View v) {
+	        Intent changeScreen = new Intent(PlayScreenActivity.this,
+	        HelpActivity.class);
+	        startActivity(changeScreen);      
+			    finish();
+	        
+	        }
+	        });
 	       // To the hidden menu option
 	      Play.setOnClickListener(new View.OnClickListener() {
 	 			

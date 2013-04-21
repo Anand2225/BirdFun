@@ -74,6 +74,19 @@ public class LeaderBoardActivity extends ListActivity {
        Button Login= (Button) findViewById(R.id.btnlogins);
        Button LeaderBoard= (Button) findViewById(R.id.btnleaderboard);
        Button Quit= (Button) findViewById(R.id.btnquit);
+       Button Help = (Button) findViewById(R.id.btnhelp);
+       
+       Help.setOnClickListener(new View.OnClickListener() {
+
+	        @Override
+	        public void onClick(View v) {
+	        Intent changeScreen = new Intent(LeaderBoardActivity.this,
+	        HelpActivity.class);
+	        startActivity(changeScreen);      
+			    finish();
+	        
+	        }
+	        });
       // To the hidden menu option
      Play.setOnClickListener(new View.OnClickListener() {
 			

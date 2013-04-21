@@ -31,6 +31,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.fyp.birdfun.FantasticFeathersActivity.UpdateUserScore;
 import com.fyp.birdfun.helpers.Card;
 import com.fyp.birdfun.helpers.DisplayNextView;
 import com.fyp.birdfun.helpers.Flip3dAnimation;
@@ -69,7 +70,8 @@ public class TheWeaponActivity extends Activity  {
     private int prevReadPlayId;
 	private int prevReadCardID;
 	private int currentValue;
-	
+	private boolean cardTapped =false;
+	private int highestScore=0;
 	//Variables for player details
 	 ArrayList<PlayerDetails> playerdata = new ArrayList<PlayerDetails>();   	
 	 PlayerDetails Currentplayer=new PlayerDetails();
@@ -79,9 +81,9 @@ public class TheWeaponActivity extends Activity  {
 	 PlayerDetails currentPlayer;
 	//Variable for manging score
 	 private static String url_score ="http://birdfun.net/update_score.php";
-	 
+	 private int  score_change;
 	 private int  roundCounter;
-	 
+	 TextView scoreViewGlobal;
 	  JSONParser jsonParser = new JSONParser();
 	 
 	 // Progress Dialog
@@ -134,13 +136,14 @@ public class TheWeaponActivity extends Activity  {
 	maxScoreText.setText("Your Top");
 	scoreViewText.setText("Score ");
 	// setting the players score
-	
+	scoreViewGlobal=scoreView;
 	 
 	if (((GlobalLoginApplication) getApplication()).loginStatus()) {
 		currentPlayer = ((GlobalLoginApplication) getApplication())
 				.getPlayerDetails();
 
-		maxScore.setText(String.valueOf(currentPlayer.SaveTheeggs));
+		maxScore.setText(String.valueOf(currentPlayer.TheWeapon));
+		highestScore=currentPlayer.TheWeapon;
 	} else {
 		maxScoreText.setText("Register\nYour score");
 		maxScoreText.setTextSize(20);
@@ -166,32 +169,68 @@ public class TheWeaponActivity extends Activity  {
 	counter = new CountDownTimer(300000, 1000) {
 
 		public void onFinish() {
-
-			CharSequence timeUp = "Time is UP!. Game Over";
-
-			//set your timer limit here
+		//stop the timer from running
+			Log.d(TAG, "main counter on Finish");	
+		
 			
-//			if (time == 100) {
-//				counter.cancel();
-//
-//			}
+		score_change=(int)Math.exp(7.00+2.00*((time*1.00)/300.00));
+		//scoreViewGlobal.setText(Integer.toString(score_change));
 			
+		     CountDownTimer miniCounter = new CountDownTimer(((score_change)*1),1){
+			 int timeBlock=(int)time/score_change;
+			 int scoreBlocks=(int)score_change/(time);
+			 
+			 public void onFinish() {
+				 
+				 Log.d(TAG, "mini counter on Finish");	
+				 time=0;
+				 myCounter.setText("" + Integer.toString(time));
+				 if(score>highestScore && ((GlobalLoginApplication) getApplication()).loginStatus()){
+					 highestScore=score;
+					 maxScore.setText(String.valueOf( highestScore));
+					 
+				 }
+				 cardTapped=false;
+				 Log.d(TAG, "mini counter on Finish - cardTapped=false");			 //nothing to do on finish
+				 this.cancel(); 
+			 }
+			 
+
+			 @Override
+			 public void onTick(long millisUntilFinished) {
+			counter.cancel();
+			 if( time>=1 ){
+			 score_change-=scoreBlocks;
+			 score+=scoreBlocks;
+
+			scoreViewGlobal.setText(Integer.toString(score));
+			 time--;
+			 myCounter.setText("" + Integer.toString(time));
+			 }
+			 else {
+				 onFinish();
+				
+			 }
+			 	
+			 }
+			   };	     
+			 miniCounter.start();
+			
+
 		}
+
 
 		@Override
 		public void onTick(long millisUntilFinished) {
-			// TODO Auto-generated method stub
-
-			time = (int) (30- millisUntilFinished / 1000);
-			// myCounter.setType
-			myCounter.setText("" + Integer.toString(time));
-			scoreView.setText(Integer.toString(score));
-
+		// TODO Auto-generated method stub
+		time = (int) ( millisUntilFinished / 1000);
+		// myCounter.setType
+		myCounter.setText("" + Integer.toString(time));
 		}
 
-	};
+		};
 
-	counter.start();
+		counter.start();
 	//Score updating portion ends 
 	
 	// ((GlobalLoginApplication) getApplication()).sounds.playSound();
@@ -227,6 +266,21 @@ public class TheWeaponActivity extends Activity  {
      Button Login= (Button) findViewById(R.id.btnlogins);
      Button LeaderBoard= (Button) findViewById(R.id.btnleaderboard);
      Button Quit= (Button) findViewById(R.id.btnquit);
+     Button Help = (Button) findViewById(R.id.btnhelp);
+  // To the hidden menu option
+
+	  Help.setOnClickListener(new View.OnClickListener() {
+	
+	
+	 @Override
+	 
+	  public void onClick(View v) {
+	  changeScreen = new Intent(TheWeaponActivity.this,
+	  HelpActivity.class);
+	  new UpdateUserScore().execute();
+	  }
+	  });
+  
     // To the hidden menu option
 		Play.setOnClickListener(new View.OnClickListener() {
 
@@ -326,10 +380,15 @@ public class TheWeaponActivity extends Activity  {
 		LoadPlayCardsToView();
 		showAndHideCards();
 		resetTicks();
-		if(roundCounter!=10)
+		cardTapped=false;
+		if(roundCounter!=10){
 		roundCounter++;
+		}
 		
 		
+	}
+	public void resetCounter(){
+		counter.start();
 	}
 	private void resetTicks() {
 		// TODO Auto-generated method stub
@@ -344,8 +403,7 @@ public class TheWeaponActivity extends Activity  {
         // check whether the tapped card is solved
 		//nfcAdapter.enable();
 		currentValue=cardValue;
-		
-		
+	
 		if(playCards[currentValue].solved==false&&noofCardsSolved!=4){
 			if(newTurn){
 				//open the tapped card
@@ -380,7 +438,7 @@ public class TheWeaponActivity extends Activity  {
 			    	//remove wrong
 			    	
 				}
-				//check for correct  card if yes open it
+				//check for correct  card if yes open it - correct
 				else if(playCards[currentValue].card_id%16==prevReadCardID%16)
 					
 		    	{	
@@ -392,6 +450,25 @@ public class TheWeaponActivity extends Activity  {
 		    		playCards[prevReadPlayId].solved=true;
 		    		noofCardsSolved++;
 		    		
+		    		score_change+=400;
+		        	 CountDownTimer miniCounter = new CountDownTimer((score_change*20),10){
+		        
+		    	 public void onFinish() {
+		   		 	 //score_change=0;
+		   		 	 //nothing to do on finish
+		   		 	 }
+		   		 
+		   		 
+		   		 	 @Override
+		   		 	 public void onTick(long millisUntilFinished) {
+		   		 	 if(score_change>=1){
+		   		 	 score_change-=10;
+		   		 	 score+=10;
+		   		 	 scoreViewGlobal.setText(Integer.toString(score));
+		   		 	 }
+		   		 	 }
+		   		     	 };
+		   		     	 miniCounter.start();
 		    	}
 				//check for wrong  card if then close first tapped card
 				else
@@ -442,15 +519,18 @@ public class TheWeaponActivity extends Activity  {
 			{
 				playCards[i].solved=false;
 			}
-			//repeat the process
+ 			//repeat the process //update score 
+
 			SetUpGame();
+			counter.onFinish();
+			
 		}
 		
 	}	
 
 	private void ShowtickAndWrong(int position,boolean tick,boolean visibility){
 		ImageView ticks = null;
-	
+	 
 	switch(position)
 	{
 	case 0: 
@@ -752,6 +832,15 @@ public class TheWeaponActivity extends Activity  {
 	NdefMessage[] msgs = getNdefMessages(intent);
 	if(checkCardContent(msgs[0]))
 	{
+		
+		if(!cardTapped){
+			score=0;
+			scoreViewGlobal.setText(""+score);
+			counter.start();
+			cardTapped = true;
+			
+		}
+		
 		playGame();
 	}
 	}
@@ -855,8 +944,11 @@ public class TheWeaponActivity extends Activity  {
             // getting updated data from EditTexts
         	if (((GlobalLoginApplication) getApplication()).loginStatus()){
  	           
-        	if(score>currentPlayer.TheWeapon){
-         	   currentPlayer.TheWeapon=score;
+        	if(highestScore>currentPlayer.TheWeapon){
+         	
+               currentPlayer.Total+=highestScore-currentPlayer.TheWeapon;
+               
+         	  currentPlayer.TheWeapon=highestScore;
             }
             
              // Building Parameters

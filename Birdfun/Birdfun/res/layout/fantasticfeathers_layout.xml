@@ -62,7 +62,10 @@
                         android:id="@+id/tick11"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
-                        android:scaleType="fitXY" />
+                        android:scaleType="fitXY" 
+              	android:src="@drawable/fantasticfeathers_correct"
+           android:visibility="invisible" 
+                        />
 
                     <ImageView
                         android:id="@+id/cross11"
@@ -70,7 +73,9 @@
                         android:layout_height="fill_parent"
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
-                        android:scaleType="fitXY" >
+		            android:src="@drawable/fantasticfeathers_wrong"
+		            android:scaleType="fitXY" 
+		            android:visibility="invisible">
                     </ImageView>
                 </FrameLayout>
 
@@ -96,7 +101,9 @@
                         android:layout_height="fill_parent"
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
-                        android:scaleType="fitXY" >
+		            android:src="@drawable/fantasticfeathers_wrong"
+		            android:scaleType="fitXY" 
+		            android:visibility="invisible">
                     </ImageView>
 
                     <ImageView
@@ -105,7 +112,9 @@
                         android:layout_height="fill_parent"
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
-                        android:scaleType="fitXY" >
+                       android:src="@drawable/fantasticfeathers_correct"
+		            android:scaleType="fitXY" 
+		            android:visibility="invisible"  >
                     </ImageView>
                 </FrameLayout>
             </LinearLayout>
@@ -143,7 +152,9 @@
                         android:layout_height="fill_parent"
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
-                        android:scaleType="fitXY" >
+		            android:src="@drawable/fantasticfeathers_wrong"
+		            android:scaleType="fitXY" 
+		            android:visibility="invisible" >
                     </ImageView>
 
                     <ImageView
@@ -152,7 +163,9 @@
                         android:layout_height="fill_parent"
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
-                        android:scaleType="fitXY" >
+                        android:src="@drawable/fantasticfeathers_correct"
+		            android:scaleType="fitXY" 
+		            android:visibility="invisible"  >
                     </ImageView>
                 </FrameLayout>
                 <!-- low right -->
@@ -180,7 +193,9 @@
                         android:layout_height="fill_parent"
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
-                        android:scaleType="fitXY" >
+		            android:src="@drawable/fantasticfeathers_wrong"
+		            android:scaleType="fitXY" 
+		            android:visibility="invisible" >
                     </ImageView>
 
                     <ImageView
@@ -189,7 +204,9 @@
                         android:layout_height="fill_parent"
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
-                        android:scaleType="fitXY" >
+                      android:src="@drawable/fantasticfeathers_correct"
+		            android:scaleType="fitXY" 
+		            android:visibility="invisible"  >
                     </ImageView>
                 </FrameLayout>
             </LinearLayout>
