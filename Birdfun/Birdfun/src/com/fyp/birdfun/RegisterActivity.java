@@ -10,7 +10,10 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -148,7 +151,16 @@ public class RegisterActivity extends Activity {
             @Override
             public void onClick(View view) {
                 // creating new product in background thread
+            	
+            	if(haveNetworkConnection(RegisterActivity.this))
+            	{	
+            	
                 new CreateNewUser().execute();
+            	}
+            	else
+            	{
+            		ToastMaker.toastNow("Please check your Internet connnection ",getApplicationContext());
+            	}
             }
         });
         btnCancel.setOnClickListener(new View.OnClickListener() {
@@ -175,6 +187,32 @@ public class RegisterActivity extends Activity {
         	registercheck2=false;
         }
     }
+    
+    public static boolean haveNetworkConnection(final Context context) {
+        boolean haveConnectedWifi = false;
+        boolean haveConnectedMobile = false;
+
+        final ConnectivityManager cm = (ConnectivityManager) context
+                     .getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (cm != null) {
+               final NetworkInfo[] netInfo = cm.getAllNetworkInfo();
+               for (final NetworkInfo netInfoCheck : netInfo) {
+                     if (netInfoCheck.getTypeName().equalsIgnoreCase("WIFI")) {
+                            if (netInfoCheck.isConnected()) {
+                                   haveConnectedWifi = true;
+                            }
+                     }
+                     if (netInfoCheck.getTypeName().equalsIgnoreCase("MOBILE")) {
+                            if (netInfoCheck.isConnected()) {
+                                   haveConnectedMobile = true;
+                            }
+                     }
+               }
+        }
+
+        return haveConnectedWifi || haveConnectedMobile;
+ }
+
  
     /**
      * Background Async Task to Create new product

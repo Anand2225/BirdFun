@@ -112,13 +112,6 @@ public class LogInActivity extends Activity{
 			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-
-				//	 intent listener to open the specific activity
-					 Intent myIntent = new Intent(LogInActivity.this, LogInActivity.class);
-
-			            startActivity(myIntent);      
-					    finish();
 				
 
 			}
@@ -144,14 +137,7 @@ public class LogInActivity extends Activity{
 			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-
-				//	 intent listener to open the specific activity
-					 Intent myIntent = new Intent(LogInActivity.this, PlayScreenActivity.class);
-
-			            startActivity(myIntent);      
-					    finish();
-				
+		
 
 			}
 		});
