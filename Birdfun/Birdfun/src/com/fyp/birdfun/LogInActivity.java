@@ -11,10 +11,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,10 +23,10 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.fyp.birdfun.helpers.JSONParser;
 import com.fyp.birdfun.helpers.PlayerDetails;
+import com.fyp.birdfun.helpers.ToastMaker;
  
 
 public class LogInActivity extends Activity{
@@ -57,6 +58,7 @@ public class LogInActivity extends Activity{
     private boolean checkSuccess0 = false;
     private boolean checkSuccess3 = false;
     
+    public ToastMaker toast=new ToastMaker();
     
     // products JSONArray
     JSONArray users = null;
@@ -64,6 +66,7 @@ public class LogInActivity extends Activity{
     //to read the content of the user input
     EditText inputLogin;
     EditText inputPassword;
+   
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -159,23 +162,36 @@ public class LogInActivity extends Activity{
      // Create button
       Button btnLogin = (Button) findViewById(R.id.btnlogin);
       Button btnCancel = (Button) findViewById(R.id.btncancel);
+      
+      
         // button click event
         btnLogin.setOnClickListener(new View.OnClickListener() {
  
             @Override
             public void onClick(View view) {
                 // creating Login check in background thread
+            	
+            	if(haveNetworkConnection(LogInActivity.this))
+            	{	
                 new LoginUser().execute();
                
                 if(checkSuccess0 == true)
                 {
-                	Toast.makeText(getApplicationContext(), "Invalid User.", Toast.LENGTH_LONG).show();
+                	ToastMaker.toastNow("Please Check your user name and Password ",getApplicationContext());
+                	//Toast.makeText(getApplicationContext(), "Invalid User.", Toast.LENGTH_LONG).show();
+                	checkSuccess0=false;
                 }
                 
-                if(checkSuccess3 == true)
+                else if(checkSuccess3 == true)
                 {
-                	Toast.makeText(getApplicationContext(), "Missing Username or Password.", Toast.LENGTH_LONG).show();
+                	ToastMaker.toastNow("Missing Username or Password. ",getApplicationContext());
+                	checkSuccess3=false;
                 }
+            	}
+            	else
+            	{
+            		ToastMaker.toastNow("Please check your Internet connnection ",getApplicationContext());
+            	}
             }
         });
         btnCancel.setOnClickListener(new View.OnClickListener() {
@@ -183,12 +199,48 @@ public class LogInActivity extends Activity{
             @Override
             public void onClick(View view) {
                 // cancel and go back to main thread
-               
+
+				//	 intent listener to open the specific activity
+					 Intent myIntent = new Intent(LogInActivity.this, PlayScreenActivity.class);
+
+			            startActivity(myIntent);      
+					    finish();
             }
         });
         
         
     }
+    
+    
+
+    public static boolean haveNetworkConnection(final Context context) {
+           boolean haveConnectedWifi = false;
+           boolean haveConnectedMobile = false;
+
+           final ConnectivityManager cm = (ConnectivityManager) context
+                        .getSystemService(Context.CONNECTIVITY_SERVICE);
+           if (cm != null) {
+                  final NetworkInfo[] netInfo = cm.getAllNetworkInfo();
+                  for (final NetworkInfo netInfoCheck : netInfo) {
+                        if (netInfoCheck.getTypeName().equalsIgnoreCase("WIFI")) {
+                               if (netInfoCheck.isConnected()) {
+                                      haveConnectedWifi = true;
+                               }
+                        }
+                        if (netInfoCheck.getTypeName().equalsIgnoreCase("MOBILE")) {
+                               if (netInfoCheck.isConnected()) {
+                                      haveConnectedMobile = true;
+                               }
+                        }
+                  }
+           }
+
+           return haveConnectedWifi || haveConnectedMobile;
+    }
+
+    
+    
+    
         /**
          * Background Async Task to Create new product
          * */
@@ -256,38 +308,28 @@ public class LogInActivity extends Activity{
                         player.TheWeapon=c.getInt(TAG_WEAPON);
                       
                         ((GlobalLoginApplication)getApplication()).setPlayerDetails(player);
+                        Intent playscreen = new Intent(getApplicationContext(), PlayScreenActivity.class);
 
+                        startActivity(playscreen);      
+                        // closing this screen
+                        finish();  
                        
-                    
-                    
-               
-
-                   
-                   
-                    
+                    }
                     
                     //if success == 0, invalid user
-                    if (success == 0)
-                    {
+                        else  if (success == 0)
+                        {
                     	checkSuccess0 = true;
                     	
-                    }
-                    //if success == 3, missing username or password
-                    if (success == 3)
-                    {
+                        }
+                    	//if success == 3, missing username or password
+                        else if (success == 3)
+                        {
                     	checkSuccess3 = true;
-                    }
+                        }
                     
-                    Intent playscreen = new Intent(getApplicationContext(), PlayScreenActivity.class);
-
-                    startActivity(playscreen);      
-                    // closing this screen
-                    finish();
-                    } 
-                    
-                    
-                   
-                } catch (JSONException e) {
+                }   
+                  catch (JSONException e) {
                     e.printStackTrace();
                 }
      

@@ -21,6 +21,7 @@ import android.widget.EditText;
 
 import com.fyp.birdfun.helpers.JSONParser;
 import com.fyp.birdfun.helpers.PlayerDetails;
+import com.fyp.birdfun.helpers.ToastMaker;
  
 public class RegisterActivity extends Activity {
  
@@ -44,6 +45,8 @@ public class RegisterActivity extends Activity {
     
     ArrayList<PlayerDetails> playerdata = new ArrayList<PlayerDetails>();
     
+    boolean registercheck1=false;
+    boolean registercheck2=false;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,14 +76,10 @@ public class RegisterActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-
-				//	 intent listener to open the specific activity
-					 Intent myIntent = new Intent(RegisterActivity.this, RegisterActivity.class);
-
-			            startActivity(myIntent);      
-					    finish();
-				
-
+	 		    Intent intent = new Intent(Intent.ACTION_MAIN);
+	 			intent.addCategory(Intent.CATEGORY_HOME);
+	 			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+	 			startActivity(intent);
 			}
 		});
      
@@ -142,7 +141,7 @@ public class RegisterActivity extends Activity {
         		
         // Create button
         Button btnRegister = (Button) findViewById(R.id.btnregister);
- 
+        Button btnCancel = (Button) findViewById(R.id.btncancel);
         // button click event
         btnRegister.setOnClickListener(new View.OnClickListener() {
  
@@ -152,6 +151,29 @@ public class RegisterActivity extends Activity {
                 new CreateNewUser().execute();
             }
         });
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent myIntent = new Intent(RegisterActivity.this, PlayScreenActivity.class);
+
+	            startActivity(myIntent);      
+			    finish();
+		
+			}
+		});
+        if(registercheck1 == true)
+        {
+        	ToastMaker.toastNow("User name already taken",getApplicationContext());
+        	//Toast.makeText(getApplicationContext(), "Invalid User.", Toast.LENGTH_LONG).show();
+        	registercheck1=false;
+        }
+        
+        if(registercheck2 == true)
+        {
+        	ToastMaker.toastNow("Please complete the form. ",getApplicationContext());
+        	registercheck2=false;
+        }
     }
  
     /**
@@ -212,6 +234,13 @@ public class RegisterActivity extends Activity {
                     // closing this screen
                     finish();
                 } 
+                else if (success==2){
+                	registercheck1=true;
+                }
+                else if (success==3)
+                {
+                	registercheck2=true;
+                }
                 
             } catch (JSONException e) {
                 e.printStackTrace();
