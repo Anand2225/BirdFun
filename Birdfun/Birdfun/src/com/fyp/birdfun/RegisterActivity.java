@@ -123,13 +123,11 @@ public class RegisterActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
+				Intent intent = new Intent(Intent.ACTION_MAIN);
+	 			intent.addCategory(Intent.CATEGORY_HOME);
+	 			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+	 			startActivity(intent);
 
-				//	 intent listener to open the specific activity
-					 Intent myIntent = new Intent(RegisterActivity.this, PlayScreenActivity.class);
-
-			            startActivity(myIntent);      
-					    finish();
-				
 
 			}
 		});
