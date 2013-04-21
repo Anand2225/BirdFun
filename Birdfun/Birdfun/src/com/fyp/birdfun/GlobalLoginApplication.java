@@ -1,14 +1,16 @@
 package com.fyp.birdfun;
 
-import com.fyp.birdfun.helpers.PlayerDetails;
-
 import android.app.Application;
+
+import com.fyp.birdfun.helpers.PlayerDetails;
+import com.fyp.birdfun.helpers.SoundPoolManager;
 
 public class GlobalLoginApplication extends Application{
 	
 	private PlayerDetails currentPlayer=new PlayerDetails() ;
 	private boolean loggedIn = false;
- 
+	public SoundPoolManager sounds=new SoundPoolManager(this) ;
+	
 	
 	public PlayerDetails getPlayerDetails(){
 		return currentPlayer;
@@ -33,6 +35,10 @@ public class GlobalLoginApplication extends Application{
 	public boolean loginStatus(){
 		return loggedIn;
 	}
-
+   
+	public void setSounds(SoundPoolManager sounds)
+	{
+		this.sounds=sounds;
+	}
 
 }

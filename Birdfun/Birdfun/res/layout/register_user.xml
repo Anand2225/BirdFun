@@ -230,13 +230,13 @@
                     android:text="Register" />
 
                 <!-- Button to Cancel -->
-
-<!--                 <Button -->
-<!--                     android:id="@+id/btncancel" -->
-<!--                     android:layout_width="match_parent" -->
-<!--                     android:layout_height="wrap_content" -->
-<!--                     android:clickable="true" -->
-<!--                     android:text="Cancel" /> -->
+	                 <Button 
+             		android:id="@+id/btncancel" 
+                   android:layout_width="match_parent" 
+                    android:layout_height="wrap_content" 
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:text="Cancel" />
             </LinearLayout>
 
             <!-- Layout for Main Layout -->

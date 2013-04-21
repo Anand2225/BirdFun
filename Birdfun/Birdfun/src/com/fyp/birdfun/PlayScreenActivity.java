@@ -3,30 +3,75 @@ package com.fyp.birdfun;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnPreparedListener;
+import android.nfc.NfcAdapter;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.fyp.birdfun.helpers.PlayerDetails;
+import com.fyp.birdfun.helpers.ToastMaker;
 
 public class PlayScreenActivity extends Activity {
 	 	Button btnSaveTheEggs;
 	    Button btnFantasticFeathers;
 	    Button btntheweapon;
+	    
+	    MediaPlayer mp;
+	    
+	    boolean nfconcheck;
+	    
 	    ArrayList<PlayerDetails> playerdata = new ArrayList<PlayerDetails>();
 	   	
 	    PlayerDetails Currentplayer=new PlayerDetails();
 	    
 	    TextView newtext;
+	    
+	    NfcAdapter nfcAdpt;
 	    @Override
 	    public void onCreate(Bundle savedInstanceState) {
 	        super.onCreate(savedInstanceState);
 	        setContentView(R.layout.play_screen);
 	        
+	        final NfcAdapter nfcAdpt = NfcAdapter.getDefaultAdapter(this);
+	        if(nfcAdpt!=null)
+	        {
+	        if(nfcAdpt.isEnabled())
+	        {
+	        	
+	        }
+	        else
+	        {
+	        	AlertDialog.Builder builder = new AlertDialog.Builder(
+	        				this);
+                builder.setCancelable(true);
+                builder.setTitle("You need NFC to  play this game");
+                builder.setInverseBackgroundForced(true);
+               
+                builder.setNegativeButton("Settings",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog,
+                                    int which) {
+                                dialog.dismiss();
+                                
+                                Intent setnfc = new Intent(Settings.ACTION_WIRELESS_SETTINGS);                             
+                                startActivity(setnfc);
+                            }
+                        });
+                AlertDialog alert = builder.create();
+                alert.show();
+	        }
+	        }
+	        
 	        // for side option buttons 
-
+   
 	        Button Play= (Button) findViewById(R.id.btnplays);
 	        Button Register= (Button) findViewById(R.id.btnregiste);
 	        Button Login= (Button) findViewById(R.id.btnlogins);
@@ -38,10 +83,8 @@ public class PlayScreenActivity extends Activity {
 	 			@Override
 	 			public void onClick(View v) {
 	 			//	 intent listener to open the specific activity
-	 				 Intent myIntent = new Intent(PlayScreenActivity.this, PlayScreenActivity.class);
-
-	 		            startActivity(myIntent);      
-	 				    finish();
+	 			
+	 		           
 	 			}
 	 		});
 	      	
@@ -52,7 +95,7 @@ public class PlayScreenActivity extends Activity {
 
 	 				//	 intent listener to open the specific activity
 	 					 Intent myIntent = new Intent(PlayScreenActivity.this, RegisterActivity.class);
-
+	 					mp.stop();
 	 			            startActivity(myIntent);      
 	 					    finish();
 	 				
@@ -68,7 +111,7 @@ public class PlayScreenActivity extends Activity {
 
 	 				//	 intent listener to open the specific activity
 	 					 Intent myIntent = new Intent(PlayScreenActivity.this, LogInActivity.class);
-
+	 					 mp.stop();
 	 			            startActivity(myIntent);      
 	 					    finish();
 	 				
@@ -84,7 +127,7 @@ public class PlayScreenActivity extends Activity {
 
 	 				//	 intent listener to open the specific activity
 	 					 Intent myIntent = new Intent(PlayScreenActivity.this, LeaderBoardActivity.class);
-
+	 					 mp.stop();
 	 			            startActivity(myIntent);      
 	 					    finish();
 	 				
@@ -97,13 +140,12 @@ public class PlayScreenActivity extends Activity {
 	 			@Override
 	 			public void onClick(View v) {
 	 				// TODO Auto-generated method stub
-
-	 				//	 intent listener to open the specific activity
-	 					 Intent myIntent = new Intent(PlayScreenActivity.this, PlayScreenActivity.class);
-
-	 			            startActivity(myIntent);      
-	 					    finish();
-	 				
+	 				//onPause();
+	 			
+	 		    Intent intent = new Intent(Intent.ACTION_MAIN);
+	 			intent.addCategory(Intent.CATEGORY_HOME);
+	 			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+	 			startActivity(intent);
 
 	 			}
 	 		});
@@ -120,10 +162,25 @@ public class PlayScreenActivity extends Activity {
 	            public void onClick(View view) {
 	                // Launching All The weapon Activity 
 	            	//send the player details
-	                Intent i = new Intent(getApplicationContext(), FindTheNestActivity.class);
-	                //i.putExtra("player",playerdata);  
-	                startActivity(i);
-	                finish();
+	            	 
+	    	    
+	    	        if(nfcAdpt!=null)
+	    	        {
+	    	        if(nfcAdpt.isEnabled())
+	    	        {
+	    	        	  Intent i = new Intent(getApplicationContext(), FindTheNestActivity.class);
+	  	                mp.stop();
+	  	                startActivity(i);
+	  	                finish();
+	    	        }
+	    	        
+	    	        else
+	    	        {
+	    	        	ToastMaker.toastNow("Please turn on your NFC  ",getApplicationContext());
+	    	        }
+	    	        }
+	            	
+	              
 	               
 	 
 	            }
@@ -135,13 +192,25 @@ public class PlayScreenActivity extends Activity {
 	            
 	            public void onClick(View view) {
 	            	// Launching All The weapon Activity 
-	            	//send the send the current score and total
-	                Intent i = new Intent(getApplicationContext(), FantasticFeathersActivity.class);
-	             
-
-	                startActivity(i);
-	 
-	                finish();
+	            	
+	                if(nfcAdpt!=null)
+	    	        {
+	    	        if(nfcAdpt.isEnabled())
+	    	        {
+	    	        	//send the send the current score and total
+		                Intent i = new Intent(getApplicationContext(), FantasticFeathersActivity.class);
+		             
+		                mp.stop();
+		                startActivity(i);
+		 
+		                finish();
+	    	        }
+	                
+	                else
+	    	        {
+	    	        	ToastMaker.toastNow("Please turn on your  NFC  ",getApplicationContext());
+	    	        }
+	    	        }
 	            }
 	        });
 	       
@@ -153,23 +222,49 @@ public class PlayScreenActivity extends Activity {
 	                // Launching create the weapon  activity
 	                Intent theweapon = new Intent(getApplicationContext(), TheWeaponActivity.class);
 	              
-
+	                mp.stop();
 	                startActivity(theweapon);
 	                finish();
 	 
 	            }
 	        });
 	    }
-	    
-	    //To-do Add exit button
-	    //To-do Sign up acitivty to update the score to the server
-		//updating the score task runs Following  occasions !
-		//User Exit to main menu
-	    //User on pause
-	    //User on resume
-		//User Comes back from playing Save the Eggs
-		//User Comes back from playing The weapon game
-	    //User Comes back from playing Fantastic feathers
-	      
-	    
+	    @Override
+	    public void onSaveInstanceState(Bundle savedInstanceState) {
+	        super.onSaveInstanceState(savedInstanceState);
+	        // your stuff or nothing
+	    }
+
+	    @Override
+	    public void onRestoreInstanceState(Bundle savedInstanceState) {
+	        super.onRestoreInstanceState(savedInstanceState);
+	        // your stuff or nothing
+	    }
+	  
+	    @Override
+	    protected void onPause() {
+	    	super.onPause();
+	    	  mp.setLooping(false);
+	            if (mp != null) {
+	            	if (mp.isPlaying()==true )
+	            	{     mp.stop();
+	            		  mp.release();
+	            	}}
+	           
+	    }
+	    @Override
+	    public void onResume(){
+	        super.onResume();
+	        mp = MediaPlayer.create(getApplicationContext(), R.raw.bgm);
+	        mp.setLooping(true);
+	        mp.setOnPreparedListener(new OnPreparedListener() {
+	            @Override
+	            public void onPrepared(MediaPlayer mp) {
+	            //Now your media player is ready to play   
+	            	 mp.start();
+	            }
+	        });
+	       
+	    }
+	   
 }

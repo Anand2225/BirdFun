@@ -13,7 +13,6 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.PixelFormat;
@@ -31,15 +30,13 @@ import android.view.animation.AccelerateInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.fyp.birdfun.FindTheNestActivity.UpdateUserScore;
-import com.fyp.birdfun.RegisterActivity.CreateNewUser;
 import com.fyp.birdfun.helpers.Card;
 import com.fyp.birdfun.helpers.DisplayNextView;
 import com.fyp.birdfun.helpers.Flip3dAnimation;
 import com.fyp.birdfun.helpers.JSONParser;
 import com.fyp.birdfun.helpers.PlayerDetails;
+import com.fyp.birdfun.helpers.SoundPoolManager;
 
 public class TheWeaponActivity extends Activity  {
 	//Game set up declarations
@@ -77,6 +74,7 @@ public class TheWeaponActivity extends Activity  {
 	 ArrayList<PlayerDetails> playerdata = new ArrayList<PlayerDetails>();   	
 	 PlayerDetails Currentplayer=new PlayerDetails();
 	 
+	
 	//current players data is here
 	 PlayerDetails currentPlayer;
 	//Variable for manging score
@@ -137,6 +135,7 @@ public class TheWeaponActivity extends Activity  {
 	scoreViewText.setText("Score ");
 	// setting the players score
 	
+	 
 	if (((GlobalLoginApplication) getApplication()).loginStatus()) {
 		currentPlayer = ((GlobalLoginApplication) getApplication())
 				.getPlayerDetails();
@@ -195,7 +194,7 @@ public class TheWeaponActivity extends Activity  {
 	counter.start();
 	//Score updating portion ends 
 	
-	
+	// ((GlobalLoginApplication) getApplication()).sounds.playSound();
 	//Create adapter and pending intent for NFC
 	nfcAdapter = NfcAdapter.getDefaultAdapter(this);
     nfcPendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, this.getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP),0);
@@ -374,6 +373,7 @@ public class TheWeaponActivity extends Activity  {
 				// check whether same card read if yes close it
 				if(playCards[currentValue].position_id ==prevReadPlayId)	
 				{	
+					  ((GlobalLoginApplication)getApplication()).sounds.playwrongSound();
 					//remove tick and add wrong
 					ShowtickAndWrong(playCards[cardValue].position_id,true,false);
 			    	applyRotation(0,90,true,playCards[currentValue].front_view_id,playCards[currentValue].back_view_id);
@@ -384,11 +384,14 @@ public class TheWeaponActivity extends Activity  {
 				else if(playCards[currentValue].card_id%16==prevReadCardID%16)
 					
 		    	{	
+					
+					  ((GlobalLoginApplication)getApplication()).sounds.playcorrectSound();
 					ShowtickAndWrong(playCards[cardValue].position_id,true,true);
 					applyRotation(0,-90,false,playCards[currentValue].front_view_id,playCards[currentValue].back_view_id);
 		    		playCards[currentValue].solved=true;
 		    		playCards[prevReadPlayId].solved=true;
 		    		noofCardsSolved++;
+		    		
 		    	}
 				//check for wrong  card if then close first tapped card
 				else
@@ -396,6 +399,7 @@ public class TheWeaponActivity extends Activity  {
 					//remove correct
 					//
 					//add wrong
+					  ((GlobalLoginApplication)getApplication()).sounds.playwrongSound();
 					ShowtickAndWrong(playCards[prevReadPlayId].position_id,true,false);
 				    
 					//open the current card

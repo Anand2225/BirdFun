@@ -11,7 +11,10 @@ import org.json.JSONObject;
 
 import android.app.ListActivity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,6 +26,7 @@ import android.widget.SimpleAdapter;
 
 import com.fyp.birdfun.helpers.JSONParser;
 import com.fyp.birdfun.helpers.PlayerDetails;
+import com.fyp.birdfun.helpers.ToastMaker;
 
 public class LeaderBoardActivity extends ListActivity {
 
@@ -135,23 +139,57 @@ public class LeaderBoardActivity extends ListActivity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
+				Intent intent = new Intent(Intent.ACTION_MAIN);
+	 			intent.addCategory(Intent.CATEGORY_HOME);
+	 			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+	 			startActivity(intent);
 
-				//	 intent listener to open the specific activity
-					 Intent myIntent = new Intent(LeaderBoardActivity.this, PlayScreenActivity.class);
-
-			            startActivity(myIntent);      
-					    finish();
-				
 
 			}
 		});
     
+     if(haveNetworkConnection(LeaderBoardActivity.this))
+ 	{
      new LoadLeaderBoard().execute();
+ 	}
+     else
+     {
+    	 ToastMaker.toastNow("Please check your Internet connnection ",getApplicationContext());
+     }
      
    }
    /**
     * Background Async Task to Create new product
     * */
+   public static boolean haveNetworkConnection(final Context context) {
+       boolean haveConnectedWifi = false;
+       boolean haveConnectedMobile = false;
+
+       final ConnectivityManager cm = (ConnectivityManager) context
+                    .getSystemService(Context.CONNECTIVITY_SERVICE);
+       if (cm != null) {
+              final NetworkInfo[] netInfo = cm.getAllNetworkInfo();
+              for (final NetworkInfo netInfoCheck : netInfo) {
+                    if (netInfoCheck.getTypeName().equalsIgnoreCase("WIFI")) {
+                           if (netInfoCheck.isConnected()) {
+                                  haveConnectedWifi = true;
+                           }
+                    }
+                    if (netInfoCheck.getTypeName().equalsIgnoreCase("MOBILE")) {
+                           if (netInfoCheck.isConnected()) {
+                                  haveConnectedMobile = true;
+                           }
+                    }
+              }
+       }
+
+       return haveConnectedWifi || haveConnectedMobile;
+}
+   
+   
+   
+   
+   
    class LoadLeaderBoard extends AsyncTask<String, String, String> {
 
        /**
