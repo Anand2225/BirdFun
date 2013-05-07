@@ -54,9 +54,9 @@ public class TheWeaponActivity extends Activity  {
 	private static String TAG2 = "firstTap";
 	private static String TAG3 = "secondTap";
 	private List myList = new ArrayList();
-	private boolean disableintent;
-	 Intent changeScreen;
-	 
+	
+	Intent changeScreen;
+	public boolean Cardcountdown=false;
 	protected NfcAdapter nfcAdapter;
     protected PendingIntent nfcPendingIntent;
 	// Variables for playing the game
@@ -251,7 +251,7 @@ public class TheWeaponActivity extends Activity  {
 	// load the views to the array
 	LoadCards();
 	SetUpGame();
-	disableintent=false;
+
 	noofCardsSolved=0;
 	
 	roundCounter=0;
@@ -408,9 +408,9 @@ public class TheWeaponActivity extends Activity  {
 			if(newTurn){
 				//open the tapped card
 				Log.d(TAG2, "firtap");
-				disableintent=true;
+				
 				applyRotation(0,-90,false,playCards[currentValue].front_view_id,playCards[currentValue].back_view_id);
-				disableintent=false;
+				
 				Log.d(TAG2, ""+currentValue);
 				ShowtickAndWrong(playCards[cardValue].position_id,true,true);
 				// remember the position
@@ -476,7 +476,7 @@ public class TheWeaponActivity extends Activity  {
 					//remove correct
 					//
 					//add wrong
-					  ((GlobalLoginApplication)getApplication()).sounds.playwrongSound();
+					((GlobalLoginApplication)getApplication()).sounds.playwrongSound();
 					ShowtickAndWrong(playCards[prevReadPlayId].position_id,true,false);
 				    
 					//open the current card
@@ -485,21 +485,19 @@ public class TheWeaponActivity extends Activity  {
 				     
 					 ShowtickAndWrong(playCards[currentValue].position_id,false,true);
 					 ShowtickAndWrong(playCards[prevReadPlayId].position_id,false,true);
-					new CountDownTimer(200, 100) {
-			
+					new CountDownTimer(5000, 1000) {
 					     public void onTick(long millisUntilFinished) {
-					    	 
+					    	 Cardcountdown=true;
 					    	
 					     }
 					     public void onFinish() {
-
-						 applyRotation(0,90,true,playCards[prevReadPlayId].front_view_id,playCards[prevReadPlayId].back_view_id);
-					     applyRotation(0,90,true,playCards[currentValue].front_view_id,playCards[currentValue].back_view_id);
-					    
+					    applyRotation(0,90,true,playCards[currentValue].front_view_id,playCards[currentValue].back_view_id);	 	
+					    applyRotation(0,90,true,playCards[prevReadPlayId].front_view_id,playCards[prevReadPlayId].back_view_id);//					     applyRotation(0,90,true,playCards[currentValue].front_view_id,playCards[currentValue].back_view_id);
+				    
 					     ShowtickAndWrong(playCards[currentValue].position_id,false,false);
 					     ShowtickAndWrong(playCards[prevReadPlayId].position_id,false,false);
 
-
+					     Cardcountdown=false;
 					     }
 					  }.start();
 					
@@ -785,10 +783,10 @@ public class TheWeaponActivity extends Activity  {
 		
 		  }
 		  // hide it after 3 seconds
-		  new CountDownTimer(3000, 1000) {
+		  new CountDownTimer(5000, 1000) {
 
 			     public void onTick(long millisUntilFinished) {
-			    	
+			    	 
 			     }
 			     public void onFinish() {
 			    	  for(int i=0;i<NO_OF_VIEWS;i++)
@@ -803,7 +801,7 @@ public class TheWeaponActivity extends Activity  {
 	//must take the start,end,Id of the images to rotate,
 	private void applyRotation(float start, float end,boolean rotate,int imageview1id,int imageview2id) {
 		// Find the center of image
-		disableintent=true;
+		
 		 ImageView image1=(ImageView)findViewById(imageview1id);
 		 ImageView image2=(ImageView)findViewById(imageview2id);
 		 // Find the center of image
@@ -822,13 +820,13 @@ public class TheWeaponActivity extends Activity  {
 			image1.startAnimation(rotation);
 		 else
 			 image2.startAnimation(rotation);
-		 disableintent=false;
+		
 		}
 
 	@Override
 	public void onNewIntent(Intent intent) { //
 	Log.d(TAG2, "onNewIntent");
-	if(disableintent==false){
+	if(Cardcountdown==false){
 	NdefMessage[] msgs = getNdefMessages(intent);
 	if(checkCardContent(msgs[0]))
 	{
